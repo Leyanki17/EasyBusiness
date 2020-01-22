@@ -1,6 +1,9 @@
 package com.projet.easybusiness;
 
-public class Annonce {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Annonce implements Parcelable {
     private String id;
     private String titre;
     private String description;
@@ -26,6 +29,26 @@ public class Annonce {
         this.images = image;
         this.date = date;
     }
+
+    protected Annonce(Parcel in) {
+        id = in.readString();
+        titre = in.readString();
+        description = in.readString();
+        prix = in.readFloat();
+        pseudo = in.readString();
+        emailContact = in.readString();
+        telContact = in.readString();
+        ville = in.readString();
+        cp = in.readString();
+        images = in.createStringArray();
+        if (in.readByte() == 0) {
+            date = null;
+        } else {
+            date = in.readLong();
+        }
+    }
+
+
 
     public String getId() {
         return id;
@@ -118,6 +141,44 @@ public class Annonce {
     public void setDate(Long date) {
         this.date = date;
     }
+
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
+        dest.writeString(titre);
+        dest.writeString(description);
+        dest.writeFloat(prix);
+        dest.writeString(pseudo);
+        dest.writeString(emailContact);
+        dest.writeString(telContact);
+        dest.writeString(ville);
+        dest.writeString(cp);
+        dest.writeStringArray(images);
+        if (date == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeLong(date);
+        }
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<Annonce> CREATOR = new Creator<Annonce>() {
+        @Override
+        public Annonce createFromParcel(Parcel in) {
+            return new Annonce(in);
+        }
+
+        @Override
+        public Annonce[] newArray(int size) {
+            return new Annonce[size];
+        }
+    };
 
 
 }

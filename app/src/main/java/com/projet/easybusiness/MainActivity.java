@@ -18,4 +18,16 @@ public class MainActivity extends AppCompatActivity {
         Intent next= new Intent(this,SeeAd.class);
         startActivity(next);
     }
+
+    public void seeAllAd(View v){
+        Intent view =  new Intent(this,SeeAllAd.class);
+        startActivity(view);
+    }
+
+    public void fillProfile(View v){
+        Intent view =  new Intent(this,UserInformation.class);
+        startActivity(view);
+    }
+
+
 }

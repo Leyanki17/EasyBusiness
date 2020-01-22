@@ -1,4 +1,4 @@
-package com.projet.easybusiness;
+package com.projet.easybusiness.helper_request;
 
 import android.util.Log;
 

@@ -2,26 +2,23 @@ package com.projet.easybusiness;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.JsonReader;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.android.material.snackbar.Snackbar;
+import com.projet.easybusiness.helper_request.HelperClass;
 import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Moshi;
 import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
-import java.text.DateFormat;
-import java.util.Calendar;
 
 import okhttp3.Call;
 import okhttp3.Callback;
-import okhttp3.Headers;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -33,7 +30,17 @@ public class SeeAd extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_see_ad);
-        makeHttpRequest("https://ensweb.users.info.unicaen.fr/android-api/mock-api/completeAdWithImages.json");
+       // makeHttpRequest("https://ensweb.users.info.unicaen.fr/android-api/mock-api/liste.json");
+
+        Intent intent= getIntent();
+
+        Annonce ad= intent.getParcelableExtra("idAnnonce");
+        if(ad!=null){
+            rempliAnnonce(ad);
+        }else{
+            makeHttpRequest("https://ensweb.users.info.unicaen.fr/android-api/mock-api/completeAdWithImages.json");
+        }
+
     }
 
     public void okhttp(View View){
@@ -109,10 +116,9 @@ public class SeeAd extends AppCompatActivity {
         ImageView imageView= findViewById(R.id.image);
 
         Log.i("YKJE", "erreur");
-        Log.i ("YKJ", "l'image de"+ ad.getPseudo() +" est " +ad.getImages()[0]);
+        Log.i ("YKJ", "l'image de "+ ad.getPseudo() +" est " +ad.getImages()[0]);
+
         Picasso.get().load(ad.getImages()[0]).error(R.drawable.laptop_hp).into(imageView);
-
-
         titre.setText(ad.getTitre());
         prix.setText(" "+ad.getPrix()+" $");
         proprietaire.setText(ad.getPseudo());
@@ -120,12 +126,18 @@ public class SeeAd extends AppCompatActivity {
         telephone.setText(ad.getTelContact());
         adresse.setText(ad.getAdresse());
         description.setText(ad.getDescription());
-        date.setText(" "+formatDate(ad.getDate()));
+        date.setText(" "+ HelperClass.formatDate(ad.getDate()));
         Log.i("YKJE", "logo fin");
     }
 
-    public String formatDate(long date){
-        String dateFormat = DateFormat.getDateInstance().format(date);
-        return dateFormat;
+    public void callPers(View v){
+        TextView telephone= (TextView) findViewById(R.id.tel);
+        startActivity(new Intent(Intent.ACTION_DIAL,Uri.parse("tel: "+telephone.getText().toString())));
+    }
+
+    public void sendEmail(View v){
+        TextView mail= (TextView) findViewById(R.id.email);
+        startActivity(new Intent(Intent.ACTION_VIEW,Uri.parse("mailto: "+ mail.getText().toString())));
+
     }
 }
