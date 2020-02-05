@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toolbar;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -12,6 +13,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
     }
 
     public void next(View view) {
@@ -28,6 +30,9 @@ public class MainActivity extends AppCompatActivity {
         Intent view =  new Intent(this,UserInformation.class);
         startActivity(view);
     }
-
+    public void depotAnnonce(View v){
+        Intent view =  new Intent(this,DepotAnnonce.class);
+        startActivity(view);
+    }
 
 }
