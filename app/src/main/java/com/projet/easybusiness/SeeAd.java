@@ -1,8 +1,11 @@
 package com.projet.easybusiness;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager.widget.ViewPager;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -113,12 +116,16 @@ public class SeeAd extends AppCompatActivity {
         TextView telephone= (TextView) findViewById(R.id.tel);
         TextView adresse = (TextView) findViewById(R.id.adresse);
         TextView description= (TextView) findViewById(R.id.description);
-        ImageView imageView= findViewById(R.id.image);
+        TextView slideNumber= (TextView) findViewById(R.id.slideNumber);
+
+
 
         Log.i("YKJE", "erreur");
         Log.i ("YKJ", "l'image de "+ ad.getPseudo() +" est " +ad.getImages()[0]);
+        ViewPager slider= findViewById(R.id.slide);
+        SliderAdapter sliderAdapter=new SliderAdapter(this,ad.getImages(),slideNumber);
+        slider.setAdapter(sliderAdapter);
 
-        Picasso.get().load(ad.getImages()[0]).error(R.drawable.laptop_hp).into(imageView);
         titre.setText(ad.getTitre());
         prix.setText(" "+ad.getPrix()+" $");
         proprietaire.setText(ad.getPseudo());
@@ -137,6 +144,10 @@ public class SeeAd extends AppCompatActivity {
 
     public void sendEmail(View v){
         TextView mail= (TextView) findViewById(R.id.email);
+        SharedPreferences preferences=  getSharedPreferences("PREF",MODE_PRIVATE);
+        Log.i("YKJ",preferences.getString("pseudo","inconnu"));
+        Log.i("YKJ",preferences.getString("email", "inconnu"));
+        Log.i("YKJ", preferences.getString("tel","pas de numero"));
         startActivity(new Intent(Intent.ACTION_VIEW,Uri.parse("mailto: "+ mail.getText().toString())));
 
     }

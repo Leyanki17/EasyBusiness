@@ -1,5 +1,6 @@
 package com.projet.easybusiness.recycler_view_helper;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -35,6 +36,7 @@ public class AnnonceViewHolder extends RecyclerView.ViewHolder {
         date.setText(HelperClass.formatDate(ad.getDate()));
         description.setText(ad.getDescription().substring(0,60)+"....");
         id.setText(ad.getId());
-        Picasso.get().load(ad.getImages()[0]).error(R.drawable.laptop_hp).into(img);
+        Log.e("try",""+ad.getImages()[0]);
+        Picasso.get().load(ad.getImages()[0]).fit().error(R.drawable.laptop_hp).into(img);
     }
 }
