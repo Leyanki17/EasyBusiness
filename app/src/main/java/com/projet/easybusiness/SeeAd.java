@@ -111,9 +111,7 @@ public class SeeAd extends AppCompatActivity {
         TextView adresse = (TextView) findViewById(R.id.adresse);
         TextView description= (TextView) findViewById(R.id.description);
         ImageView imageView= findViewById(R.id.BoutonImage);
-
         Log.i ("YKJ", "l'image de "+ ad.getPseudo() +" est " +ad.getImages()[0]);
-
         Picasso.get().load(ad.getImages()[0]).error(R.drawable.laptop_hp).into(imageView);
         titre.setText(ad.getTitre());
         prix.setText(" "+ad.getPrix()+" $");
