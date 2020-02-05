@@ -23,12 +23,12 @@
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="204dp"
+        android:layout_marginTop="120dp"
         android:onClick="seeAllAd"
         android:text="Voir toute les annonces"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.718"
+        app:layout_constraintHorizontal_bias="0.541"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/seeAd" />
 
@@ -39,10 +39,21 @@
         android:onClick="fillProfile"
         android:text="sauvegarder le profil"
         android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button" />
+
+    <Button
+        android:id="@+id/depotAnnonce"
+        android:layout_width="281dp"
+        android:layout_height="73dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="80dp"
+        android:onClick="depotAnnonce"
+        android:text="DEPOT ANNONCE"
+        app:layout_constraintStart_toStartOf="@+id/fillProfile"
+        app:layout_constraintTop_toBottomOf="@+id/fillProfile" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

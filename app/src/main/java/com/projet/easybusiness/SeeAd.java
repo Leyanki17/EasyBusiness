@@ -43,7 +43,6 @@ public class SeeAd extends AppCompatActivity {
         }else{
             makeHttpRequest("https://ensweb.users.info.unicaen.fr/android-api/mock-api/completeAdWithImages.json");
         }
-
     }
 
     public void okhttp(View View){
@@ -52,11 +51,12 @@ public class SeeAd extends AppCompatActivity {
 
     public void okhttp404(View view){
         makeHttpRequest("https://ensweb.users.info.unicaen.fr/android-api/mock-api/erreur.json");
+
     }
 
     public void parseAd(String body){
         Moshi moshi= new Moshi.Builder().add(new ApiAnnonceAdapter()).build();
-        JsonAdapter<Annonce> jsonAdapter= moshi.adapter(Annonce.class);
+        JsonAdapter<Annonce> jsonAdapter = moshi.adapter(Annonce.class);
         try{
             Annonce ad= jsonAdapter.fromJson(body);
             rempliAnnonce(ad);
@@ -87,7 +87,6 @@ public class SeeAd extends AppCompatActivity {
                         // afficher un message d'erreur
                         throw new IOException("Unexpected HTTP Code "+response);
                     }
-
                     final String adBody= responseBody.string();
                     runOnUiThread(
                             new Runnable() {
@@ -99,10 +98,8 @@ public class SeeAd extends AppCompatActivity {
                     );
                 }
             }
-
         });
     }
-
     /*
      * Permet de remplir une annonce
      * @param Ad qui correspond à une annonce
@@ -120,7 +117,7 @@ public class SeeAd extends AppCompatActivity {
 
 
 
-        Log.i("YKJE", "erreur");
+
         Log.i ("YKJ", "l'image de "+ ad.getPseudo() +" est " +ad.getImages()[0]);
         ViewPager slider= findViewById(R.id.slide);
         SliderAdapter sliderAdapter=new SliderAdapter(this,ad.getImages(),slideNumber);

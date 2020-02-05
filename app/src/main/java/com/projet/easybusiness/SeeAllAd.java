@@ -113,8 +113,8 @@ public class SeeAllAd extends AppCompatActivity {
         titreClick=clicked.getText().toString();
 
         Intent next= new Intent(this,SeeAd.class);
+        Log.i("titret",titreClick);
         next.putExtra("idAnnonce", annonces.get(titreClick));
-
         startActivity(next);
     }
 
@@ -124,6 +124,7 @@ public class SeeAllAd extends AppCompatActivity {
             Annonce ad= this.listAnnonce.get(i);
             ad.setImage(HelperClass.changeToPng(ad.getImages()));
             annonces.put(ad.getId(),ad);
+            Log.i("roooo",ad.getId());
         }
     }
 
