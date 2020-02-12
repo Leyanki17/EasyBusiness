@@ -21,7 +21,25 @@ public final class AnnoceContract {
         public static final String COLUMN_NAME_TELEPHONE = "telContact";
         public static final String COLUMN_NAME_VILLE = "ville";
         public static final String COLUMN_NAME_CODE_POSTAL = "codePostal";
-        public static final String[] COLUMN_NAME_IMAGES = {};
+        public static final String COLUMN_NAME_IMAGES = "images";
         public static final String COLUMN_NAME_DATE = "date";
+        public static final String SQL_CREATE_ENTRIES =
+                "CREATE TABLE " + AnnoceContract.FeedEntry.TABLE_NAME + " (" +
+                        _ID + " INTEGER PRIMARY KEY autoincrement," +
+                        COLUMN_NAME_ID + " TEXT," +
+                        COLUMN_NAME_TITRE + " TEXT," +
+                        COLUMN_NAME_DESCRIPTION + " TEXT," +
+                        COLUMN_NAME_PRIX +" INTEGER," +
+                        COLUMN_NAME_PSEUDO + " TEXT," +
+                        COLUMN_NAME_EMAIL + " TEXT," +
+                        COLUMN_NAME_TELEPHONE + " TEXT," +
+                        COLUMN_NAME_VILLE + " TEXT," +
+                        COLUMN_NAME_CODE_POSTAL + " TEXT," +
+                        COLUMN_NAME_IMAGES + " TEXT," +
+                        COLUMN_NAME_DATE + " INTEGER)";
+
+        public static final String SQL_DELETE_ENTRIES = "DROP TABLE IF EXISTS " + AnnoceContract.FeedEntry.TABLE_NAME;
     }
+
+
 }

@@ -153,7 +153,7 @@ public class SeeAd extends AppCompatActivity {
     }
 
     public void saveAd(View v){
-        AnnonceDb annonceDb = new AnnonceDb(v.getContext());
+        AnnonceDb annonceDb = new AnnonceDb(this);
 
         Log.i("xxxx", "on va enregistrer");
         try {

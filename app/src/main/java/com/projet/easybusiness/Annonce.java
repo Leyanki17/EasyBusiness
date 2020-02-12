@@ -29,7 +29,7 @@ public class Annonce implements Parcelable {
         this.images = image;
         this.date = date;
     }
-    public Annonce(String titre, String description, float prix, String pseudo, String emailContact, String telContact, String ville) {
+    public Annonce(String titre, String description, int prix, String pseudo, String emailContact, String telContact, String ville) {
 
         this.titre = titre;
         this.description = description;
