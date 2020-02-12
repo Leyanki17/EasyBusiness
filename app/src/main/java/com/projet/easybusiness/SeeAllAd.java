@@ -128,6 +128,4 @@ public class SeeAllAd extends AppCompatActivity {
             Log.i("roooo",ad.getId());
         }
     }
-
-
 }

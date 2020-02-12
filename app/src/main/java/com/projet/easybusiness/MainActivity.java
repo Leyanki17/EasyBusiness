@@ -3,7 +3,9 @@ package com.projet.easybusiness;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toolbar;
 
@@ -30,9 +32,16 @@ public class MainActivity extends AppCompatActivity {
         Intent view =  new Intent(this,UserInformation.class);
         startActivity(view);
     }
+
+    public void listeAdSaved(View v) {
+        AnnonceDb annonceDb = new AnnonceDb(v.getContext());
+        Cursor resultat = annonceDb.listeAnnoncesSauvegardees();
+        Log.i("ttt ", "Liste des annonces sauvegardées: " + resultat.toString());
+    }
     public void depotAnnonce(View v){
         Intent view =  new Intent(this,DepotAnnonce.class);
         startActivity(view);
+
     }
 
 }
