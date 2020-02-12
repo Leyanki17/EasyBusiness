@@ -34,7 +34,7 @@ public class AnnonceViewHolder extends RecyclerView.ViewHolder {
     public void bind(Annonce ad) {
         titre.setText(ad.getTitre());
         date.setText(HelperClass.formatDate(ad.getDate()));
-        description.setText(ad.getDescription().substring(0,60)+"....");
+        description.setText(ad.getDescription());
         id.setText(ad.getId());
         Log.e("try",""+ad.getImages()[0]);
         Picasso.get().load(ad.getImages()[0]).fit().error(R.drawable.laptop_hp).into(img);

@@ -42,7 +42,8 @@ public class SeeAllAd extends AppCompatActivity {
 
         // on fait un adaptateur qui va  le lien entre les objets et les vues
         try {
-            makeHttpRequest("https://ensweb.users.info.unicaen.fr/android-api/mock-api/liste.json");
+           // makeHttpRequest("https://ensweb.users.info.unicaen.fr/android-api/mock-api/liste.json");
+            makeHttpRequest("https://ensweb.users.info.unicaen.fr/android-api/?apikey=21912873&method=listAll");
 
         } catch (Exception e) {
             e.printStackTrace();

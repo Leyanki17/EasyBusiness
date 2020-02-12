@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -15,6 +16,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Moshi;
@@ -22,6 +24,8 @@ import com.squareup.moshi.Moshi;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.util.Date;
+import java.text.SimpleDateFormat;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -41,6 +45,10 @@ public class DepotAnnonce extends AppCompatActivity {
     private EditText description;
     private Annonce annonce;
     static final int REQUEST_IMAGE_CAPTURE = 1;
+
+    public DepotAnnonce() throws IOException {
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,7 +58,7 @@ public class DepotAnnonce extends AppCompatActivity {
         if(view.getId()==R.id.valider) {
 
             try {
-                run();
+                sendAnnonce();
                 Log.i("test","send annonce marche");
             } catch (Exception e) {
                 Log.i("test","send annonce ne  marche pas");
@@ -75,7 +83,8 @@ public class DepotAnnonce extends AppCompatActivity {
     //okHtttp pour l'envoi de post
     private final OkHttpClient client = new OkHttpClient();
 
-    public void run() throws Exception {
+    public void sendAnnonce() throws Exception {
+        SharedPreferences preferences=  getSharedPreferences("PREF",MODE_PRIVATE);
         titre = (EditText) findViewById(R.id.champsTitre);
         prix = (EditText) findViewById(R.id.champsPrix);
         ville = (EditText) findViewById(R.id.champsVille);
@@ -87,9 +96,9 @@ public class DepotAnnonce extends AppCompatActivity {
                 .add("titre", titre.getText().toString())
                 .add("description",description.getText().toString())
                 .add("prix", prix.getText().toString())
-                .add("pseudo","pseudo")
-                .add("emailContact","email")
-                .add("telContact","772345676")
+                .add("pseudo",preferences.getString("pseudo","inconnu"))
+                .add("emailContact",preferences.getString("email","inconnu"))
+                .add("telContact",preferences.getString("tel","inconnu"))
                 .add("ville",ville.getText().toString())
                 .add("cp",cp.getText().toString())
                 .build();
@@ -125,11 +134,14 @@ public class DepotAnnonce extends AppCompatActivity {
                                     @Override
                                     public void run() {
                                         parseAd(adBody);
+                                        Log.i("annonc",ad.getId());
+                                        idImage = ad.getId();
+                                        Log.i("annonc",idImage);
                                     }
                                 }
                         );
                         Log.i("ad",ad.getId());
-                        idImage = ad.getId();
+
 
                     }
                 } catch (Exception e)
@@ -154,53 +166,105 @@ public class DepotAnnonce extends AppCompatActivity {
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
             image.setImageBitmap(imageBitmap);
+            Log.i("createFile"," Changement de l'image dans le image view");
 
-            //storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-            //Log.i("image",storageDir.getAbsolutePath());
+        }
+        Log.i("createFile"," Avant la creation du fichier");
+        createImageFile();
+        Log.i("createFile","apres la creation du fichier");
+        try {
+            sendImage();
+            Log.i("dans le sendImage","");
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
-    /*public Uri getImageUri(Context inContext, Bitmap inImage) {
-        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
-        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
-        return Uri.parse(path);
+    String currentPhotoPath;
+
+    private File createImageFile()  {
+        // Create an image file name
+       try {
+           String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format( new Date());
+           String imageFileName = "png_" + timeStamp + "_";
+           File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+           File image = File.createTempFile(
+                   imageFileName,  /* prefix */
+                   ".png",         /* suffix */
+                   storageDir      /* directory */
+           );
+           // Save a file: path for use with ACTION_VIEW intents
+           currentPhotoPath = image.getAbsolutePath();
+           return image;
+       }catch (Exception e){
+
+       }
+
+        return null;
+
     }
-
-    public String getRealPathFromURI(Uri uri) {
-        Cursor cursor = getContentResolver().query(uri, null, null, null, null);
-        cursor.moveToFirst();
-        int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
-        return cursor.getString(idx);
-    }*/
-
-    /*private static final MediaType MEDIA_TYPE_PNG = MediaType.parse("image/png");
+    private static final MediaType MEDIA_TYPE_PNG = MediaType.parse("image/png");
 
     private final OkHttpClient clientImage = new OkHttpClient();
 
-    public void sendImage() throws Exception {
+    public void sendImage() {
         // Use the imgur image upload API as documented at https://api.imgur.com/endpoints/image
+        Log.i("testID", "id image " + idImage);
         RequestBody requestBody = new MultipartBody.Builder()
                 .setType(MultipartBody.FORM)
                 .addFormDataPart("apikey", "21912873")
                 .addFormDataPart("method", "addImage")
+                //.addFormDataPart("debug", "true")
                 .addFormDataPart("id", idImage)
                 .addFormDataPart("photo", "nom.png",
-                        RequestBody.create(MEDIA_TYPE_PNG, new File(storageDir.getAbsolutePath())))
+                        RequestBody.create(MEDIA_TYPE_PNG, currentPhotoPath))
                 .build();
 
-        Request request = new Request.Builder()
-                .header("Authorization", "Client-ID " + idImage)
+        final Request requestImg = new Request.Builder()
+                .header("Authorization", idImage)
                 .url(" https://ensweb.users.info.unicaen.fr/android-api/")
                 .post(requestBody)
                 .build();
 
-        try (Response response = client.newCall(request).execute()) {
+        clientImage.newCall(requestImg).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                // on recupere le corps de la reponce
+                try {
+                    // si la requete n'a pas reussi
+                    if (!response.isSuccessful()) {
+
+
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Ajout d'image reussi", Toast.LENGTH_SHORT).show();
+                    }
+
+                } catch (Exception e) {
+                    Log.i("YKJF", "Erreur lors de l'envoie de l'image");
+                }
+            }
+         });
+        /*try (Response response = clientImage.newCall(request).execute()) {
             if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
 
             System.out.println(response.body().string());
-        }
-    }*/
+        }*/
+        /*try {
+            Response response = clientImage.newCall(request).execute();
+           // if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
+
+            //System.out.println(response.body().string());
+
+        }catch (IOException e)
+        {
+            Log.i("YKJ","dans le send Image");
+        }*/
+    }
 }
 
 
