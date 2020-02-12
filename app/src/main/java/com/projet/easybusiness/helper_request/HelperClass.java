@@ -1,11 +1,42 @@
 package com.projet.easybusiness.helper_request;
 
+import android.util.Log;
+
 import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.Date;
 
 public class HelperClass {
     public static String formatDate(long date){
-        String dateFormat = DateFormat.getDateInstance().format(date);
-        return dateFormat;
+        String dateString = new SimpleDateFormat("MM/dd/yyyy").format( date);
+        return dateString;
+    }
+
+    public static Long dateToLong(Date date){
+        long longDate=0;
+        try {
+            DateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
+            date = (Date)formatter.parse(""+date+"");
+            longDate=date.getTime();
+            //System.out.println("Today is " +longDate );
+        }
+        catch (ParseException e){
+            System.out.println("Exception :"+e);
+        }
+        return longDate;
+    }
+
+    public static Date stringToDate(String s){
+        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+        Date d = null;
+        try {
+             d = sdf.parse(s);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return d;
     }
 
     public static String[] changeToPng(String[] img){
@@ -14,4 +45,30 @@ public class HelperClass {
         }
         return img;
     }
+
+    public static float stringToFloat(String str){
+        float f=0;
+        try
+        {
+             f = Float.valueOf(str.trim()).floatValue();
+        }
+        catch (NumberFormatException nfe)
+        {
+            System.err.println("NumberFormatException: " + nfe.getMessage());
+        }
+        return f;
+    }
+
+    public static Date fromLongToDate(Long valeur){
+        String dateAsString = String.valueOf(valeur);
+        Date date = null;
+        try{
+            date = new SimpleDateFormat("MM/dd/yyyy").parse(dateAsString);
+            Log.i("nnnn", "Dans le try");
+        }catch(Exception e){
+            e.printStackTrace();
+            Log.i("nnnn", "Dans le cctch");
+        }
+        return date ;
+          }
 }

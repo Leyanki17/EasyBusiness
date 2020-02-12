@@ -1,9 +1,12 @@
 package com.projet.easybusiness;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -25,7 +28,7 @@ import okhttp3.Response;
 import okhttp3.ResponseBody;
 
 public class SeeAd extends AppCompatActivity {
-
+    Annonce ad;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,9 +37,9 @@ public class SeeAd extends AppCompatActivity {
 
         Intent intent= getIntent();
 
-        Annonce ad= intent.getParcelableExtra("idAnnonce");
+        this.ad= intent.getParcelableExtra("idAnnonce");
         if(ad!=null){
-            rempliAnnonce(ad);
+            rempliAnnonce(this.ad);
         }else{
             makeHttpRequest("https://ensweb.users.info.unicaen.fr/android-api/mock-api/completeAdWithImages.json");
         }
@@ -55,7 +58,7 @@ public class SeeAd extends AppCompatActivity {
         Moshi moshi= new Moshi.Builder().add(new ApiAnnonceAdapter()).build();
         JsonAdapter<Annonce> jsonAdapter= moshi.adapter(Annonce.class);
         try{
-            Annonce ad= jsonAdapter.fromJson(body);
+            this.ad= jsonAdapter.fromJson(body);
             rempliAnnonce(ad);
         }catch(IOException e){
             Log.i("YKJ",e.getMessage());
@@ -115,7 +118,7 @@ public class SeeAd extends AppCompatActivity {
         TextView description= (TextView) findViewById(R.id.description);
         ImageView imageView= findViewById(R.id.image);
 
-        Log.i("YKJE", "erreur");
+
         Log.i ("YKJ", "l'image de "+ ad.getPseudo() +" est " +ad.getImages()[0]);
 
         Picasso.get().load(ad.getImages()[0]).error(R.drawable.laptop_hp).into(imageView);
@@ -127,7 +130,7 @@ public class SeeAd extends AppCompatActivity {
         adresse.setText(ad.getAdresse());
         description.setText(ad.getDescription());
         date.setText(" "+ HelperClass.formatDate(ad.getDate()));
-        Log.i("YKJE", "logo fin");
+        Log.i("YKJ", "logo fin");
     }
 
     public void callPers(View v){
@@ -140,4 +143,27 @@ public class SeeAd extends AppCompatActivity {
         startActivity(new Intent(Intent.ACTION_VIEW,Uri.parse("mailto: "+ mail.getText().toString())));
 
     }
+
+    public void saveAd(View v){
+        AnnonceDb annonceDb = new AnnonceDb(v.getContext());
+
+        Log.i("xxxx", "on va enregistrer");
+        try {
+           long res =  annonceDb.ajouter(this.ad);
+           Log.i("xxxx","Dans le try : " + res);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.i("xxxx","Erreur d'insertion : ");
+        }
+
+        Log.i("xxxx","Après insertion : ");
+
+    }
+
+   /*public void seeAdsSeved(View v){
+
+        AnnonceDb annonceDb = new AnnonceDb(v.getContext());
+       // Cursor resultat = annonceDb.listeAnnoncesSauvegardees();
+        //Log.i("ttt ", resultat.toString());
+    }*/
 }

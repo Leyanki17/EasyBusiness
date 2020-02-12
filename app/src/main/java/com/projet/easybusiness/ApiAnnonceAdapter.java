@@ -20,7 +20,7 @@ public class ApiAnnonceAdapter {
         reader.beginObject();
 
         while (reader.hasNext()){
-            String name = reader.nextName()
+            String name = reader.nextName();
 
             if(name.equals("success")){
                 boolean success= reader.nextBoolean();

@@ -7,7 +7,7 @@ public class Annonce implements Parcelable {
     private String id;
     private String titre;
     private String description;
-    private float prix;
+    private int prix;
     private String pseudo;
     private String emailContact;
     private String telContact;
@@ -16,7 +16,7 @@ public class Annonce implements Parcelable {
     private String[] images;
     private Long date;
 
-    public Annonce(String id, String titre, String description, float prix, String pseudo, String emailContact, String telContact, String ville, String cp, String[] image, Long date) {
+    public Annonce(String id, String titre, String description, int  prix, String pseudo, String emailContact, String telContact, String ville, String cp, String[] image, Long date) {
         this.id = id;
         this.titre = titre;
         this.description = description;
@@ -34,7 +34,7 @@ public class Annonce implements Parcelable {
         id = in.readString();
         titre = in.readString();
         description = in.readString();
-        prix = in.readFloat();
+        prix = in.readInt();
         pseudo = in.readString();
         emailContact = in.readString();
         telContact = in.readString();
@@ -74,11 +74,11 @@ public class Annonce implements Parcelable {
         this.description = description;
     }
 
-    public float getPrix() {
+    public int getPrix() {
         return prix;
     }
 
-    public void setPrix(float prix) {
+    public void setPrix(int prix) {
         this.prix = prix;
     }
 
@@ -162,6 +162,7 @@ public class Annonce implements Parcelable {
             dest.writeLong(date);
         }
     }
+
 
     @Override
     public int describeContents() {

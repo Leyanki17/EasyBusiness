@@ -15,7 +15,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".UserInformation"></activity>
+        <activity android:name=".listeDesAnnoncesSauvegardees"></activity>
+        <activity android:name=".UserInformation" />
         <activity
             android:name=".SeeAllAd"
             android:parentActivityName=".MainActivity" />

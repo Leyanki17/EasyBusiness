@@ -126,6 +126,4 @@ public class SeeAllAd extends AppCompatActivity {
             annonces.put(ad.getId(),ad);
         }
     }
-
-
 }
