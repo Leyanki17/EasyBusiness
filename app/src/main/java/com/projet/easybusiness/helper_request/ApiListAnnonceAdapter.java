@@ -19,7 +19,6 @@ public class ApiListAnnonceAdapter {
     public  ApiListAnnonceAdapter(){
         annonces=new ArrayList<>();
     }*/
-
     @ToJson
     public String toJson(ResponseAnnonces response) {
         return "";

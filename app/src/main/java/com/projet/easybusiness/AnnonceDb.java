@@ -34,7 +34,7 @@ public class AnnonceDb {
         values.put( AnnoceContract.FeedEntry.COLUMN_NAME_TELEPHONE , annonce.getTelContact());
         values.put( AnnoceContract.FeedEntry.COLUMN_NAME_VILLE , annonce.getVille());
         values.put( AnnoceContract.FeedEntry.COLUMN_NAME_CODE_POSTAL , annonce.getCp());
-        values.put(AnnoceContract.FeedEntry.COLUMN_NAME_IMAGES,);
+        //values.put(AnnoceContract.FeedEntry.COLUMN_NAME_IMAGES,);
       values.put(AnnoceContract.FeedEntry.COLUMN_NAME_DATE,   annonce.getDate());
         Log.i("nnnn", "Date : "+  HelperClass.formatDate(annonce.getDate())/*HelperClass.stringToDate(HelperClass.formatDate(annonce.getDate()))*/ + " "+ HelperClass.stringToDate(HelperClass.formatDate(annonce.getDate())).getClass().getName());
         long res = db.insert(AnnoceContract.FeedEntry.TABLE_NAME, null, values);

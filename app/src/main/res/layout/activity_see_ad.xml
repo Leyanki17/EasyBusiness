@@ -66,8 +66,9 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+
     <ImageView
-        android:id="@+id/image"
+        android:id="@+id/BoutonImage"
         android:layout_width="348dp"
         android:layout_height="145dp"
         android:layout_marginTop="16dp"
@@ -81,13 +82,15 @@
         android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="30sp"
-        android:layout_marginTop="32sp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="8dp"
         android:layout_marginRight="30sp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/image">
+        app:layout_constraintTop_toBottomOf="@+id/slideNumber">
+
+
 
         <TextView
             android:id="@+id/prix"
@@ -188,6 +191,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/description" />
 
+
     <Button
         android:id="@+id/btSaveAd"
         android:layout_width="341dp"
@@ -204,19 +208,27 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tel" />
 
-    <Button
-        android:id="@+id/tvSeeAdsSaved"
-        android:layout_width="344dp"
-        android:layout_height="46dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginEnd="40dp"
-        android:layout_marginBottom="50dp"
-        android:onClick="seeAdsSeved"
-        android:text="ANNONCES SAVEGARDEES"
-        app:layout_constraintBottom_toTopOf="@+id/btSaveAd4"
+
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/slide"
+        android:layout_width="332dp"
+        android:layout_height="110dp"
+        android:layout_marginTop="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tel" />
+        app:layout_constraintTop_toBottomOf="@+id/titre" />
+
+    <TextView
+        android:id="@+id/slideNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="TextView"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/slide" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

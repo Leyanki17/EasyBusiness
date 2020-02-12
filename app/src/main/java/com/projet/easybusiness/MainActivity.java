@@ -7,6 +7,7 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toolbar;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -14,6 +15,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
     }
 
     public void next(View view) {
@@ -31,10 +33,15 @@ public class MainActivity extends AppCompatActivity {
         startActivity(view);
     }
 
-    public void listeAdSaved(View v){
+    public void listeAdSaved(View v) {
         AnnonceDb annonceDb = new AnnonceDb(v.getContext());
-     Cursor resultat = annonceDb.listeAnnoncesSauvegardees();
-        Log.i("ttt ", "Liste des annonces sauvegardées: "+resultat.toString());
+        Cursor resultat = annonceDb.listeAnnoncesSauvegardees();
+        Log.i("ttt ", "Liste des annonces sauvegardées: " + resultat.toString());
+    }
+    public void depotAnnonce(View v){
+        Intent view =  new Intent(this,DepotAnnonce.class);
+        startActivity(view);
+
     }
 
 }

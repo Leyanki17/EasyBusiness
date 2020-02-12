@@ -29,6 +29,17 @@ public class Annonce implements Parcelable {
         this.images = image;
         this.date = date;
     }
+    public Annonce(String titre, String description, float prix, String pseudo, String emailContact, String telContact, String ville) {
+
+        this.titre = titre;
+        this.description = description;
+        this.prix = prix;
+        this.pseudo = pseudo;
+        this.emailContact = emailContact;
+        this.telContact = telContact;
+        this.ville = ville;
+        this.cp = cp;
+    }
 
     protected Annonce(Parcel in) {
         id = in.readString();
