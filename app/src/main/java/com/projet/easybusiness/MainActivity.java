@@ -34,14 +34,22 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void listeAdSaved(View v) {
-        AnnonceDb annonceDb = new AnnonceDb(v.getContext());
+        /*AnnonceDb annonceDb = new AnnonceDb(v.getContext());
         Cursor resultat = annonceDb.listeAnnoncesSauvegardees();
         Log.i("ttt ", "Liste des annonces sauvegardées: " + resultat.toString());
+        */
+        Intent view = new Intent(this,ListeDesAnnoncesSauvegargees.class);
+        startActivity(view);
     }
+
     public void depotAnnonce(View v){
         Intent view =  new Intent(this,DepotAnnonce.class);
         startActivity(view);
 
     }
 
+    public void seeMyAds(View v) {
+        Intent view =  new Intent(this,SeeAllMyAds.class);
+        startActivity(view);
+    }
 }

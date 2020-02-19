@@ -30,8 +30,8 @@ import okhttp3.Response;
 import okhttp3.ResponseBody;
 
 public class SeeAllAd extends AppCompatActivity {
-     private Map<String,Annonce> annonces=new HashMap<>();
-    private ArrayList<Annonce> listAnnonce;
+     protected Map<String,Annonce> annonces=new HashMap<>();
+    protected ArrayList<Annonce> listAnnonce;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,7 +43,7 @@ public class SeeAllAd extends AppCompatActivity {
         // on fait un adaptateur qui va  le lien entre les objets et les vues
         try {
            // makeHttpRequest("https://ensweb.users.info.unicaen.fr/android-api/mock-api/liste.json");
-            makeHttpRequest("https://ensweb.users.info.unicaen.fr/android-api/?apikey=21912873&method=listAll");
+            makeHttpRequest("https://ensweb.users.info.unicaen.fr/android-api/?apikey=21913373&method=listAll");
 
         } catch (Exception e) {
             e.printStackTrace();

@@ -7,54 +7,6 @@
     android:layout_height="match_parent"
     tools:context=".SeeAd">
 
-    <Button
-        android:id="@+id/btSaveAd4"
-        android:layout_width="341dp"
-        android:layout_height="43dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="60dp"
-        android:layout_marginEnd="30dp"
-        android:layout_marginBottom="50dp"
-        android:onClick="saveAd"
-        android:text="Save"
-        android:textSize="12sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tel" />
-
-    <Button
-        android:id="@+id/btSaveAd3"
-        android:layout_width="341dp"
-        android:layout_height="43dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="60dp"
-        android:layout_marginEnd="30dp"
-        android:layout_marginBottom="50dp"
-        android:onClick="saveAd"
-        android:text="Save"
-        android:textSize="12sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tel" />
-
-    <Button
-        android:id="@+id/btSaveAd2"
-        android:layout_width="341dp"
-        android:layout_height="43dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="60dp"
-        android:layout_marginEnd="30dp"
-        android:layout_marginBottom="50dp"
-        android:onClick="saveAd"
-        android:text="Save"
-        android:textSize="12sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tel" />
-
     <TextView
         android:id="@+id/titre"
         android:layout_width="wrap_content"
@@ -101,7 +53,7 @@
     <TextView
         android:id="@+id/description"
         android:layout_width="253dp"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         android:layout_marginStart="32dp"
         android:layout_marginTop="12dp"
         android:layout_marginEnd="32dp"
@@ -138,11 +90,10 @@
         android:id="@+id/email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
-        android:text="vendeur@gmail.com"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="36dp"
         android:onClick="sendEmail"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.12"
+        android:text="vendeur@gmail.com"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/contateIntro" />
 
@@ -150,12 +101,10 @@
         android:id="@+id/tel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
         android:layout_marginBottom="16dp"
         android:text="06888888888"
-        android:onClick="callPers"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.105"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/email"
         app:layout_constraintVertical_bias="0.135" />
@@ -181,24 +130,6 @@
         app:layout_constraintTop_toBottomOf="@+id/description" />
 
 
-    <Button
-        android:id="@+id/btSaveAd"
-        android:layout_width="341dp"
-        android:layout_height="43dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="60dp"
-        android:layout_marginEnd="30dp"
-        android:layout_marginBottom="50dp"
-        android:onClick="saveAd"
-        android:text="Save"
-        android:textSize="12sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tel" />
-
-
-
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/slide"
         android:layout_width="332dp"
@@ -210,14 +141,81 @@
 
     <TextView
         android:id="@+id/slideNumber"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="47dp"
+        android:layout_height="14dp"
         android:layout_marginTop="8dp"
         android:text="TextView"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/slide" />
+
+    <ImageView
+        android:id="@+id/SendEmail"
+        android:layout_width="32dp"
+        android:layout_height="29dp"
+        android:layout_marginBottom="28dp"
+        android:onClick="sendEmail"
+        app:layout_constraintBottom_toTopOf="@+id/CallTel"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.821"
+        app:layout_constraintStart_toEndOf="@+id/email"
+        app:layout_constraintTop_toBottomOf="@+id/proprietaire"
+        app:layout_constraintVertical_bias="0.931"
+        app:srcCompat="@drawable/send_mail" />
+
+    <ImageView
+        android:id="@+id/CallTel"
+        android:layout_width="29dp"
+        android:layout_height="29dp"
+        android:layout_marginBottom="44dp"
+        android:onClick="callPers"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.834"
+        app:layout_constraintStart_toEndOf="@+id/tel"
+        app:srcCompat="@drawable/call" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="390dp"
+        android:layout_height="62dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tel">
+
+        <Button
+            android:id="@+id/btnDel"
+            android:layout_width="153dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:layout_weight="1"
+            android:onClick="delAd"
+            android:text="Delete"
+            android:textSize="12sp" />
+
+        <Button
+            android:id="@+id/btnEdit"
+            android:layout_width="110dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:onClick="editAd"
+            android:text="Edit"
+            android:textSize="12sp" />
+
+        <Button
+            android:id="@+id/btSave"
+            android:layout_width="157dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:layout_weight="1"
+            android:onClick="saveAd"
+            android:text="Save"
+            android:textSize="12sp" />
+    </LinearLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

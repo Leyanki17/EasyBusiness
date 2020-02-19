@@ -5,9 +5,9 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
-import android.view.View;
 
 import com.projet.easybusiness.helper_request.HelperClass;
+import com.projet.easybusiness.recycler_view_helper.RecyclerViewCursorAdapter;
 
 
 public class AnnonceDb {
@@ -24,38 +24,62 @@ public class AnnonceDb {
         SQLiteDatabase db = annonceDbOpener.getWritableDatabase();
         ContentValues values = new ContentValues();
         //int price = Integer.parseInt(String.valueOf(AnnoceContract.FeedEntry.COLUMN_NAME_PRIX));
-        values.put( AnnoceContract.FeedEntry.COLUMN_NAME_ID , annonce.getId());
-        values.put( AnnoceContract.FeedEntry.COLUMN_NAME_TITRE , annonce.getTitre());
-        values.put( AnnoceContract.FeedEntry.COLUMN_NAME_DESCRIPTION , annonce.getDescription());
-       values.put( AnnoceContract.FeedEntry.COLUMN_NAME_PRIX,  annonce.getPrix());
+        values.put( AnnonceContract.FeedEntry.COLUMN_NAME_ID , annonce.getId());
+        values.put( AnnonceContract.FeedEntry.COLUMN_NAME_TITRE , annonce.getTitre());
+        values.put( AnnonceContract.FeedEntry.COLUMN_NAME_DESCRIPTION , annonce.getDescription());
+       values.put( AnnonceContract.FeedEntry.COLUMN_NAME_PRIX,  annonce.getPrix());
         Log.i("nnnn", "Prix : "+(annonce.getPrix()));
-        values.put( AnnoceContract.FeedEntry.COLUMN_NAME_PSEUDO , annonce.getPseudo());
-        values.put( AnnoceContract.FeedEntry.COLUMN_NAME_EMAIL , annonce.getEmailContact());
-        values.put( AnnoceContract.FeedEntry.COLUMN_NAME_TELEPHONE , annonce.getTelContact());
-        values.put( AnnoceContract.FeedEntry.COLUMN_NAME_VILLE , annonce.getVille());
-        values.put( AnnoceContract.FeedEntry.COLUMN_NAME_CODE_POSTAL , annonce.getCp());
-        values.put( AnnoceContract.FeedEntry.COLUMN_NAME_IMAGES, annonce.getImages()[0]);
-        values.put(AnnoceContract.FeedEntry.COLUMN_NAME_DATE,   annonce.getDate());
+        values.put( AnnonceContract.FeedEntry.COLUMN_NAME_PSEUDO , annonce.getPseudo());
+        values.put( AnnonceContract.FeedEntry.COLUMN_NAME_EMAIL , annonce.getEmailContact());
+        values.put( AnnonceContract.FeedEntry.COLUMN_NAME_TELEPHONE , annonce.getTelContact());
+        values.put( AnnonceContract.FeedEntry.COLUMN_NAME_VILLE , annonce.getVille());
+        values.put( AnnonceContract.FeedEntry.COLUMN_NAME_CODE_POSTAL , annonce.getCp());
+        values.put( AnnonceContract.FeedEntry.COLUMN_NAME_IMAGES, annonce.getImages()[0]);
+        values.put(AnnonceContract.FeedEntry.COLUMN_NAME_DATE,   annonce.getDate());
         Log.i("nnnn", "Date : "+  HelperClass.formatDate(annonce.getDate())/*HelperClass.stringToDate(HelperClass.formatDate(annonce.getDate()))*/ + " "+ HelperClass.stringToDate(HelperClass.formatDate(annonce.getDate())).getClass().getName());
-        long res = db.insert(AnnoceContract.FeedEntry.TABLE_NAME, null, values);
-
+        long res = db.insert(AnnonceContract.FeedEntry.TABLE_NAME, null, values);
 
         return res;
     }
 
+    public boolean deleteAnnonce(String id){
+        SQLiteDatabase database = this.annonceDbOpener.getWritableDatabase();
+        String[] select = {id};
+        int res=database.delete(
+                AnnonceContract.FeedEntry.TABLE_NAME,
+                AnnonceContract.FeedEntry.COLUMN_NAME_ID+ "= ? ",
+                select
+        );
+        return (res > 0 ) ? true : false;
+    }
+    public boolean exist(String id){
+            String[] projection = {
+                    AnnonceContract.FeedEntry.COLUMN_NAME_ID,
+            };
+            //annonceDbOpener.close();
+            SQLiteDatabase db = annonceDbOpener.getReadableDatabase();
+
+            Cursor cursor =   db.query(AnnonceContract.FeedEntry.TABLE_NAME, projection,null,null,null,null,null);
+        Log.i("tttt", "mes"+ cursor);
+            return (cursor.getCount() > 0)? true : false;
+    }
+
+
+
     public Cursor listeAnnoncesSauvegardees(){
+
         String[] projection = {
-                AnnoceContract.FeedEntry.COLUMN_NAME_ID,
-                AnnoceContract.FeedEntry.COLUMN_NAME_TITRE,
-                AnnoceContract.FeedEntry.COLUMN_NAME_DESCRIPTION,
-                //String.valueOf(AnnoceContract.FeedEntry.COLUMN_NAME_PRIX),
-                AnnoceContract.FeedEntry.COLUMN_NAME_PSEUDO,
-                AnnoceContract.FeedEntry.COLUMN_NAME_EMAIL,
-                AnnoceContract.FeedEntry.COLUMN_NAME_TELEPHONE,
-                AnnoceContract.FeedEntry.COLUMN_NAME_VILLE,
-                AnnoceContract.FeedEntry.COLUMN_NAME_CODE_POSTAL
-                //String.valueOf(AnnoceContract.FeedEntry.COLUMN_NAME_IMAGES),
-               // AnnoceContract.FeedEntry.COLUMN_NAME_DATE
+                AnnonceContract.FeedEntry.COLUMN_NAME_ID,
+                AnnonceContract.FeedEntry.COLUMN_NAME_TITRE,
+                AnnonceContract.FeedEntry.COLUMN_NAME_DESCRIPTION,
+                AnnonceContract.FeedEntry.COLUMN_NAME_PRIX,
+                AnnonceContract.FeedEntry.COLUMN_NAME_PSEUDO,
+                AnnonceContract.FeedEntry.COLUMN_NAME_EMAIL,
+                AnnonceContract.FeedEntry.COLUMN_NAME_TELEPHONE,
+                AnnonceContract.FeedEntry.COLUMN_NAME_VILLE,
+                AnnonceContract.FeedEntry.COLUMN_NAME_CODE_POSTAL,
+                AnnonceContract.FeedEntry.COLUMN_NAME_IMAGES,
+                AnnonceContract.FeedEntry.COLUMN_NAME_DATE
         };
 
         Log.i("tttt", "après projection");
@@ -67,12 +91,12 @@ public class AnnonceDb {
        // SQLiteDatabase db = helper.getReadableDatabase();
         Log.i("tttt", "après ouverture de la requete");
 
-        Cursor cursor =   db.query(AnnoceContract.FeedEntry.TABLE_NAME, projection,null,null,null,null,null);
+        Cursor cursor =   db.query(AnnonceContract.FeedEntry.TABLE_NAME, projection,null,null,null,null,null);
         Log.i("tttt", "après l'execution de la requete");
 
-       while(cursor != null){
+    /*   while(cursor != null){
            cursor.moveToNext();
-       }
+       }*/
         return cursor;
     }
 
