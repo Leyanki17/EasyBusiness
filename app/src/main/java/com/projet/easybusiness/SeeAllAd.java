@@ -1,12 +1,15 @@
 package com.projet.easybusiness;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
@@ -36,23 +39,46 @@ public class SeeAllAd extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_see_all_ad);
+        Toolbar toolbarItem = findViewById(R.id.tool_br);
+        toolbarItem.setTitle("");
+        setSupportActionBar(toolbarItem);
+
 
         // on recupere la recycle view
-
-
-        // on fait un adaptateur qui va  le lien entre les objets et les vues
+        // on fait un adaptateur qui va lier les objets et les vues
         try {
             makeHttpRequest("https://ensweb.users.info.unicaen.fr/android-api/mock-api/liste.json");
 
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-
         // chargement des élément de la vue avec un adapteur
-
     }
+    /***********MENU************/
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        Intent intent;
+        if(id == R.id.ic_profil){
+            intent = new Intent(this,UserInformation.class);
+            startActivity(intent);
+        }else if(id == R.id.ic_add){
+            //intent = new Intent(this,Add_annonce.class); //ajout annonce
+            //startActivity(intent);
+        }else{
+            //envoyer à la liste des annonces
+            intent = new Intent(this,SeeAllAd.class);
+            startActivity(intent);
+        }
 
+        return super.onOptionsItemSelected(item);
+    }
+    /********************************/
     public void makeHttpRequest(String url){
         OkHttpClient client = new OkHttpClient();
         Request req=  new Request.Builder().url(url).build();

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".MainActivity"
+    >
+    <item
+    android:id="@+id/ic_profil"
+    android:title="@string/profile"
+    android:icon="@drawable/ic_profile"
+    android:orderInCategory="3"
+    app:showAsAction="always"
+    />
+
+    <item
+    android:id="@+id/ic_add"
+    android:title="annonce"
+    android:icon="@drawable/ic_annonce"
+    android:orderInCategory="2"
+    app:showAsAction="always"
+    />
+
+    <!--<item
+        android:id="@+id/ic_liste"
+        android:title="stor"
+        android:icon="@drawable/ic_list_items"
+        android:orderInCategory="2"
+        app:showAsAction="always"
+        />-->
+    <item
+        android:id="@+id/ic_cam"
+        android:icon="@drawable/ic_cam"
+        android:orderInCategory="1"
+        android:title="cam"
+        app:showAsAction="always" />
+
+
+</menu>

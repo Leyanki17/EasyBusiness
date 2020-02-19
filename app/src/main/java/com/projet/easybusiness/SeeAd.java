@@ -1,11 +1,14 @@
 package com.projet.easybusiness;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -33,8 +36,12 @@ public class SeeAd extends AppCompatActivity {
        // makeHttpRequest("https://ensweb.users.info.unicaen.fr/android-api/mock-api/liste.json");
 
         Intent intent= getIntent();
-
         Annonce ad= intent.getParcelableExtra("idAnnonce");
+        //Intent inten = Intent(this,this.getParent().getLocalClassName().class);
+
+        Toolbar toolbarItem = findViewById(R.id.tool_br);
+        toolbarItem.setTitle("return to patrent");
+        setSupportActionBar(toolbarItem);
         if(ad!=null){
             rempliAnnonce(ad);
         }else{
@@ -43,6 +50,31 @@ public class SeeAd extends AppCompatActivity {
 
     }
 
+    /***********MENU************/
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        Intent intent;
+        if(id == R.id.ic_profil){
+            intent = new Intent(this,UserInformation.class);
+            startActivity(intent);
+        }else if(id == R.id.ic_add){
+            //intent = new Intent(this,Add_annonce.class); //ajout annonce
+            //startActivity(intent);
+        }else{
+            //envoyer à la liste des annonces
+            intent = new Intent(this,SeeAllAd.class);
+            startActivity(intent);
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+    /********************************/
     public void okhttp(View View){
         makeHttpRequest("https://ensweb.users.info.unicaen.fr/android-api/mock-api/completeAdWithImages.json");
     }
