@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".DepotAnnonce">
+
+    <Button
+        android:id="@+id/BoutonImage"
+        android:layout_width="152dp"
+        android:layout_height="39dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginBottom="32dp"
+        android:onClick="photo"
+        android:text="prendre image"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.085"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/entete"
+        android:layout_width="148dp"
+        android:layout_height="37dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="36dp"
+        android:text="Deposer Annonce"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/champsTitre"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="92dp"
+        android:layout_marginEnd="28dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/entete" />
+
+    <TextView
+        android:id="@+id/titre"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="44dp"
+        android:layout_marginBottom="12dp"
+        android:text="titre"
+        app:layout_constraintBottom_toBottomOf="@+id/champsTitre"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/prix"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="26dp"
+        android:text="PRIX"
+        app:layout_constraintBottom_toBottomOf="@+id/champsPrix"
+        app:layout_constraintStart_toStartOf="@+id/titre" />
+
+    <EditText
+        android:id="@+id/champsPrix"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        app:layout_constraintStart_toStartOf="@+id/champsTitre"
+        app:layout_constraintTop_toBottomOf="@+id/champsTitre" />
+
+    <TextView
+        android:id="@+id/ville"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="VILLE"
+        app:layout_constraintBottom_toBottomOf="@+id/champsVille"
+        app:layout_constraintStart_toStartOf="@+id/prix" />
+
+    <EditText
+        android:id="@+id/champsVille"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        app:layout_constraintStart_toStartOf="@+id/champsPrix"
+        app:layout_constraintTop_toBottomOf="@+id/champsPrix" />
+
+    <TextView
+        android:id="@+id/cp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="13dp"
+        android:text="CODE POSTALE"
+        app:layout_constraintBottom_toBottomOf="@+id/champsCp"
+        app:layout_constraintStart_toStartOf="@+id/ville" />
+
+    <EditText
+        android:id="@+id/champsCp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        app:layout_constraintStart_toStartOf="@+id/champsVille"
+        app:layout_constraintTop_toBottomOf="@+id/champsVille" />
+
+    <TextView
+        android:id="@+id/description"
+        android:layout_width="205dp"
+        android:layout_height="33dp"
+        android:layout_marginTop="24dp"
+        android:text="DESCRIPTION"
+        app:layout_constraintStart_toStartOf="@+id/cp"
+        app:layout_constraintTop_toBottomOf="@+id/champsCp" />
+
+    <EditText
+        android:id="@+id/champsDescription"
+        android:layout_width="330dp"
+        android:layout_height="70dp"
+        android:layout_marginStart="16dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.43"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/description" />
+
+    <Button
+        android:id="@+id/valider"
+        android:layout_width="188dp"
+        android:layout_height="54dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="88dp"
+        android:onClick="onClick"
+        android:text="valider"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/champsDescription"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <ImageView
+        android:id="@+id/imageview"
+        android:layout_width="127dp"
+        android:layout_height="112dp"
+        android:layout_marginEnd="28dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.521"
+        app:layout_constraintStart_toEndOf="@+id/entete"
+        app:layout_constraintTop_toTopOf="@+id/entete"
+        tools:srcCompat="@tools:sample/avatars" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

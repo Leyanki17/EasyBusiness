@@ -5,6 +5,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.content.Context;
 import android.content.Intent;
+
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -13,6 +14,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+
+import android.database.Cursor;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+
 
 
 public class MainActivity extends AppCompatActivity {
@@ -81,7 +89,25 @@ public class MainActivity extends AppCompatActivity {
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
             imageView.setImageBitmap(imageBitmap);
-
         }
+    }
+    public void listeAdSaved(View v) {
+        /*AnnonceDb annonceDb = new AnnonceDb(v.getContext());
+        Cursor resultat = annonceDb.listeAnnoncesSauvegardees();
+        Log.i("ttt ", "Liste des annonces sauvegardées: " + resultat.toString());
+        */
+        Intent view = new Intent(this,ListeDesAnnoncesSauvegargees.class);
+        startActivity(view);
+    }
+
+    public void depotAnnonce(View v){
+        Intent view =  new Intent(this,DepotAnnonce.class);
+        startActivity(view);
+
+    }
+
+    public void seeMyAds(View v) {
+        Intent view =  new Intent(this,SeeAllMyAds.class);
+        startActivity(view);
     }
 }

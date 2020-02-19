@@ -33,8 +33,8 @@ import okhttp3.Response;
 import okhttp3.ResponseBody;
 
 public class SeeAllAd extends AppCompatActivity {
-     private Map<String,Annonce> annonces=new HashMap<>();
-    private ArrayList<Annonce> listAnnonce;
+     protected Map<String,Annonce> annonces=new HashMap<>();
+    protected ArrayList<Annonce> listAnnonce;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,7 +47,8 @@ public class SeeAllAd extends AppCompatActivity {
         // on recupere la recycle view
         // on fait un adaptateur qui va lier les objets et les vues
         try {
-            makeHttpRequest("https://ensweb.users.info.unicaen.fr/android-api/mock-api/liste.json");
+           // makeHttpRequest("https://ensweb.users.info.unicaen.fr/android-api/mock-api/liste.json");
+            makeHttpRequest("https://ensweb.users.info.unicaen.fr/android-api/?apikey=21913373&method=listAll");
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -139,8 +140,8 @@ public class SeeAllAd extends AppCompatActivity {
         titreClick=clicked.getText().toString();
 
         Intent next= new Intent(this,SeeAd.class);
+        Log.i("titret",titreClick);
         next.putExtra("idAnnonce", annonces.get(titreClick));
-
         startActivity(next);
     }
 
@@ -150,8 +151,7 @@ public class SeeAllAd extends AppCompatActivity {
             Annonce ad= this.listAnnonce.get(i);
             ad.setImage(HelperClass.changeToPng(ad.getImages()));
             annonces.put(ad.getId(),ad);
+            Log.i("roooo",ad.getId());
         }
     }
-
-
 }
