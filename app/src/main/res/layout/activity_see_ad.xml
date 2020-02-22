@@ -7,6 +7,8 @@
     android:layout_height="match_parent"
     tools:context=".SeeAd">
 
+
+
     <!--<ImageView
         android:id="@+id/imageView3"
         android:layout_width="45dp"
@@ -26,6 +28,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
 
     <TextView
         android:id="@+id/titre"
@@ -153,7 +156,6 @@
         android:layout_width="wrap_content"
 
         android:layout_height="20dp"
-        android:layout_marginBottom="16dp"
         android:drawableLeft="@drawable/ic_phone"
         android:onClick="callPers"
         android:text="06888888888"
@@ -180,7 +182,7 @@
         android:layout_marginStart="32dp"
         android:text="Publier le "
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/date" />
+        app:layout_constraintTop_toBottomOf="@+id/description" />
 
 
     <!--<ImageView
@@ -208,6 +210,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/pubIntro" />
 
+    <!--<ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="94dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/slide"
+        app:layout_constraintTop_toBottomOf="@+id/tool_br"
+        tools:srcCompat="@drawable/ic_fleche_droite" />-->
+
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/slide"
         android:layout_width="332dp"
@@ -227,6 +240,28 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/slide" />
+
+
+    <Button
+        android:id="@+id/supprimer"
+        android:layout_width="141dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="44dp"
+        android:onClick="supprimer"
+        android:text="supprimer"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tel" />
+
+    <Button
+        android:id="@+id/modifier"
+        android:layout_width="129dp"
+        android:layout_height="47dp"
+        android:layout_marginEnd="64dp"
+        android:onClick="modifierAnnonce"
+        android:text="modifier"
+        app:layout_constraintBottom_toBottomOf="@+id/supprimer"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <ImageView
         android:id="@+id/SendEmail"
@@ -295,6 +330,7 @@
             android:text="Save"
             android:textSize="12sp" />
     </LinearLayout>
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

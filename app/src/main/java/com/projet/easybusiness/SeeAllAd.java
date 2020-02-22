@@ -47,8 +47,13 @@ public class SeeAllAd extends AppCompatActivity {
         // on recupere la recycle view
         // on fait un adaptateur qui va lier les objets et les vues
         try {
+
+           //makeHttpRequest("https://ensweb.users.info.unicaen.fr/android-api/mock-api/liste.json");
+            makeHttpRequest("https://ensweb.users.info.unicaen.fr/android-api/?apikey=21912873&method=listAll");
+
            // makeHttpRequest("https://ensweb.users.info.unicaen.fr/android-api/mock-api/liste.json");
-            makeHttpRequest("https://ensweb.users.info.unicaen.fr/android-api/?apikey=21913373&method=listAll");
+    //        makeHttpRequest("https://ensweb.users.info.unicaen.fr/android-api/?apikey=21913373&method=listAll");
+
 
         } catch (Exception e) {
             e.printStackTrace();
