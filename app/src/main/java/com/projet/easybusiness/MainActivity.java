@@ -32,8 +32,8 @@ public class MainActivity extends AppCompatActivity {
         Toolbar myToolbar = findViewById(R.id.tool_bar);
         setSupportActionBar(myToolbar);
 
-        Intent view =  new Intent(this,SeeAllAd.class);
-        startActivity(view);
+        //Intent view =  new Intent(this,SeeAllAd.class);
+        //startActivity(view);
 
     }
     /***********MENU************/

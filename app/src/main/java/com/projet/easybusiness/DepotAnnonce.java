@@ -22,9 +22,12 @@ import com.google.android.material.snackbar.Snackbar;
 import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Moshi;
 
+import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.util.Date;
 import java.text.SimpleDateFormat;
 
@@ -157,8 +160,7 @@ public class DepotAnnonce extends AppCompatActivity {
      * Va permettre l'upload de l'image vers une annonce
      * @param v
      */
-    public void photo(View v)
-    {
+    public void photo(View v){
         Intent photoIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (photoIntent.resolveActivity(getPackageManager()) != null) {
             startActivityForResult(photoIntent, REQUEST_IMAGE_CAPTURE);
@@ -167,19 +169,22 @@ public class DepotAnnonce extends AppCompatActivity {
     File storageDir;
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Bitmap imageBitmap = null;
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             ImageView image = (ImageView) findViewById(R.id.imageview);
             Bundle extras = data.getExtras();
-            Bitmap imageBitmap = (Bitmap) extras.get("data");
+           imageBitmap = (Bitmap) extras.get("data");
+      //      image.setImageBitmap();
+            Log.i("createFile"," Changement de l'image dans le image view");
             image.setImageBitmap(imageBitmap);
             Log.i("createFile"," Changement de l'image dans le image view");
 
         }
         Log.i("createFile"," Avant la creation du fichier");
-        this.imageAnnonce= createImageFile();
-        Log.i("createFile","apres la creation du fichier"+imageAnnonce);
+        this.imageAnnonce= createImageFile(imageBitmap);
+        Log.i("createFile","apres la creation du fichier"+imageAnnonce.toString());
         try {
-            sendImage();
+            sendImage(imageBitmap);
             Log.i("dans le sendImage","");
         } catch (Exception e) {
             e.printStackTrace();
@@ -188,7 +193,7 @@ public class DepotAnnonce extends AppCompatActivity {
 
     String currentPhotoPath;
 
-    private File createImageFile(){
+    private File createImageFile(Bitmap img){
         // Create an image file name
        try {
            String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format( new Date());
@@ -197,8 +202,12 @@ public class DepotAnnonce extends AppCompatActivity {
            File image = File.createTempFile(
                    imageFileName,  /* prefix */
                    ".png",         /* suffix */
-                   storageDir      /* directory */
+                   storageDir   /* directory */
            );
+
+           OutputStream os = new BufferedOutputStream(new FileOutputStream(image));
+           img.compress(Bitmap.CompressFormat.JPEG, 100, os);
+           os.close();
            // Save a file: path for use with ACTION_VIEW intents
            currentPhotoPath = image.getAbsolutePath();
            return image;
@@ -208,11 +217,11 @@ public class DepotAnnonce extends AppCompatActivity {
         return null;
 
     }
-    private static final MediaType MEDIA_TYPE_PNG = MediaType.parse("");
+    private static final MediaType MEDIA_TYPE_PNG = MediaType.parse("image/png");
 
     private final OkHttpClient clientImage = new OkHttpClient();
 
-    public void sendImage() throws Exception {
+    public void sendImage(Bitmap img) throws Exception {
         // Use the imgur image upload API as documented at https://api.imgur.com/endpoints/image
         Log.i("testID", "id image " + idImage);
         RequestBody requestBody = new MultipartBody.Builder()
@@ -220,37 +229,39 @@ public class DepotAnnonce extends AppCompatActivity {
                 .addFormDataPart("apikey", "21913373")
                 .addFormDataPart("method", "addImage")
                 .addFormDataPart("id", idImage)
-                .addFormDataPart("photo", "nom.png",
+                .addFormDataPart("photo", idImage+".png", RequestBody.create(MEDIA_TYPE_PNG, createImageFile(img)))
 
-         //               RequestBody.create(MEDIA_TYPE_PNG, createImageFile()))
-
-                        RequestBody.create(MEDIA_TYPE_PNG,this.imageAnnonce))
+                       // RequestBody.create(MEDIA_TYPE_PNG,))
 
                 .build();
 
         final Request requestImg = new Request.Builder()
-                .header("Authorization", idImage)
                 .url(" https://ensweb.users.info.unicaen.fr/android-api/")
                 .post(requestBody)
                 .build();
-
+        Log.i("testID", "1 " );
         clientImage.newCall(requestImg).enqueue(new Callback() {
+
             @Override
             public void onFailure(Call call, IOException e) {
+                Log.i("testID", "2 " );
             }
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
+                Log.i("testID", "3 " );
                 // on recupere le corps de la reponce
                 try {
+                    Log.i("testID", "4 " );
                     // si la requete n'a pas reussi
                     if (!response.isSuccessful()) {
+                        Log.i("testID", "5 " );
                     } else {
-                        Toast.makeText(getApplicationContext(), "Ajout d'image reussi", Toast.LENGTH_SHORT).show();
+                        Log.i("testID", "tout est ok");
                     }
 
                 } catch (Exception e) {
-                    Log.i("YKJF", "Erreur lors de l'envoie de l'image");
+                    Log.i("YKJF", "Erreur lors de l'envoie de l'image "+ e.getMessage());
                 }
             }
          });
