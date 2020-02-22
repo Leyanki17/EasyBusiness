@@ -2,12 +2,10 @@ package com.projet.easybusiness;
 
 import android.provider.BaseColumns;
 
-import java.util.Date;
-
-public final class AnnoceContract {
+public final class AnnonceContract {
     // To prevent someone from accidentally instantiating the contract class,
     // make the constructor private.
-    private AnnoceContract() {}
+    private AnnonceContract() {}
 
     /* Inner class that defines the table contents */
     public static class FeedEntry implements BaseColumns {
@@ -24,7 +22,7 @@ public final class AnnoceContract {
         public static final String COLUMN_NAME_IMAGES = "images";
         public static final String COLUMN_NAME_DATE = "date";
         public static final String SQL_CREATE_ENTRIES =
-                "CREATE TABLE " + AnnoceContract.FeedEntry.TABLE_NAME + " (" +
+                "CREATE TABLE " + AnnonceContract.FeedEntry.TABLE_NAME + " (" +
                         _ID + " INTEGER PRIMARY KEY autoincrement," +
                         COLUMN_NAME_ID + " TEXT," +
                         COLUMN_NAME_TITRE + " TEXT," +
@@ -38,7 +36,7 @@ public final class AnnoceContract {
                         COLUMN_NAME_IMAGES + " TEXT," +
                         COLUMN_NAME_DATE + " INTEGER)";
 
-        public static final String SQL_DELETE_ENTRIES = "DROP TABLE IF EXISTS " + AnnoceContract.FeedEntry.TABLE_NAME;
+        public static final String SQL_DELETE_ENTRIES = "DROP TABLE IF EXISTS " + AnnonceContract.FeedEntry.TABLE_NAME;
     }
 
 

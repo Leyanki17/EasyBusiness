@@ -30,5 +30,7 @@ public class UserInformation extends AppCompatActivity {
         managerPreference.putString("tel", tel.getText().toString());
         managerPreference.commit();
         managerPreference.apply();
+
+
     }
 }

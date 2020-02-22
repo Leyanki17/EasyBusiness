@@ -2,7 +2,10 @@ package com.projet.easybusiness;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+
+import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager.widget.ViewPager;
+
 
 import android.content.Context;
 import android.content.Intent;
@@ -15,7 +18,10 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -35,7 +41,7 @@ import okhttp3.Response;
 import okhttp3.ResponseBody;
 
 public class SeeAd extends AppCompatActivity {
-    Annonce ad;
+    Annonce ad=null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,23 +50,61 @@ public class SeeAd extends AppCompatActivity {
 
         Intent intent= getIntent();
 
+        Annonce ad= intent.getParcelableExtra("idAnnonce");
+        //Intent inten = Intent(this,this.getParent().getLocalClassName().class);
+
+        Toolbar toolbarItem = findViewById(R.id.tool_br);
+        toolbarItem.setTitle("return to patrent");
+        setSupportActionBar(toolbarItem);
+
+
         this.ad= intent.getParcelableExtra("idAnnonce");
+
         if(ad!=null){
             Log.i("annonceId",ad.getId());
             rempliAnnonce(this.ad);
             Log.i("annonceId",ad.getId());
         }else{
+
             //makeHttpRequest("https://ensweb.users.info.unicaen.fr/android-api/mock-api/completeAdWithImages.json");
             makeHttpRequest("https://ensweb.users.info.unicaen.fr/android-api/?apikey=21912873&method=details&id=5e47df98b4f45");
+
+         //   makeHttpRequest("https://ensweb.users.info.unicaen.fr/android-api/?apikey=21913373&method=details&id=5e44171ab5bbc");
+
         }
     }
 
+    /***********MENU************/
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        Intent intent;
+        if(id == R.id.ic_profil){
+            intent = new Intent(this,UserInformation.class);
+            startActivity(intent);
+        }else if(id == R.id.ic_add){
+            //intent = new Intent(this,Add_annonce.class); //ajout annonce
+            //startActivity(intent);
+        }else{
+            //envoyer à la liste des annonces
+            intent = new Intent(this,SeeAllAd.class);
+            startActivity(intent);
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+    /********************************/
     public void okhttp(View View){
-        makeHttpRequest("https://ensweb.users.info.unicaen.fr/android-api/mock-api/completeAdWithImages.json");
+        //makeHttpRequest("https://ensweb.users.info.unicaen.fr/android-api/mock-api/completeAdWithImages.json");
     }
 
     public void okhttp404(View view){
-        makeHttpRequest("https://ensweb.users.info.unicaen.fr/android-api/mock-api/erreur.json");
+        //makeHttpRequest("https://ensweb.users.info.unicaen.fr/android-api/mock-api/erreur.json");
 
     }
 
@@ -126,7 +170,7 @@ public class SeeAd extends AppCompatActivity {
 
         TextView slideNumber= (TextView) findViewById(R.id.slideNumber);
 
-        Log.i ("YKJ", "l'image de "+ ad.getPseudo() +" est " +ad.getImages()[0]);
+      // Log.i ("YKJ", "l'image de "+ ad.getPseudo() +" est " +ad.getImages()[0]);
         ViewPager slider= findViewById(R.id.slide);
         SliderAdapter sliderAdapter=new SliderAdapter(this,ad.getImages(),slideNumber);
         slider.setAdapter(sliderAdapter);
@@ -140,6 +184,21 @@ public class SeeAd extends AppCompatActivity {
         description.setText(ad.getDescription());
         date.setText(" "+ HelperClass.formatDate(ad.getDate()));
         Log.i("YKJ", "logo fin");
+        AnnonceDb annonceDb = new AnnonceDb(this);
+
+        Log.i("xxxx", "on verifie si l'element est dans la base");
+        try {
+            boolean res =  annonceDb.exist(this.ad.getId());
+            if(res){
+                Button btn= findViewById(R.id.btSave);
+                btn.setText("UNSAVE");
+            }
+            Log.i("xxxx","Dans le try : " + res);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.i("xxxx","Erreur de verification: ");
+        }
+
     }
 
     public void callPers(View v){
@@ -159,16 +218,41 @@ public class SeeAd extends AppCompatActivity {
     public void saveAd(View v){
         AnnonceDb annonceDb = new AnnonceDb(this);
 
-        Log.i("xxxx", "on va enregistrer");
-        try {
-           long res =  annonceDb.ajouter(this.ad);
-           Log.i("xxxx","Dans le try : " + res);
-        } catch (Exception e) {
-            e.printStackTrace();
-            Log.i("xxxx","Erreur d'insertion : ");
+        if(!annonceDb.exist(ad.getId())){
+            Log.i("xxxx", "on va enregistrer");
+            try {
+                long res =  annonceDb.ajouter(this.ad);
+                Log.i("xxxx","Dans le try : sddf" + res);
+                Button btn= findViewById(R.id.btSave);
+                btn.setText("UNSAVE");
+            } catch (Exception e) {
+                e.printStackTrace();
+                Log.i("xxxx","Erreur d'insertion : ");
+            }
+            Log.i("xxxx","Après insertion : ");
+        }else{
+            unsaveAd();
         }
 
-        Log.i("xxxx","Après insertion : ");
+    }
+
+    public boolean unsaveAd(){
+        AnnonceDb annonceDb = new AnnonceDb(this);
+
+        if(annonceDb.deleteAnnonce(ad.getId())){
+            Button btn= findViewById(R.id.btSave);
+            btn.setText("SAVE");
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public void delAd(View v){
+
+    }
+
+    public void editAd(View v){
 
     }
 

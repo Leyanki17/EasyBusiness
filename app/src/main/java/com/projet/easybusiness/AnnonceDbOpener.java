@@ -16,7 +16,7 @@ public class AnnonceDbOpener extends SQLiteOpenHelper {
 
 
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(AnnoceContract.FeedEntry.SQL_CREATE_ENTRIES);
+        db.execSQL(AnnonceContract.FeedEntry.SQL_CREATE_ENTRIES);
     }
 
     public void setDatabaseVersion(int version){
@@ -25,7 +25,7 @@ public class AnnonceDbOpener extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-       db.execSQL(AnnoceContract.FeedEntry.SQL_DELETE_ENTRIES);
+       db.execSQL(AnnonceContract.FeedEntry.SQL_DELETE_ENTRIES);
         onCreate(db);
         //setDatabaseVersion(newVersion);
     }

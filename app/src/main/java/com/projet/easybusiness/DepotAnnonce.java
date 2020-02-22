@@ -43,9 +43,12 @@ public class DepotAnnonce extends AppCompatActivity {
     private EditText ville;
     private EditText cp;
     private EditText description;
+    private File imageAnnonce;
     private Annonce annonce;
-    static final int REQUEST_IMAGE_CAPTURE = 1;
+    //okHtttp pour l'envoi de post
+    private final OkHttpClient client = new OkHttpClient();
 
+    static final int REQUEST_IMAGE_CAPTURE = 1;
     public DepotAnnonce() throws IOException {
     }
 
@@ -80,9 +83,6 @@ public class DepotAnnonce extends AppCompatActivity {
 
     }
 
-    //okHtttp pour l'envoi de post
-    private final OkHttpClient client = new OkHttpClient();
-
     public void sendAnnonce() throws Exception {
         SharedPreferences preferences=  getSharedPreferences("PREF",MODE_PRIVATE);
         titre = (EditText) findViewById(R.id.champsTitre);
@@ -91,7 +91,7 @@ public class DepotAnnonce extends AppCompatActivity {
         cp = (EditText) findViewById(R.id.champsCp);
         description = (EditText) findViewById(R.id.champsDescription);
         RequestBody formBody = new FormBody.Builder()
-                .add("apikey", "21912873")
+                .add("apikey", "21913373")
                 .add("method","save")
                 .add("titre", titre.getText().toString())
                 .add("description",description.getText().toString())
@@ -118,7 +118,6 @@ public class DepotAnnonce extends AppCompatActivity {
             public void onResponse(Call call, Response response) throws IOException {
                 // on recupere le corps de la reponce
                 try{
-                    response = client.newCall(request).execute();
                     // si la requete n'a pas reussi
                     if(!response.isSuccessful()){
                         // afficher un message d'erreur
@@ -149,6 +148,11 @@ public class DepotAnnonce extends AppCompatActivity {
             }
         });
     }
+
+    /**
+     * Va permettre l'upload de l'image vers une annonce
+     * @param v
+     */
     public void photo(View v)
     {
         Intent photoIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -168,8 +172,8 @@ public class DepotAnnonce extends AppCompatActivity {
 
         }
         Log.i("createFile"," Avant la creation du fichier");
-        createImageFile();
-        Log.i("createFile","apres la creation du fichier");
+        this.imageAnnonce= createImageFile();
+        Log.i("createFile","apres la creation du fichier"+imageAnnonce);
         try {
             sendImage();
             Log.i("dans le sendImage","");
@@ -180,7 +184,7 @@ public class DepotAnnonce extends AppCompatActivity {
 
     String currentPhotoPath;
 
-    private File createImageFile()  {
+    private File createImageFile(){
         // Create an image file name
        try {
            String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format( new Date());
@@ -204,17 +208,20 @@ public class DepotAnnonce extends AppCompatActivity {
 
     private final OkHttpClient clientImage = new OkHttpClient();
 
-    public void sendImage() {
+    public void sendImage() throws Exception {
         // Use the imgur image upload API as documented at https://api.imgur.com/endpoints/image
         Log.i("testID", "id image " + idImage);
         RequestBody requestBody = new MultipartBody.Builder()
                 .setType(MultipartBody.FORM)
-                .addFormDataPart("apikey", "21912873")
+                .addFormDataPart("apikey", "21913373")
                 .addFormDataPart("method", "addImage")
-                //.addFormDataPart("debug", "true")
                 .addFormDataPart("id", idImage)
                 .addFormDataPart("photo", "nom.png",
-                        RequestBody.create(MEDIA_TYPE_PNG, createImageFile()))
+
+         //               RequestBody.create(MEDIA_TYPE_PNG, createImageFile()))
+
+                        RequestBody.create(MEDIA_TYPE_PNG,this.imageAnnonce))
+
                 .build();
 
         final Request requestImg = new Request.Builder()
