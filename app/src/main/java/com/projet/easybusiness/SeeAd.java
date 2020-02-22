@@ -25,6 +25,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.projet.easybusiness.helper_request.HelperClass;
 import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Moshi;
@@ -38,6 +39,8 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
+
+import static com.google.android.material.snackbar.Snackbar.LENGTH_LONG;
 
 public class SeeAd extends AppCompatActivity {
     Annonce ad=null;
@@ -218,6 +221,8 @@ public class SeeAd extends AppCompatActivity {
                 Log.i("xxxx","Dans le try : sddf" + res);
                 Button btn= findViewById(R.id.btSave);
                 btn.setText("UNSAVE");
+                Snackbar make = Snackbar.make(findViewById(R.id.line), "l'annoce N°"+ ad.getId() +" peut etre consulter sans connexion" , LENGTH_LONG);
+                make.show();
             } catch (Exception e) {
                 e.printStackTrace();
                 Log.i("xxxx","Erreur d'insertion : ");
@@ -225,6 +230,8 @@ public class SeeAd extends AppCompatActivity {
             Log.i("xxxx","Après insertion : ");
         }else{
             unsaveAd();
+            Snackbar make = Snackbar.make(findViewById(R.id.line), "l'annoce N° "+ ad.getId() +"ne peut plus etre consulter sans connexion" , LENGTH_LONG);
+            make.show();
         }
 
     }

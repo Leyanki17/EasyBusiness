@@ -18,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Moshi;
 
@@ -36,6 +37,8 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
+
+import static com.google.android.material.snackbar.Snackbar.LENGTH_LONG;
 
 public class DepotAnnonce extends AppCompatActivity {
     private EditText titre;
@@ -133,9 +136,10 @@ public class DepotAnnonce extends AppCompatActivity {
                                     @Override
                                     public void run() {
                                         parseAd(adBody);
-                                        Log.i("annonc",ad.getId());
                                         idImage = ad.getId();
-                                        Log.i("annonc",idImage);
+                                        Snackbar make = Snackbar.make(findViewById(R.id.depotAd), "l'annoce à ete bien enregistrée sous l'id " +
+                                                idImage, LENGTH_LONG);
+                                        make.show();
                                     }
                                 }
                         );
@@ -232,7 +236,6 @@ public class DepotAnnonce extends AppCompatActivity {
         clientImage.newCall(requestImg).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-
             }
 
             @Override
@@ -241,8 +244,6 @@ public class DepotAnnonce extends AppCompatActivity {
                 try {
                     // si la requete n'a pas reussi
                     if (!response.isSuccessful()) {
-
-
                     } else {
                         Toast.makeText(getApplicationContext(), "Ajout d'image reussi", Toast.LENGTH_SHORT).show();
                     }

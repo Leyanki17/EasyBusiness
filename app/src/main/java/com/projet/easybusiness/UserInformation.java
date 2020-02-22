@@ -8,7 +8,11 @@ import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.TextView;
 
+import com.google.android.material.snackbar.Snackbar;
+
 import java.util.prefs.Preferences;
+
+import static com.google.android.material.snackbar.Snackbar.LENGTH_LONG;
 
 public class UserInformation extends AppCompatActivity {
 
@@ -28,8 +32,15 @@ public class UserInformation extends AppCompatActivity {
         managerPreference.putString("pseudo",pseudo.getText().toString());
         managerPreference.putString("email",email.getText().toString());
         managerPreference.putString("tel", tel.getText().toString());
-        managerPreference.commit();
-        managerPreference.apply();
+        if(managerPreference.commit()){
+            Snackbar make = Snackbar.make(findViewById(R.id.depotAd), "Votre profil a bien été mis à jour" , LENGTH_LONG);
+            make.show();
+            managerPreference.apply();
+        }else{
+            Snackbar make = Snackbar.make(findViewById(R.id.depotAd), "Votre profil n'a pas été mis à jour" , LENGTH_LONG);
+            make.show();
+        }
+
 
 
     }
