@@ -141,8 +141,6 @@ public class DepotAnnonce extends AppCompatActivity {
                                 }
                         );
                         Log.i("ad",ad.getId());
-
-
                     }
                 } catch (Exception e)
                 {
@@ -199,11 +197,10 @@ public class DepotAnnonce extends AppCompatActivity {
        }catch (Exception e){
 
        }
-
         return null;
 
     }
-    private static final MediaType MEDIA_TYPE_PNG = MediaType.parse("image/png");
+    private static final MediaType MEDIA_TYPE_PNG = MediaType.parse("");
 
     private final OkHttpClient clientImage = new OkHttpClient();
 
@@ -217,7 +214,7 @@ public class DepotAnnonce extends AppCompatActivity {
                 //.addFormDataPart("debug", "true")
                 .addFormDataPart("id", idImage)
                 .addFormDataPart("photo", "nom.png",
-                        RequestBody.create(MEDIA_TYPE_PNG, currentPhotoPath))
+                        RequestBody.create(MEDIA_TYPE_PNG, createImageFile()))
                 .build();
 
         final Request requestImg = new Request.Builder()

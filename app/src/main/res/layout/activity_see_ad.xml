@@ -12,7 +12,6 @@
         android:layout_width="341dp"
         android:layout_height="43dp"
         android:layout_marginStart="30dp"
-        android:layout_marginTop="60dp"
         android:layout_marginEnd="30dp"
         android:layout_marginBottom="50dp"
         android:onClick="saveAd"
@@ -20,15 +19,14 @@
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tel" />
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/btSaveAd3"
         android:layout_width="341dp"
         android:layout_height="43dp"
         android:layout_marginStart="30dp"
-        android:layout_marginTop="60dp"
         android:layout_marginEnd="30dp"
         android:layout_marginBottom="50dp"
         android:onClick="saveAd"
@@ -36,15 +34,14 @@
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tel" />
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/btSaveAd2"
         android:layout_width="341dp"
         android:layout_height="43dp"
         android:layout_marginStart="30dp"
-        android:layout_marginTop="60dp"
         android:layout_marginEnd="30dp"
         android:layout_marginBottom="50dp"
         android:onClick="saveAd"
@@ -52,8 +49,7 @@
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tel" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/titre"
@@ -151,8 +147,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
-        android:text="06888888888"
         android:onClick="callPers"
+        android:text="06888888888"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.105"
@@ -186,7 +182,7 @@
         android:layout_width="341dp"
         android:layout_height="43dp"
         android:layout_marginStart="30dp"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="92dp"
         android:layout_marginEnd="30dp"
         android:layout_marginBottom="50dp"
         android:onClick="saveAd"
@@ -195,9 +191,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tel" />
-
-
+        app:layout_constraintTop_toBottomOf="@+id/supprimer"
+        app:layout_constraintVertical_bias="0.0" />
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/slide"
@@ -218,6 +213,27 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/slide" />
+
+    <Button
+        android:id="@+id/supprimer"
+        android:layout_width="141dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="44dp"
+        android:onClick="supprimer"
+        android:text="supprimer"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tel" />
+
+    <Button
+        android:id="@+id/modifier"
+        android:layout_width="129dp"
+        android:layout_height="47dp"
+        android:layout_marginEnd="64dp"
+        android:onClick="modifierAnnonce"
+        android:text="modifier"
+        app:layout_constraintBottom_toBottomOf="@+id/supprimer"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

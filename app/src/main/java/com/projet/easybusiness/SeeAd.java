@@ -19,6 +19,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.projet.easybusiness.helper_request.HelperClass;
 import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Moshi;
@@ -45,9 +46,12 @@ public class SeeAd extends AppCompatActivity {
 
         this.ad= intent.getParcelableExtra("idAnnonce");
         if(ad!=null){
+            Log.i("annonceId",ad.getId());
             rempliAnnonce(this.ad);
+            Log.i("annonceId",ad.getId());
         }else{
-            makeHttpRequest("https://ensweb.users.info.unicaen.fr/android-api/mock-api/completeAdWithImages.json");
+            //makeHttpRequest("https://ensweb.users.info.unicaen.fr/android-api/mock-api/completeAdWithImages.json");
+            makeHttpRequest("https://ensweb.users.info.unicaen.fr/android-api/?apikey=21912873&method=details&id=5e47df98b4f45");
         }
     }
 
@@ -150,7 +154,6 @@ public class SeeAd extends AppCompatActivity {
         Log.i("YKJ",preferences.getString("email", "inconnu"));
         Log.i("YKJ", preferences.getString("tel","pas de numero"));
         startActivity(new Intent(Intent.ACTION_VIEW,Uri.parse("mailto: "+ mail.getText().toString())));
-
     }
 
     public void saveAd(View v){
@@ -169,6 +172,56 @@ public class SeeAd extends AppCompatActivity {
 
     }
 
+    //requete de suppression
+    OkHttpClient clientSuppression = new OkHttpClient();
+
+    public void suppressionId(String urlSuppression)  {
+
+            Request requestSuppression = new Request.Builder()
+                    .url(urlSuppression)
+                    .build();
+            clientSuppression.newCall(requestSuppression).enqueue(new Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+                    e.printStackTrace();
+                }
+
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                    try (ResponseBody responseBody = response.body()) {
+                        Log.i("try","on est dans le try");
+                        if (!response.isSuccessful())
+                            throw new IOException("Unexpected code " + response);
+                        System.out.println(responseBody.string());
+                    }catch(IOException e)
+                    {
+                       Log.i("catch","on est dans le catch");
+                    }
+                }
+            });
+    }
+
+    public void supprimer(View view) {
+        SharedPreferences preferences=  getSharedPreferences("PREF",MODE_PRIVATE);
+
+
+        if(view.getId()==R.id.supprimer && preferences.getString("email","inconnu").equalsIgnoreCase(ad.getEmailContact())) {
+            suppressionId("https://ensweb.users.info.unicaen.fr/android-api/?apikey=21912873&method=delete&id=" + ad.getId());
+            Snackbar.make(findViewById(R.id.date),"votre annonce a été supprimer avec succes", Snackbar.LENGTH_LONG).show();
+        }else
+        {
+            Snackbar.make(findViewById(R.id.date),"vous ne disposez pas les droit de supprimer cette annonce", Snackbar.LENGTH_LONG).show();
+        }
+    }
+    public void modifierAnnonce(View v)
+    {
+        if(v.getId()==R.id.modifier)
+        {
+            Intent next= new Intent(this,ModifAnnonce.class);
+            next.putExtra("idAnnonce", ad);
+            startActivity(next);
+        }
+    }
   /* public void seeAdsSeved(View v){
 
         AnnonceDb annonceDb = new AnnonceDb(v.getContext());
