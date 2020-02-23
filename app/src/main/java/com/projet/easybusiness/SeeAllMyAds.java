@@ -28,12 +28,12 @@ public class SeeAllMyAds extends SeeAllAd {
             filter(listAnnonce);
             AnnonceAdapter adapterListAnnonce= new AnnonceAdapter(listAnnonce);
             fillMap();
-            RecyclerView recyclerView= findViewById(R.id.recycleView);
+            //RecyclerView recyclerView= findViewById(R.id.recycleView);
 
             // on inserer une linear view afin d'afficher les éléments sur une ligne
-            recyclerView.setLayoutManager(new LinearLayoutManager(this));
+            //recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-            recyclerView.setAdapter(adapterListAnnonce);
+            //recyclerView.setAdapter(adapterListAnnonce);
 
         }catch (Exception e) {
             e.printStackTrace();

@@ -2,10 +2,10 @@ package com.projet.easybusiness;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -13,47 +13,49 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
-import com.projet.easybusiness.helper_request.ApiListAnnonceAdapter;
+import com.google.android.material.tabs.TabLayout;
+import com.projet.easybusiness.fragment.AllAdsFragment;
+import com.projet.easybusiness.fragment.MyAdsFragment;
+import com.projet.easybusiness.fragment.ProfilFragment;
 import com.projet.easybusiness.helper_request.HelperClass;
-import com.projet.easybusiness.helper_request.ResponseAnnonces;
-import com.projet.easybusiness.recycler_view_helper.AnnonceAdapter;
-import com.squareup.moshi.JsonAdapter;
-import com.squareup.moshi.Moshi;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
-import okhttp3.ResponseBody;
 
 public class SeeAllAd extends AppCompatActivity {
-     protected Map<String,Annonce> annonces=new HashMap<>();
+    protected Map<String,Annonce> annonces=new HashMap<>();
     protected ArrayList<Annonce> listAnnonce;
+    private ViewPager viewPage;
+    private TabLayout tablelayout;
+    public FragmentAdapter pagerAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_see_all_ad);
-        Toolbar toolbarItem = findViewById(R.id.tool_br);
-        toolbarItem.setTitle("");
-        setSupportActionBar(toolbarItem);
+        SharedPreferences preferences = getSharedPreferences("PREF",MODE_PRIVATE);
+        // si la personne n'est pas identifiée
+        if(preferences.getString("email","inconnu").equals("inconnu")){
+            Intent intent = new Intent(this,UserInformation.class);
+            startActivity(intent);
+        }else{
+            Toolbar toolbarItem = findViewById(R.id.tool_br);
+            toolbarItem.setTitle("");
+            setSupportActionBar(toolbarItem);
+            this.viewPage = (ViewPager) findViewById(R.id.viewpager);
+            tablelayout = (TabLayout) findViewById(R.id.tablay);
 
+            this.pagerAdapter = new FragmentAdapter(getSupportFragmentManager());
 
-        // on recupere la recycle view
-        // on fait un adaptateur qui va lier les objets et les vues
-        try {
-           // makeHttpRequest("https://ensweb.users.info.unicaen.fr/android-api/mock-api/liste.json");
-            makeHttpRequest("https://ensweb.users.info.unicaen.fr/android-api/?apikey=21913373&method=listAll");
+            ((FragmentAdapter) pagerAdapter).addFragment(new AllAdsFragment(),"Tout");
+            ((FragmentAdapter) pagerAdapter).addFragment(new ProfilFragment(),"Profil");
+            ((FragmentAdapter) pagerAdapter).addFragment(new MyAdsFragment() ,"Mes annonces");
 
-        } catch (Exception e) {
-            e.printStackTrace();
+            this.viewPage.setAdapter((FragmentAdapter)pagerAdapter);
+            this.tablelayout.setupWithViewPager(viewPage);
         }
-        // chargement des élément de la vue avec un adapteur
     }
     /***********MENU************/
     @Override
@@ -69,8 +71,8 @@ public class SeeAllAd extends AppCompatActivity {
             intent = new Intent(this,UserInformation.class);
             startActivity(intent);
         }else if(id == R.id.ic_add){
-            //intent = new Intent(this,Add_annonce.class); //ajout annonce
-            //startActivity(intent);
+            intent = new Intent(this,DepotAnnonce.class); //ajout annonce
+            startActivity(intent);
         }else{
             //envoyer à la liste des annonces
             intent = new Intent(this,SeeAllAd.class);
@@ -80,60 +82,6 @@ public class SeeAllAd extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
     /********************************/
-    public void makeHttpRequest(String url){
-        OkHttpClient client = new OkHttpClient();
-        Request req=  new Request.Builder().url(url).build();
-        client.newCall(req).enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                e.printStackTrace();
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-
-                try(ResponseBody responseBody=  response.body()){
-
-                    if(!response.isSuccessful()){
-                        throw  new IOException("La requete n'a pas aboutit");
-                    }
-
-                    Log.i("YKJ","la reponse m'a été remise");
-                    final String body = responseBody.string();
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            parseAds(body);
-                        }
-                    });
-                }
-            }
-        });
-    }
-
-    public void parseAds(String body){
-        // declaration de l'instance de moshi qui va gerer le parsing
-            Moshi moshi= new Moshi.Builder().add(new ApiListAnnonceAdapter()).build();
-            JsonAdapter<ResponseAnnonces> adapter = moshi.adapter(ResponseAnnonces.class);
-        Log.i("YKJ","je suis dans l'adapteur 222");
-            try{
-                 ResponseAnnonces response = adapter.fromJson(body);
-                 listAnnonce=response.getAnnonces();
-                 AnnonceAdapter adapterListAnnonce= new AnnonceAdapter(listAnnonce);
-                 fillMap();
-                RecyclerView recyclerView= findViewById(R.id.recycleView);
-
-                // on inserer une linear view afin d'afficher les éléments sur une ligne
-                recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-                recyclerView.setAdapter(adapterListAnnonce);
-
-            }catch (Exception e) {
-                e.printStackTrace();
-            }
-
-    }
-
     public void itemClick(View v){
         String titreClick;
         TextView clicked = (TextView)v.findViewById(R.id.idAnnonce);

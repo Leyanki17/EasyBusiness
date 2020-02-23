@@ -2,6 +2,7 @@ package com.projet.easybusiness;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -31,6 +32,8 @@ public class UserInformation extends AppCompatActivity {
         managerPreference.commit();
         managerPreference.apply();
 
-
+        Intent intent = new Intent(this,SeeAllAd.class);
+        startActivity(intent);
+        
     }
 }

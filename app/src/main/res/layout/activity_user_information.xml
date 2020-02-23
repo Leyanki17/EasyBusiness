@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".UserInformation">
+    tools:context=".UserInformation"
+    >
 
     <TextView
         android:id="@+id/textView"
@@ -12,6 +13,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="84dp"
         android:text="@string/profile"
+        android:fontFamily="cursive"
+        android:textSize="30dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -57,7 +60,7 @@
         android:layout_width="253dp"
         android:layout_height="49dp"
         android:layout_marginTop="68dp"
-        android:onClick="SaveProfile"
+        android:onClick="saveProfile"
         android:text="valider"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

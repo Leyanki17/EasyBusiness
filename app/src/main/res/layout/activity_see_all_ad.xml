@@ -1,41 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
     android:outlineAmbientShadowColor="#566200EE"
-    tools:context=".SeeAllAd"
-    >
+    tools:context=".SeeAllAd">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/tool_br"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/gradient"
-        android:outlineAmbientShadowColor="#6200EE"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/toolbarStyle"
         android:layout_margin="0dp"
+        android:background="@drawable/gradient"
         android:elevation="20dp"
+        android:minHeight="?attr/actionBarSize"
+        android:outlineAmbientShadowColor="#6200EE"
+        android:theme="?attr/toolbarStyle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        />
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.recyclerview.widget.RecyclerView
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbartab"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_collapseMode="pin"
+        android:background="@drawable/gradient"
+        >
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tablay"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#0f0"
+                android:text="Tab1" />
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#f00"
+                android:text="Tab2" />
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#00f"
+                android:text="Tab3" />
+        </com.google.android.material.tabs.TabLayout>
+    </androidx.appcompat.widget.Toolbar>
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        layout_behavior="@string/appbar_scrolling_view_behavior"/>
+
+    <!--<androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycleView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@android:dimen/notification_large_icon_width"
-        android:scrollbars="horizontal"
         android:background="@drawable/gradient"
+        android:scrollbars="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tool_br"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/tool_br" />-->
     <!-- tools:listitem="@layout/recycler_view_item" /> -->
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
