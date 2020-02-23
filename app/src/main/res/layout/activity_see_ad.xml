@@ -239,10 +239,10 @@
 
     <Button
         android:id="@+id/supprimer"
-        android:layout_width="141dp"
-        android:layout_height="45dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="44dp"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="68dp"
         android:onClick="supprimer"
         android:text="supprimer"
         app:layout_constraintStart_toStartOf="parent"
@@ -250,13 +250,16 @@
 
     <Button
         android:id="@+id/modifier"
-        android:layout_width="129dp"
-        android:layout_height="47dp"
-        android:layout_marginEnd="64dp"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="18dp"
+        android:layout_marginEnd="48dp"
         android:onClick="modifierAnnonce"
         android:text="modifier"
-        app:layout_constraintBottom_toBottomOf="@+id/supprimer"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/btSave"
+        app:layout_constraintTop_toTopOf="@+id/btSave" />
 
     <ImageView
         android:id="@+id/SendEmail"
@@ -280,40 +283,15 @@
         app:srcCompat="@drawable/call" />
 
     <Button
-        android:id="@+id/btnDel"
-        android:layout_width="75dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="17dp"
-        android:layout_marginEnd="32dp"
-        android:layout_weight="1"
-        android:onClick="delAd"
-        android:text="Delete"
-        android:textSize="12sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tel" />
-
-    <Button
-        android:id="@+id/btnEdit"
-        android:layout_width="75dp"
-        android:layout_height="40dp"
-        android:layout_marginEnd="32dp"
-        android:onClick="editAd"
-        android:text="Edit"
-        android:textSize="12sp"
-        app:layout_constraintEnd_toStartOf="@+id/btSave"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/btSave" />
-
-    <Button
         android:id="@+id/btSave"
-        android:layout_width="75dp"
+        android:layout_width="100dp"
         android:layout_height="40dp"
-        android:layout_marginEnd="60dp"
+        android:layout_marginStart="16dp"
         android:layout_weight="1"
         android:onClick="saveAd"
         android:text="Save"
         android:textSize="12sp"
-        app:layout_constraintEnd_toStartOf="@+id/btnDel"
-        app:layout_constraintTop_toTopOf="@+id/btnDel" />
+        app:layout_constraintStart_toEndOf="@+id/supprimer"
+        app:layout_constraintTop_toTopOf="@+id/supprimer" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

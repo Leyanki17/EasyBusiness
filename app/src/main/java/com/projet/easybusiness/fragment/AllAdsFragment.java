@@ -172,7 +172,6 @@ public class AllAdsFragment extends Fragment {
                         throw  new IOException("La requete n'a pas aboutit");
                     }
                     final String body = responseBody.string();
-                    //parseAds(body);
 
                     getActivity().runOnUiThread(new Runnable() {
                         @Override

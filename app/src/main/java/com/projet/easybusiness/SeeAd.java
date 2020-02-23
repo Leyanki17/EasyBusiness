@@ -79,16 +79,16 @@ public class SeeAd extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         Intent intent;
-        if(id == R.id.ic_profil){
+        if(id == R.id.ic_save){
             intent = new Intent(this,UserInformation.class);
             startActivity(intent);
-        }else if(id == R.id.ic_add){
-            //intent = new Intent(this,Add_annonce.class); //ajout annonce
+        }else if(id == R.id.ic_edit){
+            intent = new Intent(this,ModifAnnonce.class); //ajout annonce
             //startActivity(intent);
-        }else{
-            //envoyer à la liste des annonces
-            intent = new Intent(this,SeeAllAd.class);
-            startActivity(intent);
+        }else if(id == R.id.ic_delete){
+            //supprimé l'annonce et redirection
+            //intent = new Intent(this,SeeAllAd.class);
+            //startActivity(intent);
         }
 
         return super.onOptionsItemSelected(item);
@@ -251,7 +251,7 @@ public class SeeAd extends AppCompatActivity {
         startActivity(getParentActivityIntent());
     }
 
-    //requete de suppression
+    //requete de suppression dans l'API
     OkHttpClient clientSuppression = new OkHttpClient();
 
     public void suppressionId(String urlSuppression)  {
@@ -280,6 +280,8 @@ public class SeeAd extends AppCompatActivity {
             });
     }
 
+
+    //suppression en local
     public void supprimer(View view) {
         SharedPreferences preferences=  getSharedPreferences("PREF",MODE_PRIVATE);
 

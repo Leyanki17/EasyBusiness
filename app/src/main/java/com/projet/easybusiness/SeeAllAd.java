@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.google.android.material.tabs.TabLayout;
 import com.projet.easybusiness.fragment.AllAdsFragment;
+import com.projet.easybusiness.fragment.FavoritAdsFragment;
 import com.projet.easybusiness.fragment.MyAdsFragment;
 import com.projet.easybusiness.fragment.ProfilFragment;
 import com.projet.easybusiness.helper_request.HelperClass;
@@ -50,8 +51,8 @@ public class SeeAllAd extends AppCompatActivity {
             this.pagerAdapter = new FragmentAdapter(getSupportFragmentManager());
 
             ((FragmentAdapter) pagerAdapter).addFragment(new AllAdsFragment(),"Tout");
-            ((FragmentAdapter) pagerAdapter).addFragment(new ProfilFragment(),"Profil");
-            ((FragmentAdapter) pagerAdapter).addFragment(new MyAdsFragment() ,"Mes annonces");
+            ((FragmentAdapter) pagerAdapter).addFragment(new FavoritAdsFragment(),"Favorie");
+            //((FragmentAdapter) pagerAdapter).addFragment(new MyAdsFragment() ,"Mes annonces");
 
             this.viewPage.setAdapter((FragmentAdapter)pagerAdapter);
             this.tablelayout.setupWithViewPager(viewPage);
