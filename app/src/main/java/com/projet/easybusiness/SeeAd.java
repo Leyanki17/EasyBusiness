@@ -254,13 +254,6 @@ public class SeeAd extends AppCompatActivity {
         }
     }
 
-    public void delAd(View v){
-
-    }
-
-    public void editAd(View v){
-
-    }
 
     //requete de suppression
     OkHttpClient clientSuppression = new OkHttpClient();
