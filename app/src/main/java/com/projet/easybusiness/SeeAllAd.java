@@ -51,8 +51,8 @@ public class SeeAllAd extends AppCompatActivity {
             this.pagerAdapter = new FragmentAdapter(getSupportFragmentManager());
 
             ((FragmentAdapter) pagerAdapter).addFragment(new AllAdsFragment(),"Tout");
-            ((FragmentAdapter) pagerAdapter).addFragment(new FavoritAdsFragment(),"Favorie");
-            //((FragmentAdapter) pagerAdapter).addFragment(new MyAdsFragment() ,"Mes annonces");
+            ((FragmentAdapter) pagerAdapter).addFragment(new FavoritAdsFragment(),"Favories");
+            ((FragmentAdapter) pagerAdapter).addFragment(new MyAdsFragment() ,"Mes annonces");
 
             this.viewPage.setAdapter((FragmentAdapter)pagerAdapter);
             this.tablelayout.setupWithViewPager(viewPage);

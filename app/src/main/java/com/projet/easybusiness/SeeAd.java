@@ -247,9 +247,9 @@ public class SeeAd extends AppCompatActivity {
         }
     }
 
-    public void returnParent(View v){
+    /*public void returnParent(View v){
         startActivity(getParentActivityIntent());
-    }
+    }*/
 
     //requete de suppression dans l'API
     OkHttpClient clientSuppression = new OkHttpClient();
