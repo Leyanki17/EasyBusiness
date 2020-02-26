@@ -34,7 +34,6 @@ public class MainActivity extends AppCompatActivity {
 
         //Intent view =  new Intent(this,SeeAllAd.class);
         //startActivity(view);
-
     }
     /***********MENU************/
     @Override

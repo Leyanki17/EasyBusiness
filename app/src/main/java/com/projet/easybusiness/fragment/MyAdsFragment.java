@@ -1,11 +1,21 @@
-package com.projet.easybusiness;
+package com.projet.easybusiness.fragment;
 
+import android.content.Context;
 import android.content.SharedPreferences;
-import android.util.Log;
+import android.net.Uri;
+import android.os.Bundle;
 
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
+import com.projet.easybusiness.Annonce;
+import com.projet.easybusiness.R;
 import com.projet.easybusiness.helper_request.ApiListAnnonceAdapter;
 import com.projet.easybusiness.helper_request.ResponseAnnonces;
 import com.projet.easybusiness.recycler_view_helper.AnnonceAdapter;
@@ -14,9 +24,31 @@ import com.squareup.moshi.Moshi;
 
 import java.util.ArrayList;
 
-public class SeeAllMyAds extends SeeAllAd {
+import static android.content.Context.MODE_PRIVATE;
 
+/**
+ * A simple {@link Fragment} subclass.
+ * Activities that contain this fragment must implement the
+ * {@link MyAdsFragment.OnFragmentInteractionListener} interface
+ * to handle interaction events.
+ * Use the {@link MyAdsFragment#newInstance} factory method to
+ * create an instance of this fragment.
+ */
+public class MyAdsFragment extends AllAdsFragment {
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        v=inflater.inflate(R.layout.fragment_favorit_ads, container, false);
+        try {
+            // makeHttpRequest("https://ensweb.users.info.unicaen.fr/android-api/mock-api/liste.json");
 
+            makeHttpRequest("https://ensweb.users.info.unicaen.fr/android-api/?apikey=21913373&method=listAll");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        // Inflate the layout for this fragment
+        return v;
+    }
     public void parseAds(String body){
         // declaration de l'instance de moshi qui va gerer le parsing
         Moshi moshi= new Moshi.Builder().add(new ApiListAnnonceAdapter()).build();
@@ -28,12 +60,13 @@ public class SeeAllMyAds extends SeeAllAd {
             filter(listAnnonce);
             AnnonceAdapter adapterListAnnonce= new AnnonceAdapter(listAnnonce);
             fillMap();
-            //RecyclerView recyclerView= findViewById(R.id.recycleView);
 
+            RecyclerView recycler= v.findViewById(R.id.recycleViewFavAnnonces);
+            Log.i("act","TTTTTTTTTTTTTTTTs");
             // on inserer une linear view afin d'afficher les éléments sur une ligne
-            //recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-            //recyclerView.setAdapter(adapterListAnnonce);
+            recycler.setLayoutManager(new LinearLayoutManager(getActivity()));
+            Log.i("act","RRRRRRRRRRRRRRRRRRRr");
+            recycler.setAdapter(adapterListAnnonce);
 
         }catch (Exception e) {
             e.printStackTrace();
@@ -42,7 +75,7 @@ public class SeeAllMyAds extends SeeAllAd {
     }
 
     public void filter(ArrayList<Annonce> listeA){
-        SharedPreferences preferences = getSharedPreferences("PREF", MODE_PRIVATE);
+        SharedPreferences preferences = getActivity().getSharedPreferences("PREF", MODE_PRIVATE);
         ArrayList<Annonce> list= new ArrayList<>();
         for (int i=listeA.size()-1 ; i>=0; i--){
             Annonce ad = listeA.get(i);
@@ -58,6 +91,4 @@ public class SeeAllMyAds extends SeeAllAd {
         }
         listAnnonce= new ArrayList<>(list);
     }
-
-
 }

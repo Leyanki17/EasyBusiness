@@ -1,35 +1,28 @@
 package com.projet.easybusiness;
 
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager.widget.ViewPager;
 
 
-import android.content.Context;
 import android.content.Intent;
-
-import android.database.Cursor;
 
 import android.content.SharedPreferences;
 
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.projet.easybusiness.helper_request.HelperClass;
 import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Moshi;
-import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
 
@@ -56,7 +49,7 @@ public class SeeAd extends AppCompatActivity {
         //Intent inten = Intent(this,this.getParent().getLocalClassName().class);
 
         Toolbar toolbarItem = findViewById(R.id.tool_br);
-        toolbarItem.setTitle("return to patrent");
+        toolbarItem.setTitle("");
         setSupportActionBar(toolbarItem);
 
 
@@ -79,23 +72,23 @@ public class SeeAd extends AppCompatActivity {
     /***********MENU************/
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.see_ad_menu, menu);
         return true;
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         Intent intent;
-        if(id == R.id.ic_profil){
+        if(id == R.id.ic_save){
             intent = new Intent(this,UserInformation.class);
             startActivity(intent);
-        }else if(id == R.id.ic_add){
-            //intent = new Intent(this,Add_annonce.class); //ajout annonce
+        }else if(id == R.id.ic_edit){
+            intent = new Intent(this,ModifAnnonce.class); //ajout annonce
             //startActivity(intent);
-        }else{
-            //envoyer à la liste des annonces
-            intent = new Intent(this,SeeAllAd.class);
-            startActivity(intent);
+        }else if(id == R.id.ic_delete){
+            //supprimé l'annonce et redirection
+            //intent = new Intent(this,SeeAllAd.class);
+            //startActivity(intent);
         }
 
         return super.onOptionsItemSelected(item);
@@ -255,7 +248,11 @@ public class SeeAd extends AppCompatActivity {
     }
 
 
-    //requete de suppression
+    public void returnParent(View v){
+        startActivity(getParentActivityIntent());
+    }
+
+    //requete de suppression dans l'API
     OkHttpClient clientSuppression = new OkHttpClient();
 
     public void suppressionId(String urlSuppression)  {
@@ -284,6 +281,8 @@ public class SeeAd extends AppCompatActivity {
             });
     }
 
+
+    //suppression en local
     public void supprimer(View view) {
         SharedPreferences preferences=  getSharedPreferences("PREF",MODE_PRIVATE);
 
@@ -305,10 +304,16 @@ public class SeeAd extends AppCompatActivity {
             startActivity(next);
         }
     }
-  /* public void seeAdsSeved(View v){
 
+    public void editAd(View view) {
+    }
+
+    public void delAd(View view) {
+    }
+
+  /* public void seeAdsSeved(View v){
         AnnonceDb annonceDb = new AnnonceDb(v.getContext());
        // Cursor resultat = annonceDb.listeAnnoncesSauvegardees();
-        //Log.i("ttt ", resultat.toString());
+       //Log.i("ttt ", resultat.toString());
     }*/
 }

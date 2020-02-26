@@ -2,6 +2,7 @@ package com.projet.easybusiness;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -33,15 +34,17 @@ public class UserInformation extends AppCompatActivity {
         managerPreference.putString("email",email.getText().toString());
         managerPreference.putString("tel", tel.getText().toString());
         if(managerPreference.commit()){
-            Snackbar make = Snackbar.make(findViewById(R.id.depotAd), "Votre profil a bien été mis à jour" , LENGTH_LONG);
+            Snackbar make = Snackbar.make(findViewById(R.id.userProfile), "Votre profil a bien été mis à jour" , LENGTH_LONG);
             make.show();
             managerPreference.apply();
         }else{
-            Snackbar make = Snackbar.make(findViewById(R.id.depotAd), "Votre profil n'a pas été mis à jour" , LENGTH_LONG);
+            Snackbar make = Snackbar.make(findViewById(R.id.userProfile), "Votre profil n'a pas été mis à jour" , LENGTH_LONG);
             make.show();
         }
 
 
-
+        Intent intent = new Intent(this,SeeAllAd.class);
+        startActivity(intent);
+        
     }
 }
