@@ -1,5 +1,6 @@
 package com.projet.easybusiness.recycler_view_helper;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.util.Log;
 import android.view.View;
@@ -12,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.projet.easybusiness.Annonce;
 import com.projet.easybusiness.AnnonceContract;
 import com.projet.easybusiness.R;
+import com.projet.easybusiness.SeeAd;
 import com.projet.easybusiness.helper_request.HelperClass;
 import com.squareup.picasso.Picasso;
 
@@ -38,7 +40,11 @@ public class AnnonceViewHolder extends RecyclerView.ViewHolder {
         date.setText(HelperClass.formatDate(ad.getDate()));
         description.setText(ad.getDescription());
         id.setText(ad.getId());
-        Picasso.get().load(ad.getImages()[0]).fit().error(R.drawable.laptop_hp).into(img);
+        if(ad.getImages().length>=1){
+            Picasso.get().load(ad.getImages()[0]).fit().error(R.drawable.laptop_hp).into(img);
+        }else{
+            Picasso.get().load("rien").fit().error(R.drawable.laptop_hp).into(img);
+        }
     }
 
     public void bind(Cursor cursor){

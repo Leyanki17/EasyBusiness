@@ -62,7 +62,7 @@ public class SeeAd extends AppCompatActivity {
         }else{
 
             //makeHttpRequest("https://ensweb.users.info.unicaen.fr/android-api/mock-api/completeAdWithImages.json");
-            makeHttpRequest("https://ensweb.users.info.unicaen.fr/android-api/?apikey=21912873&method=details&id=5e47df98b4f45");
+            makeHttpRequest("https://ensweb.users.info.unicaen.fr/android-api/?apikey=21912873&method=details&id=5e5110f5eec45");
 
          //   makeHttpRequest("https://ensweb.users.info.unicaen.fr/android-api/?apikey=21913373&method=details&id=5e44171ab5bbc");
 
@@ -107,6 +107,7 @@ public class SeeAd extends AppCompatActivity {
         Moshi moshi= new Moshi.Builder().add(new ApiAnnonceAdapter()).build();
         JsonAdapter<Annonce> jsonAdapter = moshi.adapter(Annonce.class);
         try{
+            Log.i("body",""+body);
             this.ad= jsonAdapter.fromJson(body);
             rempliAnnonce(ad);
         }catch(IOException e){
@@ -229,7 +230,7 @@ public class SeeAd extends AppCompatActivity {
             Log.i("xxxx","Après insertion : ");
         }else{
             unsaveAd();
-            Snackbar make = Snackbar.make(findViewById(R.id.line), "l'annoce N° "+ ad.getId() +"ne peut plus etre consulter sans connexion" , LENGTH_LONG);
+            Snackbar make = Snackbar.make(findViewById(R.id.line), "l'annoce N° "+ ad.getId() +" ne peut plus etre consulter sans connexion" , LENGTH_LONG);
             make.show();
         }
 
@@ -248,9 +249,7 @@ public class SeeAd extends AppCompatActivity {
     }
 
 
-    public void returnParent(View v){
-        startActivity(getParentActivityIntent());
-    }
+
 
     //requete de suppression dans l'API
     OkHttpClient clientSuppression = new OkHttpClient();
@@ -288,7 +287,7 @@ public class SeeAd extends AppCompatActivity {
 
 
         if(view.getId()==R.id.supprimer && preferences.getString("email","inconnu").equalsIgnoreCase(ad.getEmailContact())) {
-            suppressionId("https://ensweb.users.info.unicaen.fr/android-api/?apikey=21912873&method=delete&id=" + ad.getId());
+            suppressionId("https://ensweb.users.info.unicaen.fr/android-api/?apikey=21913373&method=delete&id=" + ad.getId());
             Snackbar.make(findViewById(R.id.date),"votre annonce a été supprimer avec succes", Snackbar.LENGTH_LONG).show();
         }else
         {
@@ -305,11 +304,6 @@ public class SeeAd extends AppCompatActivity {
         }
     }
 
-    public void editAd(View view) {
-    }
-
-    public void delAd(View view) {
-    }
 
   /* public void seeAdsSeved(View v){
         AnnonceDb annonceDb = new AnnonceDb(v.getContext());

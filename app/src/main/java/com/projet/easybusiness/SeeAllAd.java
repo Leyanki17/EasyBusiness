@@ -26,7 +26,7 @@ import java.util.Map;
 
 
 public class SeeAllAd extends AppCompatActivity {
-    protected Map<String,Annonce> annonces=new HashMap<>();
+    public static Map<String,Annonce> annonces=new HashMap<>();
     protected ArrayList<Annonce> listAnnonce;
     private ViewPager viewPage;
     private TabLayout tablelayout;
@@ -89,7 +89,8 @@ public class SeeAllAd extends AppCompatActivity {
         titreClick=clicked.getText().toString();
 
         Intent next= new Intent(this,SeeAd.class);
-        Log.i("titret",titreClick);
+        Log.i("titret",titreClick +"size ");
+
         next.putExtra("idAnnonce", annonces.get(titreClick));
         startActivity(next);
     }

@@ -50,7 +50,7 @@ public class SliderAdapter extends PagerAdapter {
 
        // position= idSlide+1;
 
-        Log.i("YKJ","indice after+ "+position);
+        Log.i("YKJ",images[position]+" indice after+ "+container.toString());
 
         return imageView;
     }

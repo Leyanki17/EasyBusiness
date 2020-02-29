@@ -16,6 +16,7 @@
         android:layout_marginTop="@android:dimen/notification_large_icon_width"
         android:background="@drawable/gradient"
         android:scrollbars="horizontal"
+        tools:listitem="@layout/ad_view"
          />
 
 

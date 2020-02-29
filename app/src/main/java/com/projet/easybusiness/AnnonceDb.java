@@ -52,14 +52,20 @@ public class AnnonceDb {
         );
         return (res > 0 ) ? true : false;
     }
+
     public boolean exist(String id){
             String[] projection = {
                     AnnonceContract.FeedEntry.COLUMN_NAME_ID,
             };
+            String select = AnnonceContract.FeedEntry.COLUMN_NAME_ID+ " LIKE ?";
+            String[] selectArg= {
+                   id
+            };
             //annonceDbOpener.close();
-            SQLiteDatabase db = annonceDbOpener.getReadableDatabase();
+        Cursor cursor;
+        SQLiteDatabase db = annonceDbOpener.getReadableDatabase();
+            cursor = db.query(AnnonceContract.FeedEntry.TABLE_NAME, projection,select, selectArg, null, null, null);
 
-            Cursor cursor =   db.query(AnnonceContract.FeedEntry.TABLE_NAME, projection,null,null,null,null,null);
         Log.i("tttt", "mes"+ cursor);
             return (cursor.getCount() > 0)? true : false;
     }

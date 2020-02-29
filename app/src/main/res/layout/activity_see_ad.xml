@@ -46,7 +46,7 @@
         app:layout_constraintStart_toStartOf="@+id/slide"
         app:layout_constraintTop_toBottomOf="@+id/tool_br" />
 
-
+<!--
     <ImageView
         android:id="@+id/image"
         android:layout_width="330dp"
@@ -62,7 +62,7 @@
         app:layout_constraintHorizontal_bias="0.476"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/titre" />
-
+-->
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/slide"
         android:layout_width="330dp"
@@ -234,7 +234,7 @@
         app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/image" />
+        app:layout_constraintTop_toBottomOf="@+id/slide" />
 
 
     <Button

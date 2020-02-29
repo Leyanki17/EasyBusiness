@@ -51,17 +51,16 @@ import okhttp3.ResponseBody;
 public class AllAdsFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    protected static final String ARG_PARAM1 = "param1";
+    protected static final String ARG_PARAM2 = "param2";
 
     // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    protected String mParam1;
+    protected String mParam2;
     View v;
-    private OnFragmentInteractionListener mListener;
+    protected OnFragmentInteractionListener mListener;
     protected ArrayList<Annonce> listAnnonce;
-    protected Map<String,Annonce> annonces=new HashMap<>();
-    private RecyclerView recyclerView;
+    protected RecyclerView recyclerView;
     public AllAdsFragment() {
         // Required empty public constructor
     }
@@ -194,7 +193,7 @@ public class AllAdsFragment extends Fragment {
             listAnnonce=response.getAnnonces();
             AnnonceAdapter adapterListAnnonce= new AnnonceAdapter(listAnnonce);
             fillMap();
-            RecyclerView recyclerView= v.findViewById(R.id.recycleViewAnnonces);
+             recyclerView= v.findViewById(R.id.recycleViewAnnonces);
             // on inserer une linear view afin d'afficher les éléments sur une ligne
             recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
@@ -205,21 +204,21 @@ public class AllAdsFragment extends Fragment {
         }
     }
 
-    /*public void itemClick(View v){
+    public void itemClick( View v){
         String titreClick;
         TextView clicked = (TextView)v.findViewById(R.id.idAnnonce);
         titreClick=clicked.getText().toString();
 
         Intent next= new Intent(v.getContext(), SeeAd.class);
        //Log.i("titret",titreClick);
-        next.putExtra("idAnnonce", annonces.get(titreClick));
+        next.putExtra("idAnnonce", SeeAllAd.annonces.get(titreClick));
         startActivity(next);
-    }*/
+    }
     public void fillMap(){
         for(int i=0; i<this.listAnnonce.size() ;i++){
             Annonce ad= this.listAnnonce.get(i);
             ad.setImage(HelperClass.changeToPng(ad.getImages()));
-            annonces.put(ad.getId(),ad);
+            SeeAllAd.annonces.put(ad.getId(),ad);
             Log.i("roooo",ad.getId());
         }
     }

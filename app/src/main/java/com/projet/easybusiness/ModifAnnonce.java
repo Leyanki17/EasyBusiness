@@ -2,6 +2,7 @@ package com.projet.easybusiness;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -37,8 +38,6 @@ public class ModifAnnonce extends AppCompatActivity {
         this.ad= intent.getParcelableExtra("idAnnonce");
         if(ad!=null){
             remplirAnnonce(ad);
-        }else
-        {
         }
     }
     public void remplirAnnonce(Annonce annonce)
@@ -50,7 +49,7 @@ public class ModifAnnonce extends AppCompatActivity {
         TextView cp = (TextView) findViewById(R.id.champsCp);
         TextView description = (TextView) findViewById(R.id.champsDescription);
         titre.setText(annonce.getTitre());
-        prix.setText(" "+ad.getPrix()+" $");
+        prix.setText(" "+ad.getPrix());
         ville.setText(annonce.getVille());
         cp.setText(annonce.getCp());
         description.setText(annonce.getDescription());
@@ -67,7 +66,7 @@ public class ModifAnnonce extends AppCompatActivity {
     }
     //
     private final OkHttpClient client = new OkHttpClient();
-    public void ModifierAnnonce() throws Exception {
+    public void modifierAnnonce() throws Exception {
 
         TextView titre = (TextView) findViewById(R.id.champsTitre);
         TextView prix = (TextView) findViewById(R.id.champsPrix);
@@ -76,7 +75,7 @@ public class ModifAnnonce extends AppCompatActivity {
         TextView description = (EditText) findViewById(R.id.champsDescription);
         Log.i("titre",titre.getText().toString());
         RequestBody formBody = new FormBody.Builder()
-                .add("apikey", "21912873")
+                .add("apikey", "21913373")
                 .add("method","update")
                 .add("id",ad.getId())
                 .add("titre", titre.getText().toString())
@@ -115,6 +114,7 @@ public class ModifAnnonce extends AppCompatActivity {
                         Log.i("post", "Le POST a belle et bien reussi");
                         //Log.i("post", response.body().string());
                         final String adBody= response.body().string();
+
                     }
                 } catch (Exception e)
                 {
@@ -127,12 +127,18 @@ public class ModifAnnonce extends AppCompatActivity {
     {
         SharedPreferences preferences=  getSharedPreferences("PREF",MODE_PRIVATE);
 
-        if(view.getId()==R.id.valider && preferences.getString("email","inconnu").equalsIgnoreCase(ad.getEmailContact())) {
+        if(preferences.getString("email","inconnu").equalsIgnoreCase(ad.getEmailContact())
+        &&preferences.getString("pseudo","inconnu").equalsIgnoreCase(ad.getPseudo())) {
             try {
                 Log.i("modif","modif");
-                ModifierAnnonce();
+                modifierAnnonce();
                 Snackbar.make(findViewById(R.id.champsDescription),"votre annonce a été modifer avec succes", Snackbar.LENGTH_LONG).show();
-                Log.i("modif2","modif2");
+                Log.i("modif","modif " +ad.toString());
+                Intent intent= getParentActivityIntent();
+                intent.putExtra("idAnnonce", ad);
+                startActivity(intent);
+
+
             } catch (Exception e) {
                 e.printStackTrace();
             }

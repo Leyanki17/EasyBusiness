@@ -106,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void seeMyAds(View v) {
-        Intent view =  new Intent(this,SeeAllMyAds.class);
+        Intent view = new Intent(this, SeeAllMyAds.class);
         startActivity(view);
     }
 }

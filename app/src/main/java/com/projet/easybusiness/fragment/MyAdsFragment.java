@@ -38,7 +38,7 @@ public class MyAdsFragment extends AllAdsFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        v=inflater.inflate(R.layout.fragment_favorit_ads, container, false);
+        v=inflater.inflate(R.layout.fragment_my_ads, container, false);
         try {
             // makeHttpRequest("https://ensweb.users.info.unicaen.fr/android-api/mock-api/liste.json");
 
@@ -71,7 +71,6 @@ public class MyAdsFragment extends AllAdsFragment {
         }catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
     public void filter(ArrayList<Annonce> listeA){
@@ -87,7 +86,6 @@ public class MyAdsFragment extends AllAdsFragment {
                 }
             }
             Log.i("YKJ", i+""+ preferences.getString("pseudo","")+"=="+ad.getPseudo());
-
         }
         listAnnonce= new ArrayList<>(list);
     }

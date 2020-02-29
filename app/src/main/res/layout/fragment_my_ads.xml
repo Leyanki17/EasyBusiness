@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragment.FavoritAdsFragment">
+    tools:context=".fragment.MyAdsFragment"
+    android:orientation="vertical">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycleViewFavAnnonces"
@@ -12,7 +13,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@android:dimen/notification_large_icon_width"
         android:background="@drawable/gradient"
-        android:scrollbars="horizontal"
-        />
+        android:scrollbars="horizontal" />
 
 </LinearLayout>
