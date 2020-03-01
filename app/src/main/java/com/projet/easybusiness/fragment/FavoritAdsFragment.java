@@ -19,6 +19,7 @@ import android.view.ViewGroup;
 import com.projet.easybusiness.Annonce;
 import com.projet.easybusiness.AnnonceDb;
 import com.projet.easybusiness.R;
+import com.projet.easybusiness.SeeAllAd;
 import com.projet.easybusiness.helper_request.ApiListAnnonceAdapter;
 import com.projet.easybusiness.helper_request.ResponseAnnonces;
 import com.projet.easybusiness.recycler_view_helper.AnnonceAdapter;
@@ -31,7 +32,7 @@ import java.util.ArrayList;
 import static android.content.Context.MODE_PRIVATE;
 
 
-public class FavoritAdsFragment extends Fragment {
+public class FavoritAdsFragment extends Fragment{
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     protected static final String ARG_PARAM1 = "param1";
@@ -125,6 +126,7 @@ public class FavoritAdsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         v=inflater.inflate(R.layout.fragment_favorit_ads, container, false);
+        SeeAllAd.frombd=true;
         Log.i("fd", "0 fragment de base de donnéé");
         database= new AnnonceDb(getContext());
         Log.i("fd", "0.5 fragment de base de donnéé");
@@ -138,5 +140,4 @@ public class FavoritAdsFragment extends Fragment {
         Log.i("fd", "4 fragment de base de donnéé");
         return v;
     }
-
 }

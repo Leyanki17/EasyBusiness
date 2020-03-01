@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -67,8 +69,12 @@ public class DepotAnnonce extends AppCompatActivity {
         if(view.getId()==R.id.valider) {
 
             try {
-                sendAnnonce();
-                Log.i("test","send annonce marche");
+               if(haveInternetConnection()){
+                   sendAnnonce();
+               }else{
+                   Snackbar.make(findViewById(R.id.depotAd),"Impossible d'envoyer l'annonce verifier que vous êtes bien connecter à internet", LENGTH_LONG)
+                           .show();
+               }
             } catch (Exception e) {
                 Log.i("test","send annonce ne  marche pas");
                 e.printStackTrace();
@@ -92,7 +98,7 @@ public class DepotAnnonce extends AppCompatActivity {
     public void sendAnnonce() throws Exception {
         SharedPreferences preferences=  getSharedPreferences("PREF",MODE_PRIVATE);
         titre = (EditText) findViewById(R.id.champsTitre);
-        prix = (EditText) findViewById(R.id.champsPrix);
+        int prix = Integer.parseInt(((EditText) findViewById(R.id.champsPrix)).getText().toString());
         ville = (EditText) findViewById(R.id.champsVille);
         cp = (EditText) findViewById(R.id.champsCp);
         description = (EditText) findViewById(R.id.champsDescription);
@@ -101,7 +107,7 @@ public class DepotAnnonce extends AppCompatActivity {
                 .add("method","save")
                 .add("titre", titre.getText().toString())
                 .add("description",description.getText().toString())
-                .add("prix", prix.getText().toString())
+                .add("prix", String.valueOf(prix))
                 .add("pseudo",preferences.getString("pseudo","inconnu"))
                 .add("emailContact",preferences.getString("email","inconnu"))
                 .add("telContact",preferences.getString("tel","inconnu"))
@@ -161,10 +167,14 @@ public class DepotAnnonce extends AppCompatActivity {
      * @param v
      */
     public void photo(View v){
-        Intent photoIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        /*Intent photoIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (photoIntent.resolveActivity(getPackageManager()) != null) {
             startActivityForResult(photoIntent, REQUEST_IMAGE_CAPTURE);
-        }
+        }*/
+
+        Intent intentGal= new Intent(Intent.ACTION_GET_CONTENT);
+        intentGal.setType("image/*");
+        startActivityForResult(Intent.createChooser(intentGal,"pik an Image"),1);
     }
     File storageDir;
     @Override
@@ -184,7 +194,12 @@ public class DepotAnnonce extends AppCompatActivity {
         this.imageAnnonce= createImageFile(imageBitmap);
         Log.i("createFile","apres la creation du fichier"+imageAnnonce.toString());
         try {
-            sendImage(imageBitmap);
+            if(haveInternetConnection()){
+                sendImage(imageBitmap);
+            }else{
+                Snackbar.make(findViewById(R.id.depotAd),"Impossible d'envoyer l'image verifier que vous êtes bien connecter à internet", LENGTH_LONG)
+                        .show();
+            }
             Log.i("dans le sendImage","");
         } catch (Exception e) {
             e.printStackTrace();
@@ -281,6 +296,27 @@ public class DepotAnnonce extends AppCompatActivity {
             Log.i("YKJ","dans le send Image");
         }*/
     }
+
+    public boolean haveInternetConnection(){
+        // Fonction haveInternetConnection : return true si connecté, return false dans le cas contraire
+        NetworkInfo network = ((ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE))
+                .getActiveNetworkInfo();
+
+
+        if (network==null || !network.isConnected())
+        {
+            // Le périphérique n'est pas connecté à Internet
+            return false;
+        }
+        if (network.isRoaming())
+        {
+            // Si tu as besoin d’exécuter une tache spéciale si le périphérique est connecté à Internet en roaming (pour afficher un message prévenant des surcoûts opérateurs par exemple)
+            // Si inutile, supprime la condition
+        }
+        // Le périphérique est connecté à Internet
+        return true;
+    }
+
 }
 
 

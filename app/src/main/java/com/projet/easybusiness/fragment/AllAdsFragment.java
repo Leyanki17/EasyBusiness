@@ -2,6 +2,8 @@ package com.projet.easybusiness.fragment;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -11,6 +13,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.Layout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -48,7 +51,10 @@ import okhttp3.ResponseBody;
  * Use the {@link AllAdsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class AllAdsFragment extends Fragment {
+public class AllAdsFragment extends Fragment   {
+    public interface ClickListener{
+        public void itemClick(View v);
+    }
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     protected static final String ARG_PARAM1 = "param1";
@@ -58,12 +64,20 @@ public class AllAdsFragment extends Fragment {
     protected String mParam1;
     protected String mParam2;
     View v;
+    protected int layout;
     protected OnFragmentInteractionListener mListener;
     protected ArrayList<Annonce> listAnnonce;
+
     protected RecyclerView recyclerView;
+    public AllAdsFragment(int lay) {
+        // Required empty public constructor
+        layout= lay;
+    }
     public AllAdsFragment() {
         // Required empty public constructor
+        layout= R.layout.fragment_all_ads;
     }
+
 
     /**
      * Use this factory method to create a new instance of
@@ -98,10 +112,10 @@ public class AllAdsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        v=inflater.inflate(R.layout.fragment_all_ads, container, false);
+        v=inflater.inflate(layout, container, false);
+        SeeAllAd.frombd=false;
         try {
             // makeHttpRequest("https://ensweb.users.info.unicaen.fr/android-api/mock-api/liste.json");
-
             makeHttpRequest("https://ensweb.users.info.unicaen.fr/android-api/?apikey=21913373&method=listAll");
         } catch (Exception e) {
             e.printStackTrace();
@@ -204,7 +218,9 @@ public class AllAdsFragment extends Fragment {
         }
     }
 
-    public void itemClick( View v){
+
+
+   /* public void itemClick( View v){
         String titreClick;
         TextView clicked = (TextView)v.findViewById(R.id.idAnnonce);
         titreClick=clicked.getText().toString();
@@ -213,7 +229,7 @@ public class AllAdsFragment extends Fragment {
        //Log.i("titret",titreClick);
         next.putExtra("idAnnonce", SeeAllAd.annonces.get(titreClick));
         startActivity(next);
-    }
+    }*/
     public void fillMap(){
         for(int i=0; i<this.listAnnonce.size() ;i++){
             Annonce ad= this.listAnnonce.get(i);

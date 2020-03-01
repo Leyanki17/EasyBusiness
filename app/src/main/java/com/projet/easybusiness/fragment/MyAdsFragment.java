@@ -35,10 +35,20 @@ import static android.content.Context.MODE_PRIVATE;
  * create an instance of this fragment.
  */
 public class MyAdsFragment extends AllAdsFragment {
+    public MyAdsFragment(int lay) {
+        // Required empty public constructor
+        layout= lay;
+    }
+    public MyAdsFragment() {
+        // Required empty public constructor
+        layout= R.layout.fragment_my_ads;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        v=inflater.inflate(R.layout.fragment_my_ads, container, false);
+        v=inflater.inflate(layout, container, false);
+
         try {
             // makeHttpRequest("https://ensweb.users.info.unicaen.fr/android-api/mock-api/liste.json");
 

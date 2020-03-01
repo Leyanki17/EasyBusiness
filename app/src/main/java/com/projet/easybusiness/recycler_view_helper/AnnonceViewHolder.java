@@ -52,7 +52,7 @@ public class AnnonceViewHolder extends RecyclerView.ViewHolder {
         Long cdate = cursor.getLong(cursor.getColumnIndex(AnnonceContract.FeedEntry.COLUMN_NAME_DATE));
         String cdescription = cursor.getString(cursor.getColumnIndex(AnnonceContract.FeedEntry.COLUMN_NAME_DESCRIPTION));
         String cimage = cursor.getString(cursor.getColumnIndex(AnnonceContract.FeedEntry.COLUMN_NAME_IMAGES));
-        String cid= cursor.getString(cursor.getColumnIndex(AnnonceContract.FeedEntry.COLUMN_NAME_IMAGES));
+        String cid= cursor.getString(cursor.getColumnIndex(AnnonceContract.FeedEntry.COLUMN_NAME_ID));
         titre.setText(ctitre);
         date.setText(HelperClass.formatDate(cdate));
         description.setText(cdescription);

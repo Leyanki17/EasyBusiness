@@ -3,8 +3,11 @@ package com.projet.easybusiness;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -125,27 +128,51 @@ public class ModifAnnonce extends AppCompatActivity {
     }
     public void onClick(View view)
     {
-        SharedPreferences preferences=  getSharedPreferences("PREF",MODE_PRIVATE);
+       if(haveInternetConnection()){
+           SharedPreferences preferences=  getSharedPreferences("PREF",MODE_PRIVATE);
 
-        if(preferences.getString("email","inconnu").equalsIgnoreCase(ad.getEmailContact())
-        &&preferences.getString("pseudo","inconnu").equalsIgnoreCase(ad.getPseudo())) {
-            try {
-                Log.i("modif","modif");
-                modifierAnnonce();
-                Snackbar.make(findViewById(R.id.champsDescription),"votre annonce a été modifer avec succes", Snackbar.LENGTH_LONG).show();
-                Log.i("modif","modif " +ad.toString());
-                Intent intent= getParentActivityIntent();
-                intent.putExtra("idAnnonce", ad);
-                startActivity(intent);
+           if(preferences.getString("email","inconnu").equalsIgnoreCase(ad.getEmailContact())
+                   &&preferences.getString("pseudo","inconnu").equalsIgnoreCase(ad.getPseudo())) {
+               try {
+                   Log.i("modif","modif");
+                   modifierAnnonce();
+                   Snackbar.make(findViewById(R.id.modifierAd),"votre annonce a été modifer avec succes", Snackbar.LENGTH_LONG).show();
+                   Log.i("modif","modif " +ad.toString());
+                   Intent intent= new Intent(this,SeeAd.class);
+                   intent.putExtra("idAnn", ad.getId());
+                   startActivity(intent);
 
 
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }else
+               } catch (Exception e) {
+                   e.printStackTrace();
+               }
+           }else
+           {
+               // snackbar a faire
+               Snackbar.make(findViewById(R.id.modifier),"vous ne disposez pas le droit de modifier cette annonce", Snackbar.LENGTH_LONG).show();
+           }
+       }else{
+           Snackbar.make(findViewById(R.id.modifierAd),"Impossible de modifier l'annonce vous n'êtes pas connecter à internet", Snackbar.LENGTH_LONG).show();
+       }
+    }
+
+    public boolean haveInternetConnection(){
+        // Fonction haveInternetConnection : return true si connecté, return false dans le cas contraire
+        NetworkInfo network = ((ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE))
+                .getActiveNetworkInfo();
+
+
+        if (network==null || !network.isConnected())
         {
-            // snackbar a faire
-            Snackbar.make(findViewById(R.id.champsDescription),"vous ne disposez pas le droit de modifier cette annonce", Snackbar.LENGTH_LONG).show();
+            // Le périphérique n'est pas connecté à Internet
+            return false;
         }
+        if (network.isRoaming())
+        {
+            // Si tu as besoin d’exécuter une tache spéciale si le périphérique est connecté à Internet en roaming (pour afficher un message prévenant des surcoûts opérateurs par exemple)
+            // Si inutile, supprime la condition
+        }
+        // Le périphérique est connecté à Internet
+        return true;
     }
 }

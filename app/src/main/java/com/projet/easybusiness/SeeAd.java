@@ -6,10 +6,13 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager.widget.ViewPager;
 
 
+import android.content.Context;
 import android.content.Intent;
 
 import android.content.SharedPreferences;
 
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -37,15 +40,21 @@ import static com.google.android.material.snackbar.Snackbar.LENGTH_LONG;
 
 public class SeeAd extends AppCompatActivity {
     Annonce ad=null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_see_ad);
+        if(haveInternetConnection()){
+            setContentView(R.layout.activity_see_ad);
+        }else{
+            setContentView(R.layout.activity_see_ad);
+        }
        // makeHttpRequest("https://ensweb.users.info.unicaen.fr/android-api/mock-api/liste.json");
 
         Intent intent= getIntent();
 
         Annonce ad= intent.getParcelableExtra("idAnnonce");
+
         //Intent inten = Intent(this,this.getParent().getLocalClassName().class);
 
         Toolbar toolbarItem = findViewById(R.id.tool_br);
@@ -60,12 +69,12 @@ public class SeeAd extends AppCompatActivity {
             rempliAnnonce(this.ad);
             Log.i("annonceId",ad.getId());
         }else{
-
+            String idAdd = intent.getStringExtra("idAnn");
+            Log.i("idann", idAdd);
             //makeHttpRequest("https://ensweb.users.info.unicaen.fr/android-api/mock-api/completeAdWithImages.json");
-            makeHttpRequest("https://ensweb.users.info.unicaen.fr/android-api/?apikey=21912873&method=details&id=5e5110f5eec45");
+            makeHttpRequest("https://ensweb.users.info.unicaen.fr/android-api/?apikey=21913373&method=details&id="+idAdd);
 
-         //   makeHttpRequest("https://ensweb.users.info.unicaen.fr/android-api/?apikey=21913373&method=details&id=5e44171ab5bbc");
-
+            //   makeHttpRequest("https://ensweb.users.info.unicaen.fr/android-api/?apikey=21913373&method=details&id=5e44171ab5bbc");
         }
     }
 
@@ -283,25 +292,51 @@ public class SeeAd extends AppCompatActivity {
 
     //suppression en local
     public void supprimer(View view) {
-        SharedPreferences preferences=  getSharedPreferences("PREF",MODE_PRIVATE);
+      if(haveInternetConnection()){
+          SharedPreferences preferences=  getSharedPreferences("PREF",MODE_PRIVATE);
 
 
-        if(view.getId()==R.id.supprimer && preferences.getString("email","inconnu").equalsIgnoreCase(ad.getEmailContact())) {
-            suppressionId("https://ensweb.users.info.unicaen.fr/android-api/?apikey=21913373&method=delete&id=" + ad.getId());
-            Snackbar.make(findViewById(R.id.date),"votre annonce a été supprimer avec succes", Snackbar.LENGTH_LONG).show();
-        }else
-        {
-            Snackbar.make(findViewById(R.id.date),"vous ne disposez pas les droit de supprimer cette annonce", Snackbar.LENGTH_LONG).show();
-        }
+          if(view.getId()==R.id.supprimer && preferences.getString("email","inconnu").equalsIgnoreCase(ad.getEmailContact())) {
+              suppressionId("https://ensweb.users.info.unicaen.fr/android-api/?apikey=21913373&method=delete&id=" + ad.getId());
+              Snackbar.make(findViewById(R.id.line),"votre annonce a été supprimer avec succes", Snackbar.LENGTH_LONG).show();
+              Intent next= new Intent(this,SeeAllAd.class);
+              startActivity(next);
+
+          }else
+          {
+              Snackbar.make(findViewById(R.id.line),"vous ne disposez pas les droit de supprimer cette annonce", Snackbar.LENGTH_LONG).show();
+          }
+      }else{
+          Snackbar.make(findViewById(R.id.line),"Impossible de supprimer l'annonce vous n'êtes pas connecté à internet", Snackbar.LENGTH_LONG).show();
+      }
     }
     public void modifierAnnonce(View v)
     {
-        if(v.getId()==R.id.modifier)
-        {
-            Intent next= new Intent(this,ModifAnnonce.class);
-            next.putExtra("idAnnonce", ad);
-            startActivity(next);
+        if(haveInternetConnection()){
+            if(v.getId()==R.id.modifier)
+            {
+                SharedPreferences preferences=  getSharedPreferences("PREF",MODE_PRIVATE);
+
+                if(preferences.getString("email","inconnu").equalsIgnoreCase(ad.getEmailContact())
+                        &&preferences.getString("pseudo","inconnu").equalsIgnoreCase(ad.getPseudo())) {
+
+                    Intent next= new Intent(this,ModifAnnonce.class);
+                    next.putExtra("idAnnonce", ad);
+                    startActivity(next);
+
+                }else
+                {
+                    // snackbar a faire
+                    Snackbar.make(findViewById(R.id.line),"vous ne disposez pas le droit de modifier cette annonce", Snackbar.LENGTH_LONG).show();
+                }
+
+
+
+            }
+        }else{
+            Snackbar.make(findViewById(R.id.line),"Impossible de modifier l'annonce vous n'êtes pas connecté à internet", Snackbar.LENGTH_LONG).show();
         }
+
     }
 
 
@@ -310,4 +345,24 @@ public class SeeAd extends AppCompatActivity {
        // Cursor resultat = annonceDb.listeAnnoncesSauvegardees();
        //Log.i("ttt ", resultat.toString());
     }*/
+
+    public boolean haveInternetConnection(){
+        // Fonction haveInternetConnection : return true si connecté, return false dans le cas contraire
+        NetworkInfo network = ((ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE))
+                .getActiveNetworkInfo();
+
+
+        if (network==null || !network.isConnected())
+        {
+            // Le périphérique n'est pas connecté à Internet
+            return false;
+        }
+        if (network.isRoaming())
+        {
+            // Si tu as besoin d’exécuter une tache spéciale si le périphérique est connecté à Internet en roaming (pour afficher un message prévenant des surcoûts opérateurs par exemple)
+            // Si inutile, supprime la condition
+        }
+        // Le périphérique est connecté à Internet
+        return true;
+    }
 }

@@ -34,7 +34,12 @@ public class AnnonceDb {
         values.put( AnnonceContract.FeedEntry.COLUMN_NAME_TELEPHONE , annonce.getTelContact());
         values.put( AnnonceContract.FeedEntry.COLUMN_NAME_VILLE , annonce.getVille());
         values.put( AnnonceContract.FeedEntry.COLUMN_NAME_CODE_POSTAL , annonce.getCp());
-        values.put( AnnonceContract.FeedEntry.COLUMN_NAME_IMAGES, annonce.getImages()[0]);
+        if(annonce.getImages().length <0){
+            values.put( AnnonceContract.FeedEntry.COLUMN_NAME_IMAGES, annonce.getImages()[0]);
+        }else{
+            values.put( AnnonceContract.FeedEntry.COLUMN_NAME_IMAGES, "no url");
+        }
+
         values.put(AnnonceContract.FeedEntry.COLUMN_NAME_DATE,   annonce.getDate());
         Log.i("nnnn", "Date : "+  HelperClass.formatDate(annonce.getDate())/*HelperClass.stringToDate(HelperClass.formatDate(annonce.getDate()))*/ + " "+ HelperClass.stringToDate(HelperClass.formatDate(annonce.getDate())).getClass().getName());
         long res = db.insert(AnnonceContract.FeedEntry.TABLE_NAME, null, values);
@@ -106,4 +111,35 @@ public class AnnonceDb {
         return cursor;
     }
 
+    public Cursor getElt(String titreClick) {
+
+        String[] projection = {
+                AnnonceContract.FeedEntry.COLUMN_NAME_ID,
+                AnnonceContract.FeedEntry.COLUMN_NAME_TITRE,
+                AnnonceContract.FeedEntry.COLUMN_NAME_DESCRIPTION,
+                AnnonceContract.FeedEntry.COLUMN_NAME_PRIX,
+                AnnonceContract.FeedEntry.COLUMN_NAME_PSEUDO,
+                AnnonceContract.FeedEntry.COLUMN_NAME_EMAIL,
+                AnnonceContract.FeedEntry.COLUMN_NAME_TELEPHONE,
+                AnnonceContract.FeedEntry.COLUMN_NAME_VILLE,
+                AnnonceContract.FeedEntry.COLUMN_NAME_CODE_POSTAL,
+                AnnonceContract.FeedEntry.COLUMN_NAME_IMAGES,
+                AnnonceContract.FeedEntry.COLUMN_NAME_DATE
+        };
+
+        String[] select = {titreClick};
+        //annonceDbOpener.close();
+        SQLiteDatabase db = annonceDbOpener.getReadableDatabase();
+        //SQLiteOpenHelper helper = new AnnonceDbOpener(v.getContext());
+        // SQLiteDatabase db = helper.getReadableDatabase();
+        Log.i("tttt", "après ouverture de la requete");
+
+        Cursor cursor =   db.query(AnnonceContract.FeedEntry.TABLE_NAME, projection,AnnonceContract.FeedEntry.COLUMN_NAME_ID+" LIKE ?",select,null,null,null);
+        Log.i("tttt", "après l'execution de la requete"+ cursor);
+
+    /*   while(cursor != null){
+           cursor.moveToNext();
+       }*/
+        return cursor;
+    }
 }

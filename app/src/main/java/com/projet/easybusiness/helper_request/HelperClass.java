@@ -1,6 +1,14 @@
 package com.projet.easybusiness.helper_request;
 
+import android.database.Cursor;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.util.Log;
+
+import com.projet.easybusiness.Annonce;
+import com.projet.easybusiness.AnnonceContract;
+import com.projet.easybusiness.R;
+import com.squareup.picasso.Picasso;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -70,5 +78,22 @@ public class HelperClass {
             Log.i("nnnn", "Dans le cctch");
         }
         return date ;
-          }
+
+    }
+
+    public static Annonce bind(Cursor cursor){
+        String ctitre= cursor.getString(cursor.getColumnIndex(AnnonceContract.FeedEntry.COLUMN_NAME_TITRE));
+        Long cdate = cursor.getLong(cursor.getColumnIndex(AnnonceContract.FeedEntry.COLUMN_NAME_DATE));
+        String cdescription = cursor.getString(cursor.getColumnIndex(AnnonceContract.FeedEntry.COLUMN_NAME_DESCRIPTION));
+        String[] cimage = {cursor.getString(cursor.getColumnIndex(AnnonceContract.FeedEntry.COLUMN_NAME_IMAGES))};
+        String cid= cursor.getString(cursor.getColumnIndex(AnnonceContract.FeedEntry.COLUMN_NAME_ID));
+        String cville = cursor.getString(cursor.getColumnIndex(AnnonceContract.FeedEntry.COLUMN_NAME_VILLE));
+        String ccodePostal = cursor.getString(cursor.getColumnIndex(AnnonceContract.FeedEntry.COLUMN_NAME_CODE_POSTAL));
+        int cprix= cursor.getInt(cursor.getColumnIndex(AnnonceContract.FeedEntry.COLUMN_NAME_PRIX));
+        String cpseudo = cursor.getString(cursor.getColumnIndex(AnnonceContract.FeedEntry.COLUMN_NAME_PSEUDO));
+        String cemail = cursor.getString(cursor.getColumnIndex(AnnonceContract.FeedEntry.COLUMN_NAME_EMAIL));
+        String ctel= cursor.getString(cursor.getColumnIndex(AnnonceContract.FeedEntry.COLUMN_NAME_TELEPHONE));
+        return new Annonce(cid,ctitre,cdescription,cprix,cpseudo,cemail,ctel,cville,ccodePostal,cimage,cdate);
+    }
+
 }

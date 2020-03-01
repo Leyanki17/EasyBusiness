@@ -4,8 +4,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager.widget.ViewPager;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -17,7 +21,6 @@ import com.google.android.material.tabs.TabLayout;
 import com.projet.easybusiness.fragment.AllAdsFragment;
 import com.projet.easybusiness.fragment.FavoritAdsFragment;
 import com.projet.easybusiness.fragment.MyAdsFragment;
-import com.projet.easybusiness.fragment.ProfilFragment;
 import com.projet.easybusiness.helper_request.HelperClass;
 
 import java.util.ArrayList;
@@ -25,10 +28,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-public class SeeAllAd extends AppCompatActivity {
+public class SeeAllAd extends AppCompatActivity implements AllAdsFragment.ClickListener {
     public static Map<String,Annonce> annonces=new HashMap<>();
     protected ArrayList<Annonce> listAnnonce;
     private ViewPager viewPage;
+    public  static boolean frombd=false;
     private TabLayout tablelayout;
     public FragmentAdapter pagerAdapter;
 
@@ -50,9 +54,17 @@ public class SeeAllAd extends AppCompatActivity {
 
             this.pagerAdapter = new FragmentAdapter(getSupportFragmentManager());
 
-            ((FragmentAdapter) pagerAdapter).addFragment(new AllAdsFragment(),"Tout");
-            ((FragmentAdapter) pagerAdapter).addFragment(new FavoritAdsFragment(),"Favories");
-            ((FragmentAdapter) pagerAdapter).addFragment(new MyAdsFragment() ,"Mes annonces");
+            if(haveInternetConnection()){
+                ((FragmentAdapter) pagerAdapter).addFragment(new AllAdsFragment(R.layout.fragment_all_ads),"Tout");
+                ((FragmentAdapter) pagerAdapter).addFragment(new FavoritAdsFragment(),"Favories");
+                ((FragmentAdapter) pagerAdapter).addFragment(new MyAdsFragment(R.layout.fragment_my_ads) ,"Mes annonces");
+            }else{
+                ((FragmentAdapter) pagerAdapter).addFragment(new AllAdsFragment(R.layout.fragment_all_ads_no_connection),"Tout");
+                ((FragmentAdapter) pagerAdapter).addFragment(new FavoritAdsFragment(),"Favories");
+                ((FragmentAdapter) pagerAdapter).addFragment(new MyAdsFragment(R.layout.fragment_my_ads_no_connection) ,"Mes annonces");
+            }
+
+
 
             this.viewPage.setAdapter((FragmentAdapter)pagerAdapter);
             this.tablelayout.setupWithViewPager(viewPage);
@@ -88,11 +100,26 @@ public class SeeAllAd extends AppCompatActivity {
         TextView clicked = (TextView)v.findViewById(R.id.idAnnonce);
         titreClick=clicked.getText().toString();
 
-        Intent next= new Intent(this,SeeAd.class);
-        Log.i("titret",titreClick +"size ");
+       // if(haveInternetConnection()){
+            Intent next= new Intent(this,SeeAd.class);
+            Log.i("titret",titreClick +"size ");
+           /* if(SeeAllAd.frombd==true){
+                SeeAllAd.frombd=false;
+                AnnonceDb database= new AnnonceDb(this);
+                Cursor elt = database.getElt(titreClick);
 
-        next.putExtra("idAnnonce", annonces.get(titreClick));
-        startActivity(next);
+                next.putExtra("idAnnonce", HelperClass.bind(elt) );
+
+            }else{*/
+                next.putExtra("idAnnonce", annonces.get(titreClick));
+           // }
+
+            startActivity(next);
+        /*}else{
+            Snackbar.make(findViewById(R.id.p),"Impossible de modifier l'annonce vous n'êtes pas connecté à internet", Snackbar.LENGTH_LONG).show();
+        }*/
+
+
     }
 
 
@@ -103,5 +130,25 @@ public class SeeAllAd extends AppCompatActivity {
             annonces.put(ad.getId(),ad);
             Log.i("roooo",ad.getId());
         }
+    }
+
+    public boolean haveInternetConnection(){
+        // Fonction haveInternetConnection : return true si connecté, return false dans le cas contraire
+        NetworkInfo network = ((ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE))
+                .getActiveNetworkInfo();
+
+
+        if (network==null || !network.isConnected())
+        {
+            // Le périphérique n'est pas connecté à Internet
+            return false;
+        }
+        if (network.isRoaming())
+        {
+            // Si tu as besoin d’exécuter une tache spéciale si le périphérique est connecté à Internet en roaming (pour afficher un message prévenant des surcoûts opérateurs par exemple)
+            // Si inutile, supprime la condition
+        }
+        // Le périphérique est connecté à Internet
+        return true;
     }
 }
