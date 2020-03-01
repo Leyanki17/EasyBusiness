@@ -2,6 +2,7 @@ package com.projet.easybusiness;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.DialogFragment;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -43,7 +44,7 @@ import okhttp3.Response;
 
 import static com.google.android.material.snackbar.Snackbar.LENGTH_LONG;
 
-public class DepotAnnonce extends AppCompatActivity {
+public class DepotAnnonce extends AppCompatActivity implements AdPictureDialog.MyDialogListener {
     private EditText titre;
     private EditText prix;
     private EditText ville;
@@ -68,9 +69,7 @@ public class DepotAnnonce extends AppCompatActivity {
 
             try {
                 sendAnnonce();
-                Log.i("test","send annonce marche");
             } catch (Exception e) {
-                Log.i("test","send annonce ne  marche pas");
                 e.printStackTrace();
             }
         }
@@ -84,7 +83,6 @@ public class DepotAnnonce extends AppCompatActivity {
         try{
              ad= jsonAdapter.fromJson(body);
         }catch(IOException e){
-            Log.i("YKJ",e.getMessage());
         }
 
     }
@@ -126,13 +124,9 @@ public class DepotAnnonce extends AppCompatActivity {
                 try{
                     // si la requete n'a pas reussi
                     if(!response.isSuccessful()){
-                        // afficher un message d'erreur
-                        Log.i("post", "Le POST n'a pas reussi");
                         throw new IOException("Unexpected HTTP Code ");
                     }else
                     {
-                        Log.i("post", "Le POST a belle et bien reussi");
-                        //Log.i("post", response.body().string());
                         final String adBody= response.body().string();
                         runOnUiThread(
                                 new Runnable() {
@@ -146,7 +140,6 @@ public class DepotAnnonce extends AppCompatActivity {
                                     }
                                 }
                         );
-                        Log.i("ad",ad.getId());
                     }
                 } catch (Exception e)
                 {
@@ -161,6 +154,15 @@ public class DepotAnnonce extends AppCompatActivity {
      * @param v
      */
     public void photo(View v){
+        DialogFragment dialog = new AdPictureDialog();
+        dialog.show(getFragmentManager(), "Dialog");
+    }
+    public void uploadGalery(DialogFragment dialog){
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("image/*");
+        startActivityForResult(Intent.createChooser(intent,"pick an image"),1);
+    }
+    public void takePicture(DialogFragment dialog){
         Intent photoIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (photoIntent.resolveActivity(getPackageManager()) != null) {
             startActivityForResult(photoIntent, REQUEST_IMAGE_CAPTURE);
@@ -175,17 +177,12 @@ public class DepotAnnonce extends AppCompatActivity {
             Bundle extras = data.getExtras();
            imageBitmap = (Bitmap) extras.get("data");
       //      image.setImageBitmap();
-            Log.i("createFile"," Changement de l'image dans le image view");
             image.setImageBitmap(imageBitmap);
-            Log.i("createFile"," Changement de l'image dans le image view");
 
         }
-        Log.i("createFile"," Avant la creation du fichier");
         this.imageAnnonce= createImageFile(imageBitmap);
-        Log.i("createFile","apres la creation du fichier"+imageAnnonce.toString());
         try {
             sendImage(imageBitmap);
-            Log.i("dans le sendImage","");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -239,7 +236,6 @@ public class DepotAnnonce extends AppCompatActivity {
                 .url(" https://ensweb.users.info.unicaen.fr/android-api/")
                 .post(requestBody)
                 .build();
-        Log.i("testID", "1 " );
         clientImage.newCall(requestImg).enqueue(new Callback() {
 
             @Override
@@ -249,13 +245,10 @@ public class DepotAnnonce extends AppCompatActivity {
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                Log.i("testID", "3 " );
                 // on recupere le corps de la reponce
                 try {
-                    Log.i("testID", "4 " );
                     // si la requete n'a pas reussi
                     if (!response.isSuccessful()) {
-                        Log.i("testID", "5 " );
                     } else {
                         Log.i("testID", "tout est ok");
                     }
@@ -265,21 +258,6 @@ public class DepotAnnonce extends AppCompatActivity {
                 }
             }
          });
-        /*try (Response response = clientImage.newCall(request).execute()) {
-            if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
-
-            System.out.println(response.body().string());
-        }*/
-        /*try {
-            Response response = clientImage.newCall(request).execute();
-           // if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
-
-            //System.out.println(response.body().string());
-
-        }catch (IOException e)
-        {
-            Log.i("YKJ","dans le send Image");
-        }*/
     }
 }
 

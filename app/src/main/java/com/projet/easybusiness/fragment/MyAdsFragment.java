@@ -40,8 +40,6 @@ public class MyAdsFragment extends AllAdsFragment {
                              Bundle savedInstanceState) {
         v=inflater.inflate(R.layout.fragment_my_ads, container, false);
         try {
-            // makeHttpRequest("https://ensweb.users.info.unicaen.fr/android-api/mock-api/liste.json");
-
             makeHttpRequest("https://ensweb.users.info.unicaen.fr/android-api/?apikey=21913373&method=listAll");
         } catch (Exception e) {
             e.printStackTrace();
@@ -53,7 +51,6 @@ public class MyAdsFragment extends AllAdsFragment {
         // declaration de l'instance de moshi qui va gerer le parsing
         Moshi moshi= new Moshi.Builder().add(new ApiListAnnonceAdapter()).build();
         JsonAdapter<ResponseAnnonces> adapter = moshi.adapter(ResponseAnnonces.class);
-        Log.i("YKJ","je suis dans l'adapteur 222");
         try{
             ResponseAnnonces response = adapter.fromJson(body);
             listAnnonce=response.getAnnonces();
@@ -62,10 +59,9 @@ public class MyAdsFragment extends AllAdsFragment {
             fillMap();
 
             RecyclerView recycler= v.findViewById(R.id.recycleViewFavAnnonces);
-            Log.i("act","TTTTTTTTTTTTTTTTs");
             // on inserer une linear view afin d'afficher les éléments sur une ligne
             recycler.setLayoutManager(new LinearLayoutManager(getActivity()));
-            Log.i("act","RRRRRRRRRRRRRRRRRRRr");
+
             recycler.setAdapter(adapterListAnnonce);
 
         }catch (Exception e) {
@@ -85,7 +81,6 @@ public class MyAdsFragment extends AllAdsFragment {
                     Log.i("YKJ", i+" inserer");
                 }
             }
-            Log.i("YKJ", i+""+ preferences.getString("pseudo","")+"=="+ad.getPseudo());
         }
         listAnnonce= new ArrayList<>(list);
     }

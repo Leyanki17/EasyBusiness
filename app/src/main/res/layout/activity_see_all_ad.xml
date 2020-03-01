@@ -6,7 +6,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:outlineAmbientShadowColor="#566200EE"
     tools:context=".SeeAllAd">
 
     <androidx.appcompat.widget.Toolbar
@@ -21,7 +20,25 @@
         android:theme="?attr/toolbarStyle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent" >
+
+        <RelativeLayout
+            android:layout_width="140dp"
+            android:layout_height="30dp">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Easy Business"
+                android:textSize="18dp"
+                android:textColor="#000000"
+                android:fontFamily="sans-serif-smallcaps"
+                android:elevation="3dp"
+                android:gravity="center"
+                />
+        </RelativeLayout>
+
+
+    </androidx.appcompat.widget.Toolbar>
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbartab"
@@ -34,7 +51,9 @@
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tablay"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            app:tabIndicatorColor="@color/colorPrimaryDark"
+            >
 
             <com.google.android.material.tabs.TabItem
                 android:layout_width="wrap_content"

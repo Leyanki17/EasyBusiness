@@ -86,8 +86,6 @@ public class AllAdsFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //TextView text = getActivity().findViewById(R.id.textView3);
-        //Log.i("test",text.getText().toString());
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);

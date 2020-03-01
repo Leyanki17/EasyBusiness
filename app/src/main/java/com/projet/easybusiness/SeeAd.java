@@ -79,16 +79,9 @@ public class SeeAd extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         Intent intent;
-        if(id == R.id.ic_save){
-            intent = new Intent(this,UserInformation.class);
-            startActivity(intent);
-        }else if(id == R.id.ic_edit){
+        if(id == R.id.ic_edit){
             intent = new Intent(this,ModifAnnonce.class); //ajout annonce
-            //startActivity(intent);
-        }else if(id == R.id.ic_delete){
-            //supprimé l'annonce et redirection
-            //intent = new Intent(this,SeeAllAd.class);
-            //startActivity(intent);
+            startActivity(intent);
         }
 
         return super.onOptionsItemSelected(item);
@@ -248,7 +241,10 @@ public class SeeAd extends AppCompatActivity {
         }
     }
 
-
+    public void returnParent(View v){
+        Intent intent = new Intent(this,SeeAllAd.class);
+        startActivity(intent);
+    }
 
 
     //requete de suppression dans l'API

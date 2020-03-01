@@ -61,12 +61,10 @@ public class AnnonceDb {
             String[] selectArg= {
                    id
             };
-            //annonceDbOpener.close();
         Cursor cursor;
         SQLiteDatabase db = annonceDbOpener.getReadableDatabase();
-            cursor = db.query(AnnonceContract.FeedEntry.TABLE_NAME, projection,select, selectArg, null, null, null);
+        cursor = db.query(AnnonceContract.FeedEntry.TABLE_NAME, projection,select, selectArg, null, null, null);
 
-        Log.i("tttt", "mes"+ cursor);
             return (cursor.getCount() > 0)? true : false;
     }
 
@@ -88,21 +86,10 @@ public class AnnonceDb {
                 AnnonceContract.FeedEntry.COLUMN_NAME_DATE
         };
 
-        Log.i("tttt", "après projection");
-
-        Log.i("tttt", "debut ouverture de la requete");
-        //annonceDbOpener.close();
         SQLiteDatabase db = annonceDbOpener.getReadableDatabase();
-        //SQLiteOpenHelper helper = new AnnonceDbOpener(v.getContext());
-       // SQLiteDatabase db = helper.getReadableDatabase();
-        Log.i("tttt", "après ouverture de la requete");
+
 
         Cursor cursor =   db.query(AnnonceContract.FeedEntry.TABLE_NAME, projection,null,null,null,null,null);
-        Log.i("tttt", "après l'execution de la requete");
-
-    /*   while(cursor != null){
-           cursor.moveToNext();
-       }*/
         return cursor;
     }
 

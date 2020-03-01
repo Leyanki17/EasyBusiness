@@ -5,7 +5,7 @@
     android:id="@+id/line"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:onClick="returnParent"
+    android:background="@drawable/gradient"
     tools:context=".SeeAd">
 
 
@@ -29,8 +29,25 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:onClick="returnParent"
+            android:visibility="visible"
+            >
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:text="Annonce"
+                android:textSize="23dp"
+                android:textColor="#000"
+                android:gravity="center"
+                />
+        </RelativeLayout>
+
+    </androidx.appcompat.widget.Toolbar>
 
     <TextView
         android:id="@+id/titre"
@@ -41,6 +58,7 @@
         android:textFontWeight="18"
         android:textIsSelectable="true"
         android:textSize="18dp"
+        android:textColor="#000000"
         app:layout_constraintEnd_toEndOf="@+id/slide"
         app:layout_constraintHorizontal_bias="0.506"
         app:layout_constraintStart_toStartOf="@+id/slide"
@@ -77,30 +95,29 @@
         android:id="@+id/description"
         android:layout_width="344dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
+        android:layout_marginStart="3dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="32dp"
         android:text="A vendre ordinateur HP 2019, 8G RAM. 150$"
         android:textSize="15dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.666"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/pubIntro"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
+
 
     <LinearLayout
         android:id="@+id/linearLayout2"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="32dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.414"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/description"
         app:layout_constraintTop_toBottomOf="@+id/slideNumber">
 
-        <TextView
+        <!--<TextView
             android:id="@+id/prix"
             android:layout_width="187dp"
             android:layout_height="wrap_content"
@@ -114,20 +131,19 @@
             android:layout_weight="50"
             android:text="14000 Caen">
 
-        </TextView>
+        </TextView>-->
     </LinearLayout>
-
 
     <TextView
         android:id="@+id/date"
         android:layout_width="232dp"
         android:layout_height="18dp"
-        android:layout_marginTop="120dp"
+        android:layout_marginEnd="32dp"
         android:text="TextView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.141"
+        app:layout_constraintHorizontal_bias="0.37"
         app:layout_constraintStart_toEndOf="@+id/pubIntro"
-        app:layout_constraintTop_toBottomOf="@+id/description" />
+        app:layout_constraintTop_toTopOf="@+id/pubIntro" />
 
     <TextView
         android:id="@+id/proprietaire"
@@ -153,7 +169,7 @@
 
     <TextView
         android:id="@+id/email"
-        android:layout_width="140dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:onClick="sendEmail"
@@ -168,7 +184,6 @@
         android:layout_width="140dp"
 
         android:layout_height="20dp"
-        android:drawableLeft="@drawable/ic_phone"
         android:onClick="callPers"
         android:text="06888888888"
         android:textAlignment="center"
@@ -178,15 +193,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/email"
         app:layout_constraintVertical_bias="0.142" />
-
-    <TextView
-        android:id="@+id/pubIntro"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:text="Publier le "
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/description" />
 
 
     <!--<ImageView
@@ -202,13 +208,23 @@
 
 
     <TextView
+        android:id="@+id/pubIntro"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="20dp"
+        android:text="Publier le "
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/description" />
+
+    <TextView
         android:id="@+id/textView2"
         android:layout_width="0dp"
         android:layout_height="5dp"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="68dp"
         android:layout_marginEnd="32dp"
-        android:background="#CCC9C9"
+        android:background="#4F6200EE"
         android:text="TextView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
@@ -216,35 +232,32 @@
         app:layout_constraintTop_toBottomOf="@+id/pubIntro" />
 
 
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:onClick="returnParent"
-        android:visibility="visible"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tool_br"
-        tools:srcCompat="@drawable/ic_fleche_gauche" />
-
     <TextView
         android:id="@+id/slideNumber"
-        android:layout_width="47dp"
-        android:layout_height="14dp"
-        android:text="TextView"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text=" "
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/slide" />
-
 
     <Button
         android:id="@+id/supprimer"
         android:layout_width="100dp"
         android:layout_height="40dp"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="68dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="32dp"
+        android:background="@color/colorPrimaryDark"
+        android:drawableLeft="@drawable/ic_delete_ad"
         android:onClick="supprimer"
         android:text="supprimer"
+        android:textSize="12dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btSave"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tel" />
 
@@ -253,13 +266,18 @@
         android:layout_width="100dp"
         android:layout_height="40dp"
         android:layout_marginStart="18dp"
-        android:layout_marginEnd="48dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="32dp"
+        android:background="@color/colorPrimaryDark"
+        android:drawableLeft="@drawable/ic_edit_ad"
         android:onClick="modifierAnnonce"
         android:text="modifier"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/btSave"
-        app:layout_constraintTop_toTopOf="@+id/btSave" />
+        app:layout_constraintTop_toTopOf="@+id/btSave"
+        app:layout_constraintVertical_bias="0.0" />
 
     <ImageView
         android:id="@+id/SendEmail"
@@ -286,13 +304,19 @@
         android:id="@+id/btSave"
         android:layout_width="100dp"
         android:layout_height="40dp"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="32dp"
         android:layout_weight="1"
+        android:background="@color/colorPrimaryDark"
         android:onClick="saveAd"
-        android:text="Save"
+        android:text="save"
         android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/modifier"
         app:layout_constraintStart_toEndOf="@+id/supprimer"
-        app:layout_constraintTop_toTopOf="@+id/supprimer" />
+        app:layout_constraintTop_toTopOf="@+id/supprimer"
+        app:layout_constraintVertical_bias="0.0" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

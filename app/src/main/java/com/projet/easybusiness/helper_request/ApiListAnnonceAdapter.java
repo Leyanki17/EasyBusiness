@@ -15,10 +15,6 @@ import okhttp3.ResponseBody;
 
 public class ApiListAnnonceAdapter {
 
-    /*private ArrayList<Annonce> annonces;
-    public  ApiListAnnonceAdapter(){
-        annonces=new ArrayList<>();
-    }*/
     @ToJson
     public String toJson(ResponseAnnonces response) {
         return "";
@@ -40,17 +36,10 @@ public class ApiListAnnonceAdapter {
                 success= reader.nextBoolean();
 
                 if (!success) {
-                    // @todo : récupérer le message d'erreur et le donner à l'exception
-                    // @todo : créer une exception spécifique pour la distinguer des IOException
-                    Log.i("YKJ", "je ne suis pas aller dans le success");
                     throw new IOException("API a répondu FALSE");
                 }
             }else if(name.equals("response")){
 
-                Log.i("YKJ", "je suis dans l'adaptater");
-                Log.i("YKJD", "");
-
-              //  result=  ""+ reader.readJsonValue().toString();
                 ArrayList<Annonce> p = new ArrayList<Annonce>();
                 reader.beginArray();
 

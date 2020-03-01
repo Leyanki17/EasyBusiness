@@ -16,8 +16,8 @@ import android.widget.TextView;
 import com.google.android.material.tabs.TabLayout;
 import com.projet.easybusiness.fragment.AllAdsFragment;
 import com.projet.easybusiness.fragment.FavoritAdsFragment;
+import com.projet.easybusiness.fragment.FragmentAdapter;
 import com.projet.easybusiness.fragment.MyAdsFragment;
-import com.projet.easybusiness.fragment.ProfilFragment;
 import com.projet.easybusiness.helper_request.HelperClass;
 
 import java.util.ArrayList;
