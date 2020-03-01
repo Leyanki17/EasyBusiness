@@ -27,7 +27,7 @@ public class AnnonceDbOpener extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
        db.execSQL(AnnonceContract.FeedEntry.SQL_DELETE_ENTRIES);
         onCreate(db);
-        //setDatabaseVersion(newVersion);
+        setDatabaseVersion(newVersion);
     }
 
     public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {

@@ -48,8 +48,6 @@ public class SliderAdapter extends PagerAdapter {
                 .fit().centerCrop().error(R.drawable.laptop_hp).into(imageView);
         container.addView(imageView);
 
-       // position= idSlide+1;
-
         Log.i("YKJ",images[position]+" indice after+ "+container.toString());
 
         return imageView;

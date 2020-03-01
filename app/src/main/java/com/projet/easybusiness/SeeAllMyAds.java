@@ -2,10 +2,6 @@ package com.projet.easybusiness;
 
 import android.content.SharedPreferences;
 import android.util.Log;
-
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import com.projet.easybusiness.helper_request.ApiListAnnonceAdapter;
 import com.projet.easybusiness.helper_request.ResponseAnnonces;
 import com.projet.easybusiness.recycler_view_helper.AnnonceAdapter;
@@ -28,13 +24,6 @@ public class SeeAllMyAds extends SeeAllAd {
             filter(listAnnonce);
             AnnonceAdapter adapterListAnnonce= new AnnonceAdapter(listAnnonce);
             fillMap();
-            //RecyclerView recyclerView= findViewById(R.id.recycleView);
-
-            // on inserer une linear view afin d'afficher les éléments sur une ligne
-            //recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-            //recyclerView.setAdapter(adapterListAnnonce);
-
         }catch (Exception e) {
             e.printStackTrace();
         }

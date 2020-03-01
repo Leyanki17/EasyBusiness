@@ -29,9 +29,4 @@ public class ListeDesAnnoncesSauvegargees extends AppCompatActivity {
 
     }
 
-    /*public void listeDesAnncesSauvegardees(){
-
-
-    }*/
-
 }

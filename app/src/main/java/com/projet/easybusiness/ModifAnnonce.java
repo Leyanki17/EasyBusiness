@@ -167,12 +167,6 @@ public class ModifAnnonce extends AppCompatActivity {
             // Le périphérique n'est pas connecté à Internet
             return false;
         }
-        if (network.isRoaming())
-        {
-            // Si tu as besoin d’exécuter une tache spéciale si le périphérique est connecté à Internet en roaming (pour afficher un message prévenant des surcoûts opérateurs par exemple)
-            // Si inutile, supprime la condition
-        }
-        // Le périphérique est connecté à Internet
         return true;
     }
 }

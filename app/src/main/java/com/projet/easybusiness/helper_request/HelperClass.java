@@ -28,7 +28,6 @@ public class HelperClass {
             DateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
             date = (Date)formatter.parse(""+date+"");
             longDate=date.getTime();
-            //System.out.println("Today is " +longDate );
         }
         catch (ParseException e){
             System.out.println("Exception :"+e);
@@ -72,10 +71,8 @@ public class HelperClass {
         Date date = null;
         try{
             date = new SimpleDateFormat("MM/dd/yyyy").parse(dateAsString);
-            Log.i("nnnn", "Dans le try");
         }catch(Exception e){
             e.printStackTrace();
-            Log.i("nnnn", "Dans le cctch");
         }
         return date ;
 

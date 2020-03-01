@@ -7,7 +7,6 @@ import androidx.viewpager.widget.ViewPager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.Cursor;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -20,6 +19,7 @@ import android.widget.TextView;
 import com.google.android.material.tabs.TabLayout;
 import com.projet.easybusiness.fragment.AllAdsFragment;
 import com.projet.easybusiness.fragment.FavoritAdsFragment;
+import com.projet.easybusiness.fragment.FragmentAdapter;
 import com.projet.easybusiness.fragment.MyAdsFragment;
 import com.projet.easybusiness.helper_request.HelperClass;
 
@@ -137,18 +137,12 @@ public class SeeAllAd extends AppCompatActivity implements AllAdsFragment.ClickL
         NetworkInfo network = ((ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE))
                 .getActiveNetworkInfo();
 
-
         if (network==null || !network.isConnected())
         {
             // Le périphérique n'est pas connecté à Internet
             return false;
         }
-        if (network.isRoaming())
-        {
-            // Si tu as besoin d’exécuter une tache spéciale si le périphérique est connecté à Internet en roaming (pour afficher un message prévenant des surcoûts opérateurs par exemple)
-            // Si inutile, supprime la condition
-        }
-        // Le périphérique est connecté à Internet
+
         return true;
     }
 }
