@@ -14,7 +14,9 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 public class HelperClass {
     public static String formatDate(long date){
@@ -66,31 +68,52 @@ public class HelperClass {
         return f;
     }
 
-    public static Date fromLongToDate(Long valeur){
-        String dateAsString = String.valueOf(valeur);
-        Date date = null;
+    public static String fromLongToDate(Long time){
+       // String dateAsString = String.valueOf(valeur);
+       /* Date date = null;
         try{
-            date = new SimpleDateFormat("MM/dd/yyyy").parse(dateAsString);
+            date = new SimpleDateFormat("dd/MM/yyyy").parse(dateAsString);
         }catch(Exception e){
             e.printStackTrace();
         }
-        return date ;
+                */
+
+        try{
+            DateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+            Date netDate = (new Date(time));
+            Log.i("date",netDate.toString());
+            return sdf.format(netDate);
+        } catch (Exception ignored) {
+            return "xx";
+        }
+      /*  Calendar cal = Calendar.getInstance(Locale.FRANCE);
+        cal.setTimeInMillis(time * 1000);
+        String date = DateFormat.format("dd-MM-yyyy", cal).toString();*/
+
+        //return date ;
 
     }
 
-    public static Annonce bind(Cursor cursor){
-        String ctitre= cursor.getString(cursor.getColumnIndex(AnnonceContract.FeedEntry.COLUMN_NAME_TITRE));
+    public static Annonce bind(Cursor cursor) {
+        cursor.moveToPosition(0);
+        String ctitre = cursor.getString(cursor.getColumnIndex(AnnonceContract.FeedEntry.COLUMN_NAME_TITRE));
         Long cdate = cursor.getLong(cursor.getColumnIndex(AnnonceContract.FeedEntry.COLUMN_NAME_DATE));
         String cdescription = cursor.getString(cursor.getColumnIndex(AnnonceContract.FeedEntry.COLUMN_NAME_DESCRIPTION));
         String[] cimage = {cursor.getString(cursor.getColumnIndex(AnnonceContract.FeedEntry.COLUMN_NAME_IMAGES))};
-        String cid= cursor.getString(cursor.getColumnIndex(AnnonceContract.FeedEntry.COLUMN_NAME_ID));
+        String cid = cursor.getString(cursor.getColumnIndex(AnnonceContract.FeedEntry.COLUMN_NAME_ID));
         String cville = cursor.getString(cursor.getColumnIndex(AnnonceContract.FeedEntry.COLUMN_NAME_VILLE));
         String ccodePostal = cursor.getString(cursor.getColumnIndex(AnnonceContract.FeedEntry.COLUMN_NAME_CODE_POSTAL));
-        int cprix= cursor.getInt(cursor.getColumnIndex(AnnonceContract.FeedEntry.COLUMN_NAME_PRIX));
+        int cprix = cursor.getInt(cursor.getColumnIndex(AnnonceContract.FeedEntry.COLUMN_NAME_PRIX));
         String cpseudo = cursor.getString(cursor.getColumnIndex(AnnonceContract.FeedEntry.COLUMN_NAME_PSEUDO));
         String cemail = cursor.getString(cursor.getColumnIndex(AnnonceContract.FeedEntry.COLUMN_NAME_EMAIL));
-        String ctel= cursor.getString(cursor.getColumnIndex(AnnonceContract.FeedEntry.COLUMN_NAME_TELEPHONE));
-        return new Annonce(cid,ctitre,cdescription,cprix,cpseudo,cemail,ctel,cville,ccodePostal,cimage,cdate);
+        String ctel = cursor.getString(cursor.getColumnIndex(AnnonceContract.FeedEntry.COLUMN_NAME_TELEPHONE));
+        return new Annonce(cid, ctitre, cdescription, cprix, cpseudo, cemail, ctel, cville, ccodePostal, cimage, cdate);
     }
 
+    public static void wait(int time){
+        try {
+            Thread.sleep(time);
+        } catch (InterruptedException e) {
+        }
+    }
 }

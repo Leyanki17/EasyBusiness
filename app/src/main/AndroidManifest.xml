@@ -15,9 +15,9 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/ic_launcher_easybusiness"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/ic_launcher_easybusiness_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
@@ -40,12 +40,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <!--
-        <activity android:name=".ListeDesAnnoncesSauvegargees"/>
-        <activity
-            android:name=".MainActivity"
-            android:parentActivityName=".MainActivity">
-        </activity>-->
+
+        <activity android:name=".ListeDesAnnoncesSauvegargees" android:parentActivityName=".SeeAllAd"></activity>
+        <!--   <activity
+             android:name=".MainActivity"
+             android:parentActivityName=".MainActivity">
+         </activity>-->
     </application>
 
 </manifest>

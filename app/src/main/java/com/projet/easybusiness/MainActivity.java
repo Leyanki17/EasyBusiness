@@ -43,15 +43,24 @@ public class MainActivity extends AppCompatActivity {
             intent = new Intent(this,UserInformation.class);
             startActivity(intent);
         }else if(id == R.id.ic_add){
-            //intent = new Intent(this,Add_annonce.class);
-            //startActivity(intent);
+            intent = new Intent(this,DepotAnnonce.class); //ajout annonce
+            startActivity(intent);
+        }else if(id == R.id.ic_save){
+            intent = new Intent(this,ListeDesAnnoncesSauvegargees.class);
+            startActivity(intent);
+        }else if(id == R.id.ic_refrech){
+            intent = new Intent(this, SeeAllAd.class); //ajout annonce
+            startActivity(intent);
+
         }else{
             //envoyer à la liste des annonces
             intent = new Intent(this,SeeAllAd.class);
             startActivity(intent);
         }
+
         return super.onOptionsItemSelected(item);
     }
+
     /********************************/
 
     public void next(View view) {

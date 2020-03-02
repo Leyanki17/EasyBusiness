@@ -1,13 +1,18 @@
 package com.projet.easybusiness;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
 import android.widget.Adapter;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.projet.easybusiness.helper_request.HelperClass;
 import com.projet.easybusiness.recycler_view_helper.RecyclerViewCursorAdapter;
 
 public class ListeDesAnnoncesSauvegargees extends AppCompatActivity {
@@ -29,4 +34,16 @@ public class ListeDesAnnoncesSauvegargees extends AppCompatActivity {
 
     }
 
+    public void itemClick(View v){
+        String titreClick;
+        TextView clicked = (TextView)v.findViewById(R.id.idAnnonce);
+        titreClick=clicked.getText().toString();
+        AnnonceDb database= new AnnonceDb(this);
+        Intent next= new Intent(this,SeeAd.class);
+        Cursor elt = database.getElt(titreClick);
+
+        next.putExtra("idAnnonce", HelperClass.bind(elt));
+        startActivity(next);
+
+    }
 }

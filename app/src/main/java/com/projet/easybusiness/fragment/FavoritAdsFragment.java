@@ -1,6 +1,7 @@
 package com.projet.easybusiness.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
@@ -18,7 +19,9 @@ import android.view.ViewGroup;
 
 import com.projet.easybusiness.Annonce;
 import com.projet.easybusiness.AnnonceDb;
+import com.projet.easybusiness.ListeDesAnnoncesSauvegargees;
 import com.projet.easybusiness.R;
+import com.projet.easybusiness.SeeAd;
 import com.projet.easybusiness.SeeAllAd;
 import com.projet.easybusiness.helper_request.ApiListAnnonceAdapter;
 import com.projet.easybusiness.helper_request.ResponseAnnonces;
@@ -105,6 +108,9 @@ public class FavoritAdsFragment extends Fragment{
         mListener = null;
     }
 
+    public void voirList(View view) {
+    }
+
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
@@ -136,6 +142,9 @@ public class FavoritAdsFragment extends Fragment{
         Log.i("fd", "3 fragment de base de donnéé");
         recyclerView.setAdapter(cAdapter);
         Log.i("fd", "4 fragment de base de donnéé");
+        Intent next= new Intent(getContext(), ListeDesAnnoncesSauvegargees.class);
+        startActivity(next);
         return v;
     }
+
 }

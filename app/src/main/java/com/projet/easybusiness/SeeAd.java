@@ -88,8 +88,8 @@ public class SeeAd extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         Intent intent;
-        if(id == R.id.ic_edit){
-            intent = new Intent(this,ModifAnnonce.class); //ajout annonce
+        if(id == R.id.ic_refrech){
+            intent = new Intent(this,SeeAllAd.class); //ajout annonce
             startActivity(intent);
         }
 
@@ -180,7 +180,7 @@ public class SeeAd extends AppCompatActivity {
         telephone.setText(ad.getTelContact());
         adresse.setText(ad.getAdresse());
         description.setText(ad.getDescription());
-        date.setText(" "+ HelperClass.formatDate(ad.getDate()));
+        date.setText(" "+ HelperClass.fromLongToDate(ad.getDate()));
         Log.i("YKJ", "logo fin");
         AnnonceDb annonceDb = new AnnonceDb(this);
 
@@ -295,9 +295,9 @@ public class SeeAd extends AppCompatActivity {
           if(view.getId()==R.id.supprimer && preferences.getString("email","inconnu").equalsIgnoreCase(ad.getEmailContact())) {
               suppressionId("https://ensweb.users.info.unicaen.fr/android-api/?apikey=21913373&method=delete&id=" + ad.getId());
               Snackbar.make(findViewById(R.id.line),"votre annonce a été supprimer avec succes", Snackbar.LENGTH_LONG).show();
+              HelperClass.wait(1500);
               Intent next= new Intent(this,SeeAllAd.class);
               startActivity(next);
-
           }else
           {
               Snackbar.make(findViewById(R.id.line),"vous ne disposez pas les droit de supprimer cette annonce", Snackbar.LENGTH_LONG).show();
@@ -346,11 +346,7 @@ public class SeeAd extends AppCompatActivity {
             // Le périphérique n'est pas connecté à Internet
             return false;
         }
-        if (network.isRoaming())
-        {
-            // Si tu as besoin d’exécuter une tache spéciale si le périphérique est connecté à Internet en roaming (pour afficher un message prévenant des surcoûts opérateurs par exemple)
-            // Si inutile, supprime la condition
-        }
+
         // Le périphérique est connecté à Internet
         return true;
     }

@@ -37,7 +37,7 @@ public class AnnonceViewHolder extends RecyclerView.ViewHolder {
 
     public void bind(Annonce ad) {
         titre.setText(ad.getTitre());
-        date.setText(HelperClass.formatDate(ad.getDate()));
+        date.setText(HelperClass.fromLongToDate(ad.getDate()));
         description.setText(ad.getDescription());
         id.setText(ad.getId());
         if(ad.getImages().length>=1){
@@ -54,7 +54,7 @@ public class AnnonceViewHolder extends RecyclerView.ViewHolder {
         String cimage = cursor.getString(cursor.getColumnIndex(AnnonceContract.FeedEntry.COLUMN_NAME_IMAGES));
         String cid= cursor.getString(cursor.getColumnIndex(AnnonceContract.FeedEntry.COLUMN_NAME_ID));
         titre.setText(ctitre);
-        date.setText(HelperClass.formatDate(cdate));
+        date.setText(HelperClass.fromLongToDate(cdate));
         description.setText(cdescription);
         id.setText(cid);
         Picasso.get().load(cimage).fit().error(R.drawable.laptop_hp).into(img);

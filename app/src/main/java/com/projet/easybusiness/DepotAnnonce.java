@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -28,8 +29,10 @@ import com.squareup.moshi.Moshi;
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Date;
 import java.text.SimpleDateFormat;
@@ -99,7 +102,13 @@ public class DepotAnnonce extends AppCompatActivity implements AdPictureDialog.M
     public void sendAnnonce() throws Exception {
         SharedPreferences preferences=  getSharedPreferences("PREF",MODE_PRIVATE);
         titre = (EditText) findViewById(R.id.champsTitre);
-        int prix = Integer.parseInt(((EditText) findViewById(R.id.champsPrix)).getText().toString());
+        String price = ((EditText) findViewById(R.id.champsPrix)).getText().toString();
+        if(price == ""){
+            int prix = 0;
+        }else{
+            int prix = Integer.parseInt(price);
+        }
+
         ville = (EditText) findViewById(R.id.champsVille);
         cp = (EditText) findViewById(R.id.champsCp);
         description = (EditText) findViewById(R.id.champsDescription);
@@ -170,13 +179,12 @@ public class DepotAnnonce extends AppCompatActivity implements AdPictureDialog.M
         dialog.show(getFragmentManager(), "Dialog");
     }
     public void uploadGalery(DialogFragment dialog){
-        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setType("image/*");
-        startActivityForResult(Intent.createChooser(intent,"pick an image"),1);
+        startActivityForResult(Intent.createChooser(intent,"pick an image"),1499);
     }
     public void takePicture(DialogFragment dialog){
         Intent photoIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-
         if (photoIntent.resolveActivity(getPackageManager()) != null) {
             startActivityForResult(photoIntent, REQUEST_IMAGE_CAPTURE);
         }
@@ -185,12 +193,25 @@ public class DepotAnnonce extends AppCompatActivity implements AdPictureDialog.M
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         Bitmap imageBitmap = null;
+        ImageView image =  findViewById(R.id.imageview);
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            ImageView image = (ImageView) findViewById(R.id.imageview);
+
             Bundle extras = data.getExtras();
            imageBitmap = (Bitmap) extras.get("data");
       //      image.setImageBitmap();
             image.setImageBitmap(imageBitmap);
+        } else if(requestCode==1499){
+            final Uri imageUri = data.getData();
+            final InputStream imageStream;
+            try {
+                imageStream = getContentResolver().openInputStream(imageUri);
+                imageBitmap = BitmapFactory.decodeStream(imageStream);
+                image.setImageBitmap(imageBitmap);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+                Snackbar.make(findViewById(R.id.depotAd),"Envoie de l'image à échoué", LENGTH_LONG)
+                        .show();
+            }
 
         }
         this.imageAnnonce= createImageFile(imageBitmap);
@@ -198,6 +219,8 @@ public class DepotAnnonce extends AppCompatActivity implements AdPictureDialog.M
 
             if(haveInternetConnection()){
                 sendImage(imageBitmap);
+                Snackbar.make(findViewById(R.id.depotAd),"Envoie de l'image à reussie", LENGTH_LONG)
+                        .show();
             }else{
                 Snackbar.make(findViewById(R.id.depotAd),"Impossible d'envoyer l'image verifier que vous êtes bien connecter à internet", LENGTH_LONG)
                         .show();
@@ -292,15 +315,13 @@ public class DepotAnnonce extends AppCompatActivity implements AdPictureDialog.M
             // Le périphérique n'est pas connecté à Internet
             return false;
         }
-        if (network.isRoaming())
-        {
-            // Si tu as besoin d’exécuter une tache spéciale si le périphérique est connecté à Internet en roaming (pour afficher un message prévenant des surcoûts opérateurs par exemple)
-            // Si inutile, supprime la condition
-        }
         // Le périphérique est connecté à Internet
         return true;
     }
-
+    public void TerminerAjout(View view) {
+       Intent intent = new Intent(this, SeeAllAd.class); //ajout annonce
+        startActivity(intent);
+    }
 }
 
 

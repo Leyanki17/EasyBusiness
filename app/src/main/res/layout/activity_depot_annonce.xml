@@ -8,18 +8,18 @@
     android:background="@drawable/gradient"
     tools:context=".DepotAnnonce">
 
-    <!--<Button
-        android:id="@+id/BoutonImage"
+    <Button
+        android:id="@+id/BoutonTerminer"
         android:layout_width="152dp"
         android:layout_height="39dp"
         android:layout_marginStart="24dp"
         android:layout_marginBottom="32dp"
-        android:onClick="photo"
-        android:text="prendre image"
+        android:onClick="TerminerAjout"
+        android:text="Terminer"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.085"
-        app:layout_constraintStart_toStartOf="parent" />-->
+        app:layout_constraintHorizontal_bias="0.468"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/entete"
@@ -50,7 +50,7 @@
         android:id="@+id/titre"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="76dp"
+        android:layout_marginTop="108dp"
         android:layout_marginEnd="26dp"
         android:text="Titre        :"
         android:textAlignment="center"
@@ -64,7 +64,7 @@
         android:id="@+id/prix"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="40dp"
         android:layout_marginEnd="22dp"
         android:text="Prix         :"
         android:textAlignment="center"
@@ -80,7 +80,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:ems="10"
-        android:inputType="textPersonName"
+        android:inputType="@string/number"
         app:layout_constraintStart_toStartOf="@+id/champsTitre"
         app:layout_constraintTop_toBottomOf="@+id/champsTitre" />
 
@@ -127,7 +127,7 @@
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="2dp"
-        android:layout_marginTop="35dp"
+        android:layout_marginTop="48dp"
         android:layout_marginEnd="22dp"
         android:text="Code postale"
         android:textSize="16dp"
@@ -149,8 +149,8 @@
         android:id="@+id/description"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="43dp"
-        android:layout_marginEnd="22dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="20dp"
         android:text="Description"
         android:textSize="16dp"
         app:layout_constraintEnd_toStartOf="@+id/champsDescription"
@@ -166,11 +166,12 @@
         app:layout_constraintStart_toStartOf="@+id/champsCp"
         app:layout_constraintTop_toBottomOf="@+id/champsCp" />
 
+
     <androidx.cardview.widget.CardView
         android:id="@+id/valider"
         android:layout_width="200dp"
         android:layout_height="50dp"
-        android:layout_marginTop="94dp"
+        android:layout_marginTop="52dp"
         android:onClick="onClick"
         app:cardBackgroundColor="@color/colorPrimaryDark"
         app:cardCornerRadius="25dp"
@@ -195,13 +196,13 @@
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
 
-
     <ImageView
         android:id="@+id/imageview"
         android:layout_width="127dp"
         android:layout_height="112dp"
-        android:layout_marginEnd="32dp"
-        android:visibility="invisible"
+        android:layout_marginTop="44dp"
+        android:layout_marginEnd="40dp"
+        android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/entete"
         tools:srcCompat="@tools:sample/avatars" />

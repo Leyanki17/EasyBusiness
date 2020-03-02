@@ -7,6 +7,7 @@ import androidx.viewpager.widget.ViewPager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -56,12 +57,12 @@ public class SeeAllAd extends AppCompatActivity implements AllAdsFragment.ClickL
 
             if(haveInternetConnection()){
                 ((FragmentAdapter) pagerAdapter).addFragment(new AllAdsFragment(R.layout.fragment_all_ads),"Tout");
-                ((FragmentAdapter) pagerAdapter).addFragment(new FavoritAdsFragment(),"Favories");
                 ((FragmentAdapter) pagerAdapter).addFragment(new MyAdsFragment(R.layout.fragment_my_ads) ,"Mes annonces");
+               // ((FragmentAdapter) pagerAdapter).addFragment(new FavoritAdsFragment(),"Favories");
             }else{
                 ((FragmentAdapter) pagerAdapter).addFragment(new AllAdsFragment(R.layout.fragment_all_ads_no_connection),"Tout");
-                ((FragmentAdapter) pagerAdapter).addFragment(new FavoritAdsFragment(),"Favories");
                 ((FragmentAdapter) pagerAdapter).addFragment(new MyAdsFragment(R.layout.fragment_my_ads_no_connection) ,"Mes annonces");
+             //   ((FragmentAdapter) pagerAdapter).addFragment(new FavoritAdsFragment(),"Favories");
             }
 
 
@@ -81,46 +82,50 @@ public class SeeAllAd extends AppCompatActivity implements AllAdsFragment.ClickL
         int id = item.getItemId();
         Intent intent;
         if(id == R.id.ic_profil){
+            Log.i("menu","jesuis "+ id);
             intent = new Intent(this,UserInformation.class);
             startActivity(intent);
         }else if(id == R.id.ic_add){
+            Log.i("menu","jesuis "+ id);
             intent = new Intent(this,DepotAnnonce.class); //ajout annonce
+            startActivity(intent);
+        }else if(id == R.id.ic_save){
+            intent = new Intent(this,ListeDesAnnoncesSauvegargees.class);
+            startActivity(intent);
+        }else if(id == R.id.ic_refrech){
+            Log.i("menu","jesuis "+ id);
+            intent = new Intent(this, SeeAllAd.class); //ajout annonce
             startActivity(intent);
         }else{
             //envoyer à la liste des annonces
+            Log.i("menu","Par default");
             intent = new Intent(this,SeeAllAd.class);
             startActivity(intent);
         }
 
         return super.onOptionsItemSelected(item);
     }
+
+    public void voirList(View view) {
+        Intent next= new Intent(this,ListeDesAnnoncesSauvegargees.class);
+        startActivity(next);
+    }
+
     /********************************/
-    public void itemClick(View v){
+
+
+    public  void itemClick(View v){
         String titreClick;
         TextView clicked = (TextView)v.findViewById(R.id.idAnnonce);
         titreClick=clicked.getText().toString();
 
-       // if(haveInternetConnection()){
             Intent next= new Intent(this,SeeAd.class);
             Log.i("titret",titreClick +"size ");
-           /* if(SeeAllAd.frombd==true){
-                SeeAllAd.frombd=false;
-                AnnonceDb database= new AnnonceDb(this);
-                Cursor elt = database.getElt(titreClick);
-
-                next.putExtra("idAnnonce", HelperClass.bind(elt) );
-
-            }else{*/
                 next.putExtra("idAnnonce", annonces.get(titreClick));
-           // }
-
             startActivity(next);
-        /*}else{
-            Snackbar.make(findViewById(R.id.p),"Impossible de modifier l'annonce vous n'êtes pas connecté à internet", Snackbar.LENGTH_LONG).show();
-        }*/
-
-
     }
+
+
 
 
     public void fillMap(){

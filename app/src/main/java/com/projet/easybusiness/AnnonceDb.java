@@ -123,7 +123,6 @@ public class AnnonceDb {
 
         Cursor cursor =   db.query(AnnonceContract.FeedEntry.TABLE_NAME, projection,AnnonceContract.FeedEntry.COLUMN_NAME_ID+" LIKE ?",select,null,null,null);
         Log.i("tttt", "après l'execution de la requete"+ cursor);
-
         return cursor;
     }
 }

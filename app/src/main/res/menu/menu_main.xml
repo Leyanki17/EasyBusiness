@@ -8,17 +8,28 @@
         android:id="@+id/ic_profil"
         android:title="@string/profile"
         android:icon="@drawable/ic_profile2"
-        android:orderInCategory="3"
+        android:orderInCategory="4"
         app:showAsAction="always"
         />
 
     <item
         android:id="@+id/ic_add"
-        android:title="annonce"
         android:icon="@drawable/ic_add_annonce"
+        android:orderInCategory="3"
+        android:title="depot"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/ic_save"
+        android:icon="@drawable/ic_star_saved_ad"
         android:orderInCategory="2"
-        app:showAsAction="always"
-        />
+        android:title="save"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/ic_refrech"
+        android:icon="@drawable/ic_refresh"
+        android:orderInCategory="1"
+        android:title="refrech"
+        app:showAsAction="always" />
 
     <!--<item
         android:id="@+id/ic_liste"

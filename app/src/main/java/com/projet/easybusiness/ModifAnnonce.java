@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.google.android.material.snackbar.Snackbar;
+import com.projet.easybusiness.helper_request.HelperClass;
 import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Moshi;
 
@@ -138,6 +139,7 @@ public class ModifAnnonce extends AppCompatActivity {
                    modifierAnnonce();
                    Snackbar.make(findViewById(R.id.modifierAd),"votre annonce a été modifer avec succes", Snackbar.LENGTH_LONG).show();
                    Log.i("modif","modif " +ad.toString());
+                   HelperClass.wait(1000);
                    Intent intent= new Intent(this,SeeAd.class);
                    intent.putExtra("idAnn", ad.getId());
                    startActivity(intent);
@@ -149,7 +151,7 @@ public class ModifAnnonce extends AppCompatActivity {
            }else
            {
                // snackbar a faire
-               Snackbar.make(findViewById(R.id.modifier),"vous ne disposez pas le droit de modifier cette annonce", Snackbar.LENGTH_LONG).show();
+               Snackbar.make(findViewById(R.id.depotAd),"vous ne disposez pas le droit de modifier cette annonce", Snackbar.LENGTH_LONG).show();
            }
        }else{
            Snackbar.make(findViewById(R.id.modifierAd),"Impossible de modifier l'annonce vous n'êtes pas connecter à internet", Snackbar.LENGTH_LONG).show();
@@ -160,7 +162,6 @@ public class ModifAnnonce extends AppCompatActivity {
         // Fonction haveInternetConnection : return true si connecté, return false dans le cas contraire
         NetworkInfo network = ((ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE))
                 .getActiveNetworkInfo();
-
 
         if (network==null || !network.isConnected())
         {

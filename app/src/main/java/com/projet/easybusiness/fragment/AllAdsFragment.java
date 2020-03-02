@@ -216,8 +216,6 @@ public class AllAdsFragment extends Fragment   {
         }
     }
 
-
-
    /* public void itemClick( View v){
         String titreClick;
         TextView clicked = (TextView)v.findViewById(R.id.idAnnonce);
