@@ -34,7 +34,7 @@ public class AnnonceDb {
         values.put( AnnonceContract.FeedEntry.COLUMN_NAME_TELEPHONE , annonce.getTelContact());
         values.put( AnnonceContract.FeedEntry.COLUMN_NAME_VILLE , annonce.getVille());
         values.put( AnnonceContract.FeedEntry.COLUMN_NAME_CODE_POSTAL , annonce.getCp());
-        if(annonce.getImages().length <0){
+        if(annonce.getImages().length >=0){
             values.put( AnnonceContract.FeedEntry.COLUMN_NAME_IMAGES, annonce.getImages()[0]);
         }else{
             values.put( AnnonceContract.FeedEntry.COLUMN_NAME_IMAGES, "no url");

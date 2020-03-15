@@ -41,8 +41,9 @@ public class ListeDesAnnoncesSauvegargees extends AppCompatActivity {
         AnnonceDb database= new AnnonceDb(this);
         Intent next= new Intent(this,SeeAd.class);
         Cursor elt = database.getElt(titreClick);
-
-        next.putExtra("idAnnonce", HelperClass.bind(elt));
+        Annonce ad = HelperClass.bind(elt);
+        Log.i("img",ad.getImages()[0]+"");
+        next.putExtra("idAnnonce", ad);
         startActivity(next);
 
     }

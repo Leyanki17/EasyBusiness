@@ -55,7 +55,11 @@ public class AnnonceViewHolder extends RecyclerView.ViewHolder {
         String cid= cursor.getString(cursor.getColumnIndex(AnnonceContract.FeedEntry.COLUMN_NAME_ID));
         titre.setText(ctitre);
         date.setText(HelperClass.fromLongToDate(cdate));
-        description.setText(cdescription);
+        if(cdescription.length()>150){
+            description.setText(cdescription.substring(0,150));
+        }else{
+            description.setText(cdescription);
+        }
         id.setText(cid);
         Picasso.get().load(cimage).fit().error(R.drawable.laptop_hp).into(img);
     }

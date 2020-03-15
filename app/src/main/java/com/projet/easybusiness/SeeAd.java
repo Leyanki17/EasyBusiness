@@ -66,6 +66,7 @@ public class SeeAd extends AppCompatActivity {
 
         if(ad!=null){
             Log.i("annonceId",ad.getId());
+            Log.i("price",ad.getPrix()+"");
             rempliAnnonce(this.ad);
             Log.i("annonceId",ad.getId());
         }else{
@@ -111,6 +112,7 @@ public class SeeAd extends AppCompatActivity {
         try{
             Log.i("body",""+body);
             this.ad= jsonAdapter.fromJson(body);
+            Log.i("price",ad.getPrix()+"");
             rempliAnnonce(ad);
         }catch(IOException e){
             Log.i("YKJ",e.getMessage());

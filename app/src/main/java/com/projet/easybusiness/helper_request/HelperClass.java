@@ -14,6 +14,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
@@ -94,6 +95,13 @@ public class HelperClass {
 
     }
 
+    public static ArrayList<Annonce> reverseList(ArrayList<Annonce> list){
+        ArrayList<Annonce> listAnnonce= new ArrayList<>();
+        for(int i=list.size()-1; i>=0 ;i--){
+            listAnnonce.add(list.get(i));
+        }
+        return listAnnonce;
+    }
     public static Annonce bind(Cursor cursor) {
         cursor.moveToPosition(0);
         String ctitre = cursor.getString(cursor.getColumnIndex(AnnonceContract.FeedEntry.COLUMN_NAME_TITRE));

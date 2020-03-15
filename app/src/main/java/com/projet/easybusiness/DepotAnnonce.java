@@ -102,22 +102,16 @@ public class DepotAnnonce extends AppCompatActivity implements AdPictureDialog.M
     public void sendAnnonce() throws Exception {
         SharedPreferences preferences=  getSharedPreferences("PREF",MODE_PRIVATE);
         titre = (EditText) findViewById(R.id.champsTitre);
-        String price = ((EditText) findViewById(R.id.champsPrix)).getText().toString();
-        if(price == ""){
-            int prix = 0;
-        }else{
-            int prix = Integer.parseInt(price);
-        }
-
         ville = (EditText) findViewById(R.id.champsVille);
         cp = (EditText) findViewById(R.id.champsCp);
+        prix = (EditText) findViewById(R.id.champsPrix);
         description = (EditText) findViewById(R.id.champsDescription);
         RequestBody formBody = new FormBody.Builder()
                 .add("apikey", "21913373")
                 .add("method","save")
                 .add("titre", titre.getText().toString())
                 .add("description",description.getText().toString())
-                .add("prix", String.valueOf(prix))
+                .add("prix",prix.getText().toString())
                 .add("pseudo",preferences.getString("pseudo","inconnu"))
                 .add("emailContact",preferences.getString("email","inconnu"))
                 .add("telContact",preferences.getString("tel","inconnu"))

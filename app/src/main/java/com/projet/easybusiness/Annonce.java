@@ -38,7 +38,7 @@ public class Annonce implements Parcelable {
         this.emailContact = emailContact;
         this.telContact = telContact;
         this.ville = ville;
-        this.cp = cp;
+
     }
 
     protected Annonce(Parcel in) {
@@ -159,7 +159,7 @@ public class Annonce implements Parcelable {
         dest.writeString(id);
         dest.writeString(titre);
         dest.writeString(description);
-        dest.writeFloat(prix);
+        dest.writeInt(prix);
         dest.writeString(pseudo);
         dest.writeString(emailContact);
         dest.writeString(telContact);

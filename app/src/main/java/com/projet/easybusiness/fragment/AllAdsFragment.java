@@ -202,7 +202,7 @@ public class AllAdsFragment extends Fragment   {
 
         try{
             ResponseAnnonces response = adapter.fromJson(body);
-            listAnnonce=response.getAnnonces();
+            listAnnonce=HelperClass.reverseList(response.getAnnonces());
             AnnonceAdapter adapterListAnnonce= new AnnonceAdapter(listAnnonce);
             fillMap();
              recyclerView= v.findViewById(R.id.recycleViewAnnonces);
@@ -227,7 +227,7 @@ public class AllAdsFragment extends Fragment   {
         startActivity(next);
     }*/
     public void fillMap(){
-        for(int i=0; i<this.listAnnonce.size() ;i++){
+        for(int i=this.listAnnonce.size()-1; i>=0 ;i--){
             Annonce ad= this.listAnnonce.get(i);
             ad.setImage(HelperClass.changeToPng(ad.getImages()));
             SeeAllAd.annonces.put(ad.getId(),ad);

@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import com.projet.easybusiness.Annonce;
 import com.projet.easybusiness.R;
 import com.projet.easybusiness.helper_request.ApiListAnnonceAdapter;
+import com.projet.easybusiness.helper_request.HelperClass;
 import com.projet.easybusiness.helper_request.ResponseAnnonces;
 import com.projet.easybusiness.recycler_view_helper.AnnonceAdapter;
 import com.squareup.moshi.JsonAdapter;
@@ -63,7 +64,7 @@ public class MyAdsFragment extends AllAdsFragment {
         JsonAdapter<ResponseAnnonces> adapter = moshi.adapter(ResponseAnnonces.class);
         try{
             ResponseAnnonces response = adapter.fromJson(body);
-            listAnnonce=response.getAnnonces();
+            listAnnonce= HelperClass.reverseList(response.getAnnonces());
             filter(listAnnonce);
             AnnonceAdapter adapterListAnnonce= new AnnonceAdapter(listAnnonce);
             fillMap();
